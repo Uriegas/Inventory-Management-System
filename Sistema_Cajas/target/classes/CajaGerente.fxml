@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<?import javafx.scene.Scene?>
+<?import javafx.scene.control.Button?>
+<?import javafx.scene.control.Label?>
+<?import javafx.scene.control.TableColumn?>
+<?import javafx.scene.control.TableView?>
+<?import javafx.scene.layout.AnchorPane?>
+<?import javafx.scene.shape.Line?>
+<?import javafx.scene.shape.Rectangle?>
+<?import javafx.scene.text.Font?>
+
+<Scene xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.TeamPro.CajaGerenteController">
+    <AnchorPane prefHeight="516.0" prefWidth="865.0">
+      <children>
+         <TableView fx:id="tvTablaVentas" layoutX="493.0" layoutY="196.0" prefHeight="306.0" prefWidth="360.0">
+           <columns>
+               <TableColumn prefWidth="114.0" text="Nombre" />
+             <TableColumn prefWidth="95.0" text="Cantidad" />
+             <TableColumn prefWidth="87.0" text="Total" />
+               <TableColumn prefWidth="62.0" text="Quitar" />
+           </columns>
+         </TableView>
+         <Label layoutX="499.0" layoutY="13.0" text="Registro de caja">
+            <font>
+               <Font size="22.0" />
+            </font>
+         </Label>
+         <Button fx:id="btnCerrar" layoutX="764.0" layoutY="14.0" mnemonicParsing="false" onAction="#clickCerrarCaja" text="Cerrar caja" />
+         <Button fx:id="btnAbrir" layoutX="384.0" layoutY="14.0" mnemonicParsing="false" onAction="#clickAbrirCaja" text="Abrir caja" />
+         <TableView fx:id="tvTablaCajas" layoutX="14.0" layoutY="84.0" prefHeight="426.0" prefWidth="443.0">
+            <columns>
+               <TableColumn prefWidth="57.0" text="ID" />
+               <TableColumn prefWidth="138.0" text="Fecha de apertura" />
+               <TableColumn prefWidth="138.0" text="Fecha de cierre" />
+               <TableColumn minWidth="1.0" prefWidth="109.0" text="Total" />
+            </columns>
+         </TableView>
+         <Label layoutX="25.0" layoutY="43.0" text="Cierre de caja">
+            <font>
+               <Font size="18.0" />
+            </font>
+         </Label>
+         <Label fx:id="lbIdCaja" layoutX="664.0" layoutY="13.0" text="xxx">
+            <font>
+               <Font size="22.0" />
+            </font>
+         </Label>
+         <Line endX="-100.0" endY="-161.0" layoutX="574.0" layoutY="161.0" startX="-100.0" startY="355.0" />
+         <Label layoutX="499.0" layoutY="57.0" text="Empleado">
+            <font>
+               <Font name="System Bold" size="13.0" />
+            </font>
+         </Label>
+         <Label fx:id="lbNombre" layoutX="499.0" layoutY="74.0" text="Jose Maria Morelos y Pavon" />
+         <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d7d7d7" height="107.0" layoutX="698.0" layoutY="54.0" stroke="TRANSPARENT" strokeType="INSIDE" width="149.0" />
+         <Label layoutX="709.0" layoutY="65.0" text="Apertura">
+            <font>
+               <Font name="System Bold" size="13.0" />
+            </font>
+         </Label>
+         <Label layoutX="709.0" layoutY="107.0" text="Total ventas">
+            <font>
+               <Font name="System Bold" size="13.0" />
+            </font>
+         </Label>
+         <Label fx:id="lbApertura" layoutX="709.0" layoutY="80.0" text="xx-xx-xxxx" />
+         <Label fx:id="lbTotalVentas" layoutX="709.0" layoutY="121.0" text="\$xx,xxx.xx" />
+      </children></AnchorPane>
+</Scene>
