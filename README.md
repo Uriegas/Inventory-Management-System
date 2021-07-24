@@ -1,6 +1,17 @@
 # POO-Unidad-4-Actividad-1
 ## Actividad 7: Cajeros en Red y Web server
 
+### Conceptos
+#### Caja
+* Atributos: Efectivo
+* Metodos: Retirar y Depositar
+
+Corte de caja. Comparar el dinero que hay (físico) contra el registrado en el programa.
+* Atributos:
+1. Caja (donde)
+2. Usuario (quién)
+3. Fecha y Hora (cuándo)
+
 
 ### Objetivo de la Práctica
 
