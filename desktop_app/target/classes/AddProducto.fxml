@@ -7,23 +7,23 @@
 <?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 
-<Scene xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.TeamPro.AddProductoController">
-    <AnchorPane prefHeight="364.0" prefWidth="667.0">
+<Scene xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.TeamPro.AddProductoController">
+    <AnchorPane prefHeight="364.0" prefWidth="667.0" styleClass="background-inv" stylesheets="@estilos.css">
       <children>
-         <Label layoutX="279.0" layoutY="14.0" text="Datos del producto" />
-         <ImageView fx:id="ivFoto" fitHeight="182.0" fitWidth="219.0" layoutX="430.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true" />
-         <Button fx:id="btnCancelar" layoutX="503.0" layoutY="327.0" mnemonicParsing="false" onAction="#clickCancelar" style="-fx-background-color: false;" text="Cancelar" />
-         <Button fx:id="btnGuardar" layoutX="587.0" layoutY="327.0" mnemonicParsing="false" onAction="#clickGuardar" text="Guardar" />
-         <Button fx:id="btnExaminar" layoutX="332.0" layoutY="261.0" mnemonicParsing="false" onAction="#clickExaminar" text="Examinar" textAlignment="RIGHT" />
-         <TextField fx:id="tfID" layoutX="96.0" layoutY="80.0" prefHeight="23.0" prefWidth="113.0" />
-         <TextField fx:id="tfDescripcion" layoutX="96.0" layoutY="126.0" prefHeight="23.0" prefWidth="308.0" />
-         <TextField fx:id="tfPrecio" layoutX="96.0" layoutY="171.0" prefHeight="23.0" prefWidth="113.0" />
-         <TextField fx:id="tfStock" layoutX="96.0" layoutY="215.0" prefHeight="23.0" prefWidth="113.0" />
-         <TextField fx:id="tfFoto" layoutX="95.0" layoutY="261.0" prefHeight="23.0" prefWidth="240.0" />
-         <Label layoutX="23.0" layoutY="84.0" text="ID" />
-         <Label layoutX="23.0" layoutY="130.0" text="Descripción" />
-         <Label layoutX="23.0" layoutY="175.0" text="Precio" />
-         <Label layoutX="23.0" layoutY="220.0" text="Stock" />
-         <Label layoutX="23.0" layoutY="265.0" text="Foto" />
+         <Label layoutX="238.0" layoutY="14.0" styleClass="label-titulos" text="Datos del producto" />
+         <ImageView fx:id="ivFoto" fitHeight="168.0" fitWidth="210.0" layoutX="439.0" layoutY="82.0" pickOnBounds="true" preserveRatio="true" />
+         <Button fx:id="btnCancelar" layoutX="442.0" layoutY="314.0" mnemonicParsing="false" onAction="#clickCancelar" style="-fx-background-color: false;" styleClass="button-cancelar" text="Cancelar" />
+         <Button fx:id="btnGuardar" layoutX="552.0" layoutY="314.0" mnemonicParsing="false" onAction="#clickGuardar" styleClass="button-save" text="Guardar" />
+         <Button fx:id="btnExaminar" layoutX="348.0" layoutY="261.0" mnemonicParsing="false" onAction="#clickExaminar" styleClass="button-examinar" text="Examinar" textAlignment="RIGHT" textFill="WHITE" />
+         <TextField fx:id="tfID" layoutX="108.0" layoutY="82.0" prefHeight="23.0" prefWidth="113.0" />
+         <TextField fx:id="tfDescripcion" layoutX="108.0" layoutY="126.0" prefHeight="26.0" prefWidth="292.0" />
+         <TextField fx:id="tfPrecio" layoutX="108.0" layoutY="171.0" prefHeight="23.0" prefWidth="113.0" />
+         <TextField fx:id="tfStock" layoutX="108.0" layoutY="215.0" prefHeight="23.0" prefWidth="113.0" />
+         <TextField fx:id="tfFoto" layoutX="108.0" layoutY="261.0" prefHeight="33.0" prefWidth="240.0" />
+         <Label layoutX="20.0" layoutY="84.0" styleClass="label-texto" text="ID" />
+         <Label layoutX="20.0" layoutY="128.0" styleClass="label-texto" text="Descripción" />
+         <Label layoutX="20.0" layoutY="171.0" styleClass="label-texto" text="Precio" />
+         <Label layoutX="20.0" layoutY="217.0" styleClass="label-texto" text="Stock" />
+         <Label layoutX="20.0" layoutY="267.0" styleClass="label-texto" text="Foto" />
       </children></AnchorPane>
 </Scene>

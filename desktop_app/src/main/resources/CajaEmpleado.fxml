@@ -12,10 +12,10 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Scene xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.TeamPro.CajaEmpleadoController">
-    <AnchorPane prefHeight="516.0" prefWidth="865.0">
+<Scene xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.TeamPro.CajaEmpleadoController">
+    <AnchorPane prefHeight="519.0" prefWidth="877.0" styleClass="background-inv" stylesheets="@estilos.css">
       <children>
-         <TableView fx:id="tvProductosCarrito" layoutX="492.0" layoutY="95.0" prefHeight="306.0" prefWidth="360.0">
+         <TableView fx:id="tvProductosCarrito" layoutX="492.0" layoutY="95.0" prefHeight="306.0" prefWidth="369.0" stylesheets="@tableview.css">
            <columns>
                <TableColumn prefWidth="114.0" text="Nombre" />
              <TableColumn prefWidth="95.0" text="Cantidad" />
@@ -23,31 +23,31 @@
                <TableColumn prefWidth="62.0" text="Quitar" />
            </columns>
          </TableView>
-         <Button fx:id="btnConfirmar" layoutX="493.0" layoutY="449.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="372.0" text="Confirmar venta" />
-         <Label layoutX="712.0" layoutY="410.0" text="Total a pagar:" />
-         <Label layoutX="796.0" layoutY="410.0" text="\$" textFill="#303f9f" textOverrun="CLIP" underline="true">
+         <Button fx:id="btnConfirmar" layoutX="486.0" layoutY="437.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="378.0" styleClass="button-save" text="Confirmar venta" />
+         <Label layoutX="700.0" layoutY="408.0" styleClass="label-texto" text="Total a pagar:" />
+         <Label layoutX="798.0" layoutY="410.0" text="\$" textFill="#303f9f" textOverrun="CLIP" underline="true">
             <font>
                <Font name="System Bold" size="13.0" />
             </font>
          </Label>
-         <Label layoutX="493.0" layoutY="58.0" text="Carrito">
+         <Label layoutX="492.0" layoutY="63.0" styleClass="label-table" text="Carrito">
             <font>
                <Font size="22.0" />
             </font>
          </Label>
-         <Label layoutX="566.0" layoutY="65.0" text="(" />
-         <Label layoutX="597.0" layoutY="65.0" text="productos)" />
-         <Label fx:id="lbCantidadProductos" layoutX="571.0" layoutY="65.0" text="100" />
-         <Button fx:id="btnVaciar" layoutX="757.0" layoutY="61.0" mnemonicParsing="false" text="Vaciar carrito" />
+         <Label layoutX="614.0" layoutY="65.0" styleClass="label-texto" text="(" />
+         <Label layoutX="645.0" layoutY="65.0" styleClass="label-texto" text="productos)" />
+         <Label fx:id="lbCantidadProductos" layoutX="618.0" layoutY="65.0" styleClass="label-texto" text="100" textFill="#ac6064" />
+         <Button fx:id="btnVaciar" layoutX="730.0" layoutY="60.0" mnemonicParsing="false" prefHeight="31.0" prefWidth="129.0" styleClass="button-login" text="Vaciar carrito" />
          <Pane prefHeight="519.0" prefWidth="467.0">
             <children>
-               <Label layoutX="14.0" layoutY="14.0" text="Nombre tienda" textFill="#303f9f">
+               <Label layoutX="14.0" layoutY="14.0" styleClass="label-titulos" text="Nombre tienda" textFill="#303f9f">
                   <font>
                      <Font name="System Bold" size="18.0" />
                   </font>
                </Label>
                <TextField fx:id="tfBusqueda" layoutX="14.0" layoutY="54.0" prefHeight="23.0" prefWidth="339.0" promptText="Buscar producto" />
-               <Button fx:id="btnBuscar" layoutX="362.0" layoutY="54.0" mnemonicParsing="false" text="Buscar" />
+               <Button fx:id="btnBuscar" layoutX="353.0" layoutY="52.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="35.0" styleClass="button-buscar" />
                <Button layoutX="11.0" layoutY="119.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="217.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.7) , 10,0,0,1 );" text="Coca cola 600ml     " wrapText="true">
                   <font>
                      <Font name="System Bold" size="13.0" />
@@ -67,7 +67,7 @@
                <ListView fx:id="lvProductos" layoutX="11.0" layoutY="99.0" prefHeight="406.0" prefWidth="446.0" />
             </children>
          </Pane>
-         <Label fx:id="lbTotalPagar" layoutX="800.0" layoutY="410.0" text=" 000.00" textFill="#303f9f" textOverrun="CLIP" underline="true">
+         <Label fx:id="lbTotalPagar" layoutX="802.0" layoutY="409.0" text=" 000.00" textFill="#303f9f" textOverrun="CLIP" underline="true">
             <font>
                <Font name="System Bold" size="13.0" />
             </font>
