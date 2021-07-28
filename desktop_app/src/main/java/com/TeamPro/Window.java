@@ -1,10 +1,13 @@
 package com.TeamPro;
 
-import javafx.event.*;
-import javafx.fxml.*;
-import javafx.scene.*;
-import javafx.stage.*;
-import java.io.*;
+import javafx.event.Event;
+import javafx.fxml.FXMLLoader;
+import javafx.scene.Node;
+import javafx.scene.Scene;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
+
+import java.io.IOException;
 
 /**
  * Abstract Window class, needed because of switching scenes and implementing global CSS properties
