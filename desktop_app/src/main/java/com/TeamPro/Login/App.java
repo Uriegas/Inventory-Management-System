@@ -1,8 +1,9 @@
 package com.TeamPro.Login;
 
+import com.TeamPro.MySQL;
+import com.TeamPro.Window;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
-import javafx.scene.Parent;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
@@ -14,19 +15,27 @@ import java.io.IOException;
  */
 public class App extends Application {
 
+    MySQL db = new MySQL();
+    FXMLLoader loader;
+
     public static void main(String[] args) {
         launch(args);
     }
 
     @Override
     public void start(Stage primaryStage) throws IOException {
-
-        FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/LoginResources/Login.fxml"));
-        //FXMLLoader loader = new FXMLLoader(this.getClass().getResource("/AddAdmin.fxml"));
+        this.db.conexion();
+        if((this.db.select("usuarios", "*", "tipo = 'administrador'"))) {// Si ya existe cuenta admin, abre Login
+            loader = new FXMLLoader(this.getClass().getResource("/LoginResources/Login.fxml"));
+        }
+        else{
+            loader = new FXMLLoader(this.getClass().getResource("/LoginResources/AddAdmin.fxml"));
+        }
+        /*Window login = loader.getController();
+        login.initModel(this.db);//Initialize the data model into the controller*/
         Scene scene = loader.load();
         primaryStage.setTitle("Sistema inventario");
         primaryStage.getIcons().add(new Image(App.class.getResourceAsStream( "/LoginResources/teampro.png" )));
-        //primaryStage.setResizable(false);
         primaryStage.setScene(scene);
         primaryStage.show();
     }
