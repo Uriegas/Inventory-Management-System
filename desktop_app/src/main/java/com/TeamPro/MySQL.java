@@ -13,7 +13,7 @@ public class MySQL {
      */
     public Connection conexion(){
         try {       //Cambiar los datos de acceso por los datos finales
-            this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/unidad4", "elpapi", "Contrasen&a1234");
+            this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/unidad4", "", "tuberculosis.");
         } catch (SQLException e) {
             e.printStackTrace();
         }

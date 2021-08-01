@@ -1,0 +1,125 @@
+.root{
+    -fx-font-family: "Monaco";
+}
+
+.background-login {
+    -fx-background-image: url("fondo_login.png");
+}
+
+.background-inventario {
+    -fx-background-color: #AC6064;
+}
+
+.background-inv {
+    -fx-background-image: url("blanquito.png");
+}
+
+.button-login{
+    -fx-border-radius: 12px;
+    -fx-font-family: Candara;
+    -fx-padding: 5 22 5 22;
+    -fx-border-color: #505362;
+    -fx-background-color: #505362;
+    -fx-font-size: 11pt;
+    -fx-text-fill: #d8d8d8;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+}
+
+.jfx-text-field{
+    -fx-text-inner-color: white;
+}
+
+.label-tienda {
+    -fx-font-family: "Gabriola";
+    -fx-font-size: 20pt;
+    -fx-text-fill: white;
+    -fx-opacity: 1;
+}
+
+.label-texto {
+    -fx-font-family: "Monaco";
+    -fx-font-size: 11pt;
+    -fx-text-fill: #6F99A5;
+    -fx-opacity: 1;
+    -fx-font-weight: bold;
+}
+
+.label-name {
+    -fx-font-family: "Courier";
+    -fx-font-size: 11pt;
+    -fx-text-fill: #505362;
+    -fx-opacity: 1;
+    -fx-font-weight: bold;
+}
+
+.label-table {
+    -fx-font-family: "Lucida Console";
+    -fx-font-size: 15pt;
+    -fx-text-fill: #6F99A5;
+    -fx-opacity: 1;
+    -fx-font-weight: bold;
+}
+
+.label-titulos {
+    -fx-font-family: "Ebrima";
+    -fx-font-size: 16pt;
+    -fx-text-fill: #6F99A5;
+    -fx-opacity: 1;
+    -fx-font-weight: bold;
+}
+
+.button-inventario {
+    -fx-font-family: "Cambodian";
+    -fx-padding: 5 22 5 22;
+    -fx-border-color: #AC6064;
+    -fx-border-width: 2;
+    -fx-background-radius: 0;
+    -fx-background-color: #AC6064;
+    -fx-font-size: 11pt;
+    -fx-text-fill: white;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+}
+
+.button-buscar{
+    -fx-background-image:url("buscar.png");
+    -fx-background-repeat:no-repeat;
+    -fx-background-color: #505362;
+    -fx-background-position:center;
+    -fx-border-radius: 15px;
+}
+
+.button-add{
+    -fx-graphic: url("add.png");
+    -fx-content-display: left;
+    -fx-background-color: #505362;
+}
+
+.button-examinar{
+    -fx-graphic: url("buscar.png");
+    -fx-content-display: left;
+    -fx-background-color: #505362;
+}
+
+.button-save {
+    -fx-font-family: "Monaco";
+    -fx-padding: 5 22 5 22;
+    -fx-border-color: #95ADB1;
+    -fx-border-width: 2;
+    -fx-background-radius: 0;
+    -fx-background-color: #95ADB1;
+    -fx-font-size: 11pt;
+    -fx-text-fill: white;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+}
+
+.button-cancelar {
+    -fx-font-family: "Monaco";
+    -fx-padding: 5 22 5 22;
+    -fx-border-color: #E9EEEF;
+    -fx-border-width: 2;
+    -fx-background-radius: 0;
+    -fx-background-color: #E9EEEF;
+    -fx-font-size: 11pt;
+    -fx-text-fill: #505362;
+    -fx-background-insets: 0 0 0 0, 0, 1, 2;
+}
