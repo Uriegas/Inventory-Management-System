@@ -1,0 +1,43 @@
+create database inventariosDB;
+
+use inventariosDB;
+
+create table usuarios(
+nombre varchar(80) not null,
+contraseña varchar(30) not null,
+tipo varchar(30) not null,
+id_u int not null primary key
+);
+
+create table productos(
+id_p int not null primary key,
+precio decimal(10,2) not null,
+descrpcion varchar(100) not null,
+existencia int(5) not null
+);
+
+create table corte_caja(
+id_cc int not null primary key,
+inicio date  not null,
+fin date  not null,
+total decimal(10,2) not null,
+id_u int not null,
+CONSTRAINT fk_corte_gerente FOREIGN KEY (id_u) REFERENCES usuarios (id_u) ON DELETE CASCADE
+);
+
+create table venta (
+id_v int not null primary key,
+Monto decimal(10,2) not null,
+fecha date not null,
+id_u int not null,
+id_cc int not null,
+CONSTRAINT fk_venta_usuario FOREIGN KEY (id_u) REFERENCES usuarios (id_u) ON DELETE CASCADE,
+CONSTRAINT fk_corte_caja FOREIGN KEY (id_cc) REFERENCES corte_caja (id_cc) ON DELETE CASCADE
+);
+
+create table caja(
+id_c int not null primary key,
+id_u int not null,
+saldo_caja int not null,
+CONSTRAINT fk_caja_usuario FOREIGN KEY (id_u) REFERENCES usuarios (id_u) ON DELETE CASCADE
+);
