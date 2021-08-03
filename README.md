@@ -1,6 +1,10 @@
 # POO-Unidad-4-Actividad-1
 ## Actividad 7: Cajeros en Red y Web server
 
+### Architecture  
+It is possible to develop this project without a server that handles requests and has a connection to the database, instead each client makes direct requests to the database.  
+Here arise a problem of authentication, how could a desktop app client connect if it cannot access the database and therefore make a new account request?; the easiest way to handle this is define that the admin is the only one capable of creating accounts; the other solution is to use a server.
+
 ### Requirements
 * MySQL (tested with MariaDB 10.5.10)
 
