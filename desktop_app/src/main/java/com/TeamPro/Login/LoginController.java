@@ -1,12 +1,16 @@
 package com.TeamPro.Login;
 
+import com.TeamPro.MySQL;
 import com.TeamPro.Window;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
-import javafx.scene.control.Button;
+import javafx.fxml.Initializable;
 import javafx.scene.control.TextField;
+import java.net.URL;
+import java.util.ResourceBundle;
 
-public class LoginController extends Window {
+public class LoginController extends Window implements Initializable {
+    protected MySQL db = new MySQL();
 
     @FXML
     private TextField TfUsuario;
@@ -14,19 +18,32 @@ public class LoginController extends Window {
     @FXML
     private TextField TfContra;
 
-    @FXML
-    private Button btnLogin;
-
+    /**
+     * Verifica las credenciales de autenticación y llama a las vistas dependiendo del tipo de usuario
+     * @param event
+     */
     @FXML
     void clickLogin(ActionEvent event) {
-        System.out.println("CLickk");
+        String nombre = TfUsuario.getText();
+        String pass = TfContra.getText();
+        String tipoUsuario = db.getTipoUsuario("usuarios", "tipo","nombre = '"+nombre+"' AND contraseña = '"+pass+"'");
 
-        if(TfUsuario.getText().equals("admin") && TfContra.getText().equals("admin") ){
-            switchScene(event, "/Sistema_InventarioResources/Inventario.fxml");
-        }else if(TfUsuario.getText().equals("empleado") && TfContra.getText().equals("empleado") ){
-            switchScene(event, "/Sistema_CajasResources/CajaEmpleado.fxml");
-        }else if(TfUsuario.getText().equals("gerente") && TfContra.getText().equals("gerente") ){
-            switchScene(event, "/Sistema_CajasResources/CajaGerente.fxml");
+        if(tipoUsuario.length() > 0){
+            System.out.println(tipoUsuario);
+            if(tipoUsuario.equals("administrador")){
+                switchScene(event, "/Sistema_InventarioResources/Inventario.fxml");
+            }else if(tipoUsuario.equals("vendedor")){
+                switchScene(event, "/Sistema_CajasResources/CajaEmpleado.fxml");
+            }else if(tipoUsuario.equals("gerente")){
+                switchScene(event, "/Sistema_CajasResources/CajaGerente.fxml");
+            }
+        }else{
+            System.out.println("No existe el usuario");
         }
+    }
+
+    @Override
+    public void initialize(URL url, ResourceBundle resourceBundle) {
+        db.conexion();
     }
 }

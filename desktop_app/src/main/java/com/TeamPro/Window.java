@@ -13,6 +13,7 @@ import java.io.IOException;
  * Abstract Window class, needed because of switching scenes and implementing global CSS properties
  */
 public abstract class Window {
+    protected MySQL db;
     /**
      * Switch the current scene (window) to the specified FXML file
 	 * @param FXML file
@@ -52,5 +53,16 @@ public abstract class Window {
         //     stage.close();
         // });
         dialog.show();
+    }
+    /**
+     * Abstract method for initializing the db connection
+     * @param d
+     */
+    public void initModel(MySQL d){
+        if(this.db != null)
+            throw new IllegalStateException("Database connection only can be instantiated once");
+        else{
+            this.db = d;
+        }
     }
 }

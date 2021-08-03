@@ -1,5 +1,6 @@
 package com.TeamPro.Login;
 
+import com.TeamPro.MySQL;
 import com.TeamPro.Window;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -13,14 +14,17 @@ import javafx.scene.paint.Color;
 import javafx.scene.paint.ImagePattern;
 import javafx.scene.shape.Circle;
 import javafx.stage.FileChooser;
-
 import java.io.File;
 import java.net.URL;
 import java.util.ResourceBundle;
 
+/**
+ * Permite crear un usuario administrador cuando no existe dicho usuario
+ */
 public class AddAdminController extends Window implements Initializable{
 
     Image img;
+    protected MySQL db = new MySQL();
 
     @FXML
     private TextField tfNombre;
@@ -37,6 +41,11 @@ public class AddAdminController extends Window implements Initializable{
     @FXML
     private Label lblError;
 
+
+    /**
+     * Permite agregar una foto de usuario
+     * @param event
+     */
     @FXML
     void clickAdd(ActionEvent event) {
         FileChooser fc = new FileChooser();
@@ -52,20 +61,26 @@ public class AddAdminController extends Window implements Initializable{
         }
     }
 
+    /**
+     * Toma los datos ingresados, manda a insertar dicho usuario y cambia de vista
+     * @param event
+     */
     @FXML
     void clickGuardar(ActionEvent event) {
-        if(!tfNombre.getText().isEmpty() && !tfUsername.getText().isEmpty() && !tfPassword.getText().isEmpty() )
+
+        if(!tfNombre.getText().isEmpty() && !tfUsername.getText().isEmpty() && !tfPassword.getText().isEmpty() ) {
+            String datos = "'"+tfNombre.getText()+"', '"+tfPassword.getText()+"', 'administrador', 011";
+            this.db.insert("usuarios", datos );
             switchScene(event, "/Sistema_InventarioResources/Inventario.fxml");
+        }
         else
             lblError.setVisible(true);
     }
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        //Agregar algo para comprobar si existe cuenta admin
-
-        this.img = new Image(this.getClass().getResource("/userAdmin.jpg").toString(),false);
+        db.conexion();
+        this.img = new Image(this.getClass().getResource("/LoginResources/userAdmin.jpg").toString(),false);
         clip.setFill(new ImagePattern(this.img));
         clip.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.8)));
     }

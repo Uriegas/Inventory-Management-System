@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Line?>
 <?import javafx.scene.text.Font?>
 
-<Scene stylesheets="@estilos.css" xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.TeamPro.Login.AddAdminController">
+<Scene xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.TeamPro.Login.AddAdminController">
     <AnchorPane prefHeight="501.0" prefWidth="411.0" style="-fx-background-color: #ffffff;">
       <children>
          <Circle fx:id="clip" fill="WHITE" layoutX="206.0" layoutY="111.0" radius="55.0" stroke="#9a9a9a" strokeLineCap="ROUND" />
@@ -37,13 +37,5 @@
                <Font name="System Bold" size="13.0" />
             </font>
          </Label>
-         <!--<ComboBox layoutX="96.0" layoutY="171.0" prefHeight="23.0" prefWidth="107.0" promptText="Empleado" fx:value="Empleado">
-              <items>
-                  <FXCollections fx:factory="observableArrayList">
-                      <String fx:id="gerente" fx:value="Gerente" />
-                      <String fx:id="admin" fx:value="Administrador" />
-                  </FXCollections>
-              </items>
-          </ComboBox>-->
       </children></AnchorPane>
 </Scene>
