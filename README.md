@@ -1,6 +1,16 @@
 # POO-Unidad-4-Actividad-1
 ## Actividad 7: Cajeros en Red y Web server
 
+### Requirements
+* MySQL (tested with MariaDB 10.5.10)
+
+### Execute
+For starting the server is necessary to run MySQL with:
+```
+sudo systemctl start mysql
+```
+Once the server is run the desktop app can is the client that connects to the server
+
 ### Conceptos
 #### Caja
 * Atributos: Efectivo
