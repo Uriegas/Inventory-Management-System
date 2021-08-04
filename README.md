@@ -3,6 +3,7 @@
 
 ### DUDA  
 El profe quiere a fuerzas que usemos un server o con la pura conexión a la base de datos esta bien?
+Según yo solo es la conexión, por lo que dijo hoy, no?
 
 ### Architecture  
 It is possible to develop this project without a server that handles requests and has a connection to the database, instead each client makes direct requests to the database.  
