@@ -5,13 +5,15 @@ import java.net.*;
 import java.sql.*;
 import java.util.*;
 
-import javax.naming.ldap.HasControls;
-
-
 /**
  * The webserver class is a client of the database
- * and a server for a http request.
- *
+ * and a server for a http request. <p>
+ * Example data (add to DB):<br>
+ * <ul>
+ *     <li>INSERT INTO productos VALUES(1, 15.42, 'jabon ZOTE', 800);</li>
+ *     <li>INSERT INTO productos VALUES(2, 15.99, 'cuaderno NORMA', 100);</li>
+ *     <li>INSERT INTO productos VALUES(3, 5.99, 'taka taka', 1000);</li>
+ * </ul>
  */
 public class WebServer extends Thread {
     //--> Credentials
@@ -105,28 +107,43 @@ public class WebServer extends Thread {
                     }
                     // <-- Get URL from client
 
-                    String query_in_table = "";
                     // --> Get response from DB
+                    String query_in_table = "";
                     try{
-                        HashMap<String, List<String>> res = query("SELECT * FROM prueba", conn);//Change this to PRODUCTS table
-                        System.out.println(Colors.toYellow("[QUERY] ") + res );
-                        query_in_table = query_to_html_table(res);
+                        Statement st = conn.createStatement();
+                        ResultSet rs = st.executeQuery("SELECT * FROM productos");
+                        List<Producto> productos = new ArrayList<Producto>();
+                        // --> Create a list of products
+                        while( rs.next() ) {
+                            productos.add( new Producto( rs.getInt( "id_p" ), rs.getString( "descrpcion" ), rs.getFloat( "precio" ), rs.getInt( "existencia" ) ) );
+                        }
+                        System.out.println(Colors.toYellow("[QUERY] ") + productos.toString());
+                        query_in_table = "<table><tr><th>ID</th><th>Descripcion</th><th>Precio</th><th>Existencia</th></tr>";
+                        for( Producto p : productos ) {
+                            query_in_table += p.toHTML() + "\n";
+                        }
+                        query_in_table += "</table>";
+                        // <-- Create a list of products
+                        System.out.println(Colors.toYellow("[RESPONSE] ") + productos.toString());
+
+                        // query_in_table = query_to_html_table(res);
                     }catch(SQLException e){
                         System.out.println(Colors.toRed("[ERROR] ") + e.getMessage());
                     }
+                    // <-- Get response from DB
                     
-                    // --> Send client response
+                    // --> Send client response (HTML)
                     out.println("HTTP/1.0 200 OK");
                     out.println("Content-Type: text/html");
                     out.println("Server: Bot");
                     // this blank line signals the end of the headers
                     out.println("");
                     // Send the HTML page
-                    out.println("<H1>Welcome to the Ultra Mini-WebServer</H1>");
-                    out.println("<H2>This is the database query:</H2>");
+                    out.println("<H1>Welcome to Tienda: LPY</H1>");
+                    out.println("<H2>Productos:</H2>");
                     out.println(query_in_table);
                     out.flush();
-                    // <-- Send client response
+                    // <-- Send client response (HTML)
                 }catch(IOException e){
                     System.out.println(Colors.toRed("[ERROR] ") + e.getMessage());
                 }
@@ -229,7 +246,7 @@ public class WebServer extends Thread {
         return rowMap;
     }
     /**
-     * Convert a HashMap<String, List<String>> aka. table to a HTML table
+     * Convert a HashMap<String, List<String>> aka. table to a horizontal HTML table
      * @param table
      * @return HTML table
      */
