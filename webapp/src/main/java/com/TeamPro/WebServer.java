@@ -2,6 +2,10 @@ package com.TeamPro;
 
 import java.io.*;
 import java.net.*;
+import java.sql.*;
+import java.util.*;
+
+import javax.naming.ldap.HasControls;
 
 
 /**
@@ -14,6 +18,7 @@ public class WebServer extends Thread {
     private static final String DB = "jdbc:mysql://localhost/inventariosDB";
     private static String USER = "inventarios_client";
     private static String PASSWORD = "inventarios123";
+    private Connection conn;
     //<-- Credentials
 
     //--> Server variables
@@ -25,6 +30,9 @@ public class WebServer extends Thread {
     public WebServer( int port ) throws Exception {
         serverSocket = new ServerSocket( port );
         System.out.println( "Server started on port " + port );
+        // --> Connect to the database
+        conn = DriverManager.getConnection( DB, USER, PASSWORD );
+        // <-- Connect to the database
         start();
         // drop();
     }
@@ -97,6 +105,16 @@ public class WebServer extends Thread {
                     }
                     // <-- Get URL from client
 
+                    String query_in_table = "";
+                    // --> Get response from DB
+                    try{
+                        HashMap<String, List<String>> res = query("SELECT * FROM prueba", conn);//Change this to PRODUCTS table
+                        System.out.println(Colors.toYellow("[QUERY] ") + res );
+                        query_in_table = query_to_html_table(res);
+                    }catch(SQLException e){
+                        System.out.println(Colors.toRed("[ERROR] ") + e.getMessage());
+                    }
+                    
                     // --> Send client response
                     out.println("HTTP/1.0 200 OK");
                     out.println("Content-Type: text/html");
@@ -105,6 +123,8 @@ public class WebServer extends Thread {
                     out.println("");
                     // Send the HTML page
                     out.println("<H1>Welcome to the Ultra Mini-WebServer</H1>");
+                    out.println("<H2>This is the database query:</H2>");
+                    out.println(query_in_table);
                     out.flush();
                     // <-- Send client response
                 }catch(IOException e){
@@ -169,5 +189,61 @@ public class WebServer extends Thread {
         } catch ( Exception e ) {
             System.out.println( Colors.toRed("[ERROR] ") + e.getMessage() );
         }
+    }
+    /**
+     * Query the database with a prepared statement
+     * @param query
+     * @return query result
+     */
+    public HashMap<String, List<String>> query(String statement, Connection conn) throws SQLException {
+        System.out.println("Executing query: " + statement);
+        // try {
+            Statement st = conn.createStatement();
+            ResultSet rs = st.executeQuery(statement);
+            System.out.println(Colors.toGreen("[OK]") + " Query executed");
+            HashMap<String, List<String>> result = new HashMap<>();
+
+            for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) // Add column names
+                result.put(rs.getMetaData().getColumnName(i), new ArrayList<>());
+
+            while (rs.next())
+                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) // Add values
+                    result.get(rs.getMetaData().getColumnName(i)).add(rs.getString(i));
+
+            return result;
+        // } catch(SQLException e){
+        //     System.out.println(Colors.toRed("[ERROR]") + " Query failed");
+        // }
+    }
+    /**
+     * Get a specific row from a HashMap<String, List<String>> aka. table<p>
+     * Index start from 0
+     * @param table
+     * @param row
+     * @return row in a {@link HashMap}
+     */
+    public HashMap<String, String> getRow(HashMap<String, List<String>> map, int row) {
+        HashMap<String, String> rowMap = new HashMap<>();
+        for (Map.Entry<String, List<String>> entry : map.entrySet())
+            rowMap.put(entry.getKey(), entry.getValue().get(row));
+        return rowMap;
+    }
+    /**
+     * Convert a HashMap<String, List<String>> aka. table to a HTML table
+     * @param table
+     * @return HTML table
+     */
+    public String query_to_html_table(HashMap<String, List<String>> map) {
+        StringBuilder sb = new StringBuilder();
+        sb.append("<table>");
+        for (Map.Entry<String, List<String>> entry : map.entrySet()) {
+            sb.append("<tr>");
+            sb.append("<td>" + entry.getKey() + "</td>");
+            for (String value : entry.getValue())
+                sb.append("<td>" + value + "</td>");
+            sb.append("</tr>");
+        }
+        sb.append("</table>");
+        return sb.toString();
     }
 }
