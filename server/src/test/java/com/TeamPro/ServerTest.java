@@ -26,6 +26,8 @@ public class ServerTest {
         try {
             server = new Server();
             server.run();
+            server.insert("INSERT IGNORE INTO prueba VALUES(1, 'hola');");
+            server.insert("INSERT IGNORE INTO prueba VALUES(2, 'como');");
         } catch(SQLTimeoutException e){
             System.out.println(Colors.toYellow("[TIMEOUT ERROR]:") + "Couldn't establish a connection to DB ");
         } catch (SQLException e) {
@@ -51,9 +53,9 @@ public class ServerTest {
 		return Arrays.asList( new Object[][] {
 			//List some movies
 			{ "SELECT * FROM prueba WHERE id = 1;",
-				"{var=[hola], id=[1]}"},
+				"{id=[1], value=[hola]}"},
 			{ "SELECT * FROM prueba WHERE id = 2;",
-				"{var=[como], id=[2]}"}
+				"{id=[2], value=[como]}"}
 		});
 	}
 	/**
@@ -64,7 +66,9 @@ public class ServerTest {
 	public void testQueries() throws Exception{
 		//assert that strings are equal
         try {
+            System.out.println(Colors.toGreen("[TEST] ") + expected_result + " == " + server.query(actual_query).toString());
             Assert.assertEquals(expected_result, server.query(actual_query).toString());
+            System.out.println(Colors.toGreen("[SUCCESS]:") + "Query " + actual_query + " was correctly executed");
         } catch (Exception e) {
             Assert.fail("Insert data please");
         }
