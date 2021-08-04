@@ -21,6 +21,7 @@ public class WebServer extends Thread {
     private static String USER = "inventarios_client";
     private static String PASSWORD = "inventarios123";
     private Connection conn;
+    private String html = "";
     //<-- Credentials
 
     //--> Server variables
@@ -30,18 +31,28 @@ public class WebServer extends Thread {
     //<-- Server variables
 
     public WebServer( int port ) throws Exception {
+        // --> Load html
+        try{
+            File file = new File( this.getClass().getResource( "/index.html" ).getFile() );
+            BufferedReader br = new BufferedReader( new FileReader( file ) );
+            System.out.println( Colors.toBlue("[INFO]") + " Loading file: " + file.getAbsolutePath() );
+            String line = "";
+            while ( (line = br.readLine()) != null )
+                html += line;
+            br.close();
+        } catch ( IOException e ) {
+            System.out.println(Colors.toRed("[ERROR] ") + e.getMessage());
+        }
+        // <-- Load html
         serverSocket = new ServerSocket( port );
         System.out.println( "Server started on port " + port );
-        // --> Connect to the database
         conn = DriverManager.getConnection( DB, USER, PASSWORD );
-        // <-- Connect to the database
         start();
-        // drop();
     }
 
     @Override
     public void run() {
-        while ( !this.interrupted() ) {
+        // while ( !this.interrupted() ) {
             //wait for clients
             Socket connection;
             try {
@@ -51,7 +62,7 @@ public class WebServer extends Thread {
                 // TODO Auto-generated catch block
                 System.out.println(Colors.toRed("[ERROR] ") + e.getMessage());
             }
-        }
+        // }
     }
 
     public void assignConnectionToSubServer( Socket connection ) {
@@ -131,7 +142,7 @@ public class WebServer extends Thread {
                         System.out.println(Colors.toRed("[ERROR] ") + e.getMessage());
                     }
                     // <-- Get response from DB
-                    
+
                     // --> Send client response (HTML)
                     out.println("HTTP/1.0 200 OK");
                     out.println("Content-Type: text/html");
@@ -139,8 +150,10 @@ public class WebServer extends Thread {
                     // this blank line signals the end of the headers
                     out.println("");
                     // Send the HTML page
-                    out.println("<H1>Welcome to Tienda: LPY</H1>");
-                    out.println("<H2>Productos:</H2>");
+                    synchronized(html){
+                        System.out.println(Colors.toYellow("[HTML] ") + html);
+                        out.println(html);
+                    }
                     out.println(query_in_table);
                     out.flush();
                     // <-- Send client response (HTML)
