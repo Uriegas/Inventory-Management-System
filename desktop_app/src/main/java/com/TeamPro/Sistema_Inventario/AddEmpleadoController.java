@@ -1,5 +1,6 @@
 package com.TeamPro.Sistema_Inventario;
 
+import com.TeamPro.DAO.MySQL;
 import com.TeamPro.Window;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -8,6 +9,9 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
 public class AddEmpleadoController extends Window {
+
+    MySQL query = new MySQL();
+
     @FXML
     private ImageView ivFoto;
 
@@ -27,6 +31,9 @@ public class AddEmpleadoController extends Window {
     private TextField tfNombre;
 
     @FXML
+    private TextField tfNombre1;
+
+    @FXML
     private TextField tfFoto;
 
     @FXML
@@ -41,6 +48,10 @@ public class AddEmpleadoController extends Window {
 
     @FXML
     void clickGuardar(ActionEvent event) {
-
+        String id = tfID.getText();
+        String name = tfNombre.getText();
+        String Tipo = tfNombre1.getText();
+        String valores = "'" + name + "'" + ", " + "'" + " " + "'" + ", " + "'" + Tipo + "'";
+        query.insert("usuarios", "");
     }
 }
