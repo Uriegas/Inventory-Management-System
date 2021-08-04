@@ -1,7 +1,7 @@
 package com.TeamPro.Login;
 
-import com.TeamPro.MySQL;
 import com.TeamPro.Window;
+import com.TeamPro.DAO.MySQL;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;

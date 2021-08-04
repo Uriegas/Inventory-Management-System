@@ -1,13 +1,11 @@
 package com.TeamPro.Login;
 
-import com.TeamPro.MySQL;
-import com.TeamPro.Window;
+import com.TeamPro.DAO.MySQL;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Scene;
 import javafx.scene.image.Image;
 import javafx.stage.Stage;
-
 import java.io.IOException;
 
 /**
