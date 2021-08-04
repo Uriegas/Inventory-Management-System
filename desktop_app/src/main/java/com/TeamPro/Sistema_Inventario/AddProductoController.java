@@ -1,6 +1,8 @@
 package com.TeamPro.Sistema_Inventario;
 
+import com.TeamPro.MySQL;
 import com.TeamPro.Window;
+import com.mysql.cj.x.protobuf.MysqlxDatatypes;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -8,6 +10,10 @@ import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
 
 public class AddProductoController extends Window {
+
+    MySQL query = new MySQL();
+
+
     @FXML
     private ImageView ivFoto;
 
@@ -47,6 +53,11 @@ public class AddProductoController extends Window {
 
     @FXML
     void clickGuardar(ActionEvent event) {
-
+        String id = tfID.getText();
+        String desc = tfDescripcion.getText();
+        String Precio = tfPrecio.getText();
+        String cant = tfStock.getText();
+        String valores = Precio + ", " + "'" + desc + "'" + ", " + cant;
+        query.insert("productos", valores);
     }
 }
