@@ -26,14 +26,25 @@ public class ServerTest {
         try {
             server = new Server();
             server.run();
-            server.insert("INSERT IGNORE INTO prueba VALUES(1, 'hola');");
-            server.insert("INSERT IGNORE INTO prueba VALUES(2, 'como');");
+            server.update("INSERT IGNORE INTO prueba VALUES(1, 'hola');");
+            server.update("INSERT IGNORE INTO prueba VALUES(2, 'como');");
         } catch(SQLTimeoutException e){
             System.out.println(Colors.toYellow("[TIMEOUT ERROR]:") + "Couldn't establish a connection to DB ");
         } catch (SQLException e) {
             System.out.println(Colors.toRed("[SQL ERROR]:") + "Couldn't connect to DB, check if it is running or with correct credentials");
         } finally {
             System.out.println("Exiting...");
+        }
+    }
+    /**
+     * Delete inserted rows
+     */
+    @After
+    public void tearDown(){
+        try {
+            server.update("DELETE FROM prueba;");//Delete all rows from table prueba
+        } catch (SQLException e) {
+            System.out.println(Colors.toRed("[SQL ERROR]:") + "Couldn't delete rows from DB");
         }
     }
     /**

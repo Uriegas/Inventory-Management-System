@@ -17,7 +17,7 @@ import java.util.*;
  * Then, create the user by running the following command in the MySQL console:
  * {@code CREATE USER 'inventarios_client'@'localhost' IDENTIFIED BY 'inventarios123';} <p>
  * and grant it permissions to the inventoriosDB with the following command:
- * {@code GRANT SELECT,INSERT, UPDATE ON inventariosDB.* TO 'inventarios_client'@'localhost';}<p>
+ * {@code GRANT SELECT,INSERT, UPDATE, DELETE ON inventariosDB.* TO 'inventarios_client'@'localhost';}<p>
  * 
  * TODO: remove the grant permissions to ALL the tables in the database to only the corresponding tables.
  * 
@@ -133,14 +133,16 @@ public class Server{
         // }
     }
     /**
-     * Insert statement
+     * Insert, update and delete statement
+     * @param statement
+     * @throws SQLException
      */
-    public void insert(String statement) throws SQLException {
+    public void update(String statement) throws SQLException {
         System.out.println("Executing insert: " + statement);
         // try {
             Statement st = connection.createStatement();
             st.executeUpdate(statement);
-            System.out.println(Colors.toGreen("[OK]") + " Insert executed");
+            System.out.println(Colors.toGreen("[OK]") + " Insert|Update|Delete executed");
         // } catch(SQLException e){
         //     System.out.println(Colors.toRed("[ERROR]") + " Insert failed");
         // }
