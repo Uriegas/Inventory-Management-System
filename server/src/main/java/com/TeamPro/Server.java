@@ -1,7 +1,6 @@
 package com.TeamPro;
 
 import java.io.Console;
-import java.net.*;
 import java.sql.*;
 import java.util.*;
 
@@ -40,6 +39,7 @@ import java.util.*;
  * {@code CREATE TABLE prueba(id int not null, var varchar(255));}<p>
  * {@code SHOW TABLES;}<p>
  * {@code INSERT INTO prueba(id, var) VALUES(1, 'hola');}<p>
+ * {@code INSERT INTO prueba(id, var) VALUES(2, 'como');}<p>
  * 
  * Running the following command will show the table:
  * {@code SELECT * FROM prueba;}<p>
@@ -48,8 +48,8 @@ import java.util.*;
  */
 public class Server{
     // --> Column names (instead of strings for performance)
-    private static final int VAR = 1;
-    private static final int NAME = 2;
+    // private static final int VAR = 1;
+    // private static final int NAME = 2;
     // <-- Column names
 
     private static final String DB = "jdbc:mysql://localhost/inventariosDB";
@@ -83,22 +83,21 @@ public class Server{
 
         Console console = System.console();
         // --> Query loop
-        while(true) {
-            System.out.print("Enter a query statement: ");
-            String query = console.readLine();
-            if(query.equals("exit"))
-                break;
-            // --> Execute query
-            try {
-                HashMap<String, List<String>> result = query(query);
-                // --> Print result
-                System.out.println("Result: " + result);
-            } catch (SQLException e) {
-                System.out.println(Colors.toRed("[ERROR]") + " " + e.getMessage());
-            }
-        }
+        // while(true) {
+        //     System.out.print("Enter a query statement: ");
+        //     String query = console.readLine();
+        //     if(query.equals("exit"))
+        //         break;
+        //     // --> Execute query
+        //     try {
+        //         HashMap<String, List<String>> result = query(query);
+        //         // --> Print result
+        //         System.out.println("Result: " + result);
+        //     } catch (SQLException e) {
+        //         System.out.println(Colors.toRed("[ERROR]") + " " + e.getMessage());
+        //     }
+        // }
         // <-- Query loop
-
         // <-- Create connection to the database
 
         // --> Create connection to a desktop client
@@ -131,6 +130,19 @@ public class Server{
             return result;
         // } catch(SQLException e){
         //     System.out.println(Colors.toRed("[ERROR]") + " Query failed");
+        // }
+    }
+    /**
+     * Insert statement
+     */
+    public void insert(String statement) throws SQLException {
+        System.out.println("Executing insert: " + statement);
+        // try {
+            Statement st = connection.createStatement();
+            st.executeUpdate(statement);
+            System.out.println(Colors.toGreen("[OK]") + " Insert executed");
+        // } catch(SQLException e){
+        //     System.out.println(Colors.toRed("[ERROR]") + " Insert failed");
         // }
     }
     /**
