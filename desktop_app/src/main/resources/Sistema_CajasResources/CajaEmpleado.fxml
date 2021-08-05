@@ -71,7 +71,7 @@
                      <TableColumn fx:id="prodDescCol" prefWidth="200.0" text="Descripcion" />
                      <TableColumn fx:id="prodPrecioCol" prefWidth="61.0" text="Precio" />
                      <TableColumn fx:id="prodStockCol" prefWidth="118.0" text="Disponible" />
-                     <TableColumn prefWidth="96.0" text="Acciones" />
+                     <!--<TableColumn prefWidth="96.0" text="Acciones" />-->
                   </columns>
                </TableView>
                <Button fx:id="btnMostrarTodo" layoutX="372.0" layoutY="61.0" mnemonicParsing="false" onAction="#clickMostrarTodo" styleClass="button-add" text="Mostrar todo" textFill="WHITE" />

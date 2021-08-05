@@ -143,6 +143,22 @@ public class MySQL {
         return empleados;
     }
     /**
+     * Query the database and get a list of searched employees
+     * @return {@link List<EmpleadoFX>}
+     */
+    public ObservableList<EmpleadoFX> getEmpleado(String condicion){
+        ObservableList<EmpleadoFX> empleados = FXCollections.observableArrayList();
+        try {
+            Statement select = this.conn.createStatement();
+            ResultSet rs = select.executeQuery("SELECT * FROM " + USUARIOS + " WHERE LOWER(nombre) = LOWER('" + condicion+"')");
+            while(rs.next())
+                empleados.add(new EmpleadoFX(rs.getInt(USUARIO_ID), rs.getString(USUARIO_NOMBRE), rs.getString(USUARIO_CONTRASENA), rs.getString(USUARIO_TIPO)));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return empleados;
+    }
+    /**
      * Query the database and get a list of products
      */
     public ObservableList<ProductoFX> getProductos(){

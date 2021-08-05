@@ -12,7 +12,9 @@ import javafx.fxml.Initializable;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
+import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.util.Callback;
 
 import java.net.URL;
 import java.util.ResourceBundle;
@@ -94,12 +96,18 @@ public class InventarioController extends Window implements Initializable {
     }
     @FXML
     void clickFindProduct(ActionEvent event) {
-
+        tvDatosProductos.getItems().clear();
+        tvDatosProductos.setItems(query.getProducto(tfBuscarProducto.getText()));
     }
     @FXML
     void clickAddProduct(ActionEvent event) {
         //switchScene(event, "/Sistema_InventarioResources/AddProducto.fxml");
         createPopUp(event, "/Sistema_InventarioResources/AddProducto.fxml");
+    }
+    @FXML
+    void clickMostrarTodoProd(ActionEvent event){
+        tvDatosProductos.getItems().clear();
+        tvDatosProductos.setItems(query.getProductos());
     }
 
     @FXML
@@ -111,11 +119,17 @@ public class InventarioController extends Window implements Initializable {
         //switchScene(event, "/Sistema_InventarioResources/AddEmpleado.fxml");
         createPopUp(event, "/Sistema_InventarioResources/AddEmpleado.fxml");
     }
-
     @FXML
     void clickFindEmployee(ActionEvent event) {
-
+        tvDatosEmpleado.getItems().clear();
+        tvDatosEmpleado.setItems(query.getEmpleado(tfBuscarEmpleado.getText()));
     }
+    @FXML
+    void clickMostrarTodoEmp(ActionEvent event){
+        tvDatosEmpleado.getItems().clear();
+        tvDatosEmpleado.setItems(query.getEmpleados());
+    }
+
     @FXML
     void clickLogout(ActionEvent event) {
         switchScene(event, "/LoginResources/Login.fxml");
@@ -140,9 +154,111 @@ public class InventarioController extends Window implements Initializable {
         this.empPuestoCol.setCellValueFactory(cellData -> cellData.getValue().tipoProperty());
         // <-- Inicializamos las columnas de la tabla de empleados
 
-        //Agregamo las filas a la tabla de productos
+        //Agregamos las filas a la tabla de productos
         tvDatosProductos.setItems(query.getProductos());
-        //Agregamo las filas a la tabla de empleados
+        addButtonIntoTableProducts();
+        //Agregamos las filas a la tabla de empleados
         tvDatosEmpleado.setItems(query.getEmpleados());
+        addButtonIntoTableEmployees();
+    }
+
+    public void addButtonIntoTableProducts(){
+        // --> Botones en tabla
+        TableColumn<ProductoFX, Void> colBtn = new TableColumn("Acciones"); // Creamos la columna
+        Callback<TableColumn<ProductoFX, Void>, TableCell<ProductoFX, Void>> cellFactory = new Callback<TableColumn<ProductoFX, Void>, TableCell<ProductoFX, Void>>() {
+            @Override
+            public TableCell<ProductoFX, Void> call(final TableColumn<ProductoFX, Void> param) {
+                final TableCell<ProductoFX, Void> cell = new TableCell<ProductoFX, Void>() {
+
+                    // --> Creamos el boton
+                    private final Button btnModificar = new Button("Mod");
+                    {
+                        // --> Definimos su accion al hacer clic
+                        btnModificar.setOnAction((ActionEvent event) -> {
+                            ProductoFX producto = getTableView().getItems().get(getIndex()); //toma el producto seleccionado
+                            System.out.println("Se modificara " + producto.getNombre()); // ----- Aqui pondras el codigo o llamada a un metodo que agregue el producto a la otra tabla
+                        });
+                        // <-- Definimos su accion al hacer clic
+                    }
+                    // <-- Creamos el boton
+                    private final Button btnElimianar = new Button("Del");
+                    {
+                        // --> Definimos su accion al hacer clic
+                        btnElimianar.setOnAction((ActionEvent event) -> {
+                            ProductoFX producto = getTableView().getItems().get(getIndex()); //toma el producto seleccionado
+                            System.out.println("Se eliminara " + producto.getNombre()); // ----- Aqui pondras el codigo o llamada a un metodo que agregue el producto a la otra tabla
+                        });
+                        // <-- Definimos su accion al hacer clic
+                    }
+                    // <-- Creamos el boton
+                    // --> Lo agregamos a la columna
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            HBox botonesAcciones = new HBox(btnModificar, btnElimianar);
+                            setGraphic(botonesAcciones);
+                        }
+                    }
+                    // <-- Lo agregamos a la columna
+                };
+                return cell;
+            }
+        };
+        colBtn.setCellFactory(cellFactory);
+        tvDatosProductos.getColumns().add(colBtn);   //Agregamos la columna a la tabla
+        // --> Botones en tabla
+    }
+
+    public void addButtonIntoTableEmployees(){
+        // --> Botones en tabla
+        TableColumn<EmpleadoFX, Void> colBtn = new TableColumn("Acciones"); // Creamos la columna
+        Callback<TableColumn<EmpleadoFX, Void>, TableCell<EmpleadoFX, Void>> cellFactory = new Callback<TableColumn<EmpleadoFX, Void>, TableCell<EmpleadoFX, Void>>() {
+            @Override
+            public TableCell<EmpleadoFX, Void> call(final TableColumn<EmpleadoFX, Void> param) {
+                final TableCell<EmpleadoFX, Void> cell = new TableCell<EmpleadoFX, Void>() {
+
+                    // --> Creamos el boton
+                    private final Button btnModificar = new Button("Mod");
+                    {
+                        // --> Definimos su accion al hacer clic
+                        btnModificar.setOnAction((ActionEvent event) -> {
+                            EmpleadoFX usuario = getTableView().getItems().get(getIndex()); //toma el producto seleccionado
+                            System.out.println("Se modificara " + usuario.getNombre()); // ----- Aqui pondras el codigo o llamada a un metodo que agregue el producto a la otra tabla
+                        });
+                        // <-- Definimos su accion al hacer clic
+                    }
+                    // <-- Creamos el boton
+                    private final Button btnElimianar = new Button("Del");
+                    {
+                        // --> Definimos su accion al hacer clic
+                        btnElimianar.setOnAction((ActionEvent event) -> {
+                            EmpleadoFX usuario = getTableView().getItems().get(getIndex()); //toma el producto seleccionado
+                            System.out.println("Se eliminara " + usuario.getNombre()); // ----- Aqui pondras el codigo o llamada a un metodo que agregue el producto a la otra tabla
+                        });
+                        // <-- Definimos su accion al hacer clic
+                    }
+                    // <-- Creamos el boton
+                    // --> Lo agregamos a la columna
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            HBox botonesAcciones = new HBox(btnModificar, btnElimianar);
+                            setGraphic(botonesAcciones);
+                        }
+                    }
+                    // <-- Lo agregamos a la columna
+                };
+                return cell;
+            }
+        };
+        colBtn.setCellFactory(cellFactory);
+        tvDatosEmpleado.getColumns().add(colBtn);   //Agregamos la columna a la tabla
+        // --> Botones en tabla
     }
 }

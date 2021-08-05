@@ -12,7 +12,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Scene xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.TeamPro.Sistema_Inventario.InventarioController">
+<Scene xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.TeamPro.Sistema_Inventario.InventarioController">
    <AnchorPane prefHeight="539.0" prefWidth="815.0" styleClass="background-inv" stylesheets="@estilos.css">
       <children>
          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#f8f8f8" height="542.0" layoutY="-1.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-fill: #AC6064;" width="203.0" />
@@ -43,7 +43,7 @@
                      <TableColumn fx:id="prodPrecioCol" prefWidth="76.66665649414062" text="Precio" />
                      <TableColumn fx:id="prodFotoCol" prefWidth="139.33331298828125" text="Foto" />
                      <TableColumn fx:id="prodStockCol" prefWidth="76.00003051757812" text="Stock" />
-                     <TableColumn fx:id="prodAccionesCol" prefWidth="156.0" text="Acciones" />
+                     <!--<TableColumn fx:id="prodAccionesCol" prefWidth="156.0" text="Acciones" />-->
                   </columns>
                </TableView>
                <Label layoutX="29.0" layoutY="53.0" styleClass="label-table" text="Lista de productos">
@@ -51,6 +51,7 @@
                      <Font size="18.0" />
                   </font>
                </Label>
+               <Button fx:id="btnMostrarTodoProd" layoutX="521.0" layoutY="8.0" mnemonicParsing="false" onAction="#clickMostrarTodoProd" styleClass="button-save" text="Mostrar todo" textFill="WHITE" />
             </children>
          </Pane>
          <Pane fx:id="pEmpleados" layoutX="205.0" layoutY="-1.0" prefHeight="543.0" prefWidth="792.0" style="-fx-background-color: #FFFFFF;" styleClass="background-inv">
@@ -63,7 +64,7 @@
                      <TableColumn fx:id="empIdCol" prefWidth="87.33332824707031" text="ID" />
                      <TableColumn fx:id="empNombCol" prefWidth="326.0" text="Nombre" />
                      <TableColumn fx:id="empPuestoCol" prefWidth="201.0" text="Puesto" />
-                     <TableColumn fx:id="empAccionesCol" minWidth="0.0" prefWidth="178.0" text="Acciones" />
+                     <!--<TableColumn fx:id="empAccionesCol" minWidth="0.0" prefWidth="178.0" text="Acciones" />-->
                   </columns>
                </TableView>
                <Label layoutX="29.0" layoutY="53.0" styleClass="label-table" text="Lista de empleados">
@@ -71,6 +72,7 @@
                      <Font size="18.0" />
                   </font>
                </Label>
+               <Button fx:id="btnMostrarTodoEmp" layoutX="524.0" layoutY="6.0" mnemonicParsing="false" onAction="#clickMostrarTodoEmp" styleClass="button-save" text="Mostrar todo" textFill="WHITE" />
             </children>
          </Pane>
          <Button fx:id="btnLogout" mnemonicParsing="false" onAction="#clickLogout" text="Cerrar sesión" />
