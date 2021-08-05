@@ -60,7 +60,8 @@ public class MySQL {
      */
     public Connection conexion(){
         try {       //Cambiar los datos de acceso por los datos finales
-            this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventariosDB", "inventarios_client", "inventarios123");
+            //this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventariosDB", "inventarios_client", "inventarios123");
+            this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/unidad4", "elpapi", "Contrasen&a1234");
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -149,6 +150,22 @@ public class MySQL {
         try {
             Statement select = this.conn.createStatement();
             ResultSet rs = select.executeQuery("SELECT * FROM " + PRODUCTOS);
+            while(rs.next())
+                productos.add(new ProductoFX(rs.getInt(PRODUCTO_ID), rs.getDouble(PRODUCTO_PRECIO), rs.getString(PRODUCTO_DESC), rs.getInt(PRODUCTO_EXISTENCIA)));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return productos;
+    }
+
+    /**
+     * Query the database and Check the database and get a list of searched products
+     */
+    public ObservableList<ProductoFX> getProducto(String condicion){
+        ObservableList<ProductoFX> productos = FXCollections.observableArrayList();
+        try {
+            Statement select = this.conn.createStatement();
+            ResultSet rs = select.executeQuery("SELECT * FROM " + PRODUCTOS + " WHERE LOWER(descrpcion) = LOWER('" + condicion+"')");
             while(rs.next())
                 productos.add(new ProductoFX(rs.getInt(PRODUCTO_ID), rs.getDouble(PRODUCTO_PRECIO), rs.getString(PRODUCTO_DESC), rs.getInt(PRODUCTO_EXISTENCIA)));
         } catch (SQLException throwables) {

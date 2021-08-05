@@ -80,9 +80,9 @@ public class AddAdminController extends Window implements Initializable{
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         db.conexion();
-        this.img = new Image(this.getClass().getResource("/LoginResources/userAdmin.jpg").toString(),false);
+        /*this.img = new Image(this.getClass().getResource("/LoginResources/userAdmin.jpg").toString(),false);
         clip.setFill(new ImagePattern(this.img));
-        clip.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.8)));
+        clip.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.8)));*/
     }
 }
 

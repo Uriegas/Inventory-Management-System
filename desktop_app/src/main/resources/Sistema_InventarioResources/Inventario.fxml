@@ -38,12 +38,12 @@
                <Button fx:id="btnBuscarProducto" layoutX="57.0" layoutY="9.0" mnemonicParsing="false" onAction="#clickFindProduct" prefHeight="31.0" prefWidth="30.0" styleClass="button-buscar" />
                <TableView fx:id="tvDatosProductos" layoutY="94.0" prefHeight="449.0" prefWidth="794.0" stylesheets="@tableview.css">
                   <columns>
-                     <TableColumn prefWidth="87.33332824707031" text="ID" />
-                     <TableColumn prefWidth="245.33334350585938" text="Descripcion" />
-                     <TableColumn prefWidth="76.66665649414062" text="Precio" />
-                     <TableColumn prefWidth="139.33331298828125" text="Foto" />
-                     <TableColumn prefWidth="76.00003051757812" text="Stock" />
-                     <TableColumn prefWidth="156.0" text="Acciones" />
+                     <TableColumn fx:id="prodIdCol" prefWidth="87.33332824707031" text="ID" />
+                     <TableColumn fx:id="prodDescCol" prefWidth="245.33334350585938" text="Descripcion" />
+                     <TableColumn fx:id="prodPrecioCol" prefWidth="76.66665649414062" text="Precio" />
+                     <TableColumn fx:id="prodFotoCol" prefWidth="139.33331298828125" text="Foto" />
+                     <TableColumn fx:id="prodStockCol" prefWidth="76.00003051757812" text="Stock" />
+                     <TableColumn fx:id="prodAccionesCol" prefWidth="156.0" text="Acciones" />
                   </columns>
                </TableView>
                <Label layoutX="29.0" layoutY="53.0" styleClass="label-table" text="Lista de productos">
@@ -60,10 +60,10 @@
                <Button fx:id="btnBuscarEmpleado" layoutX="54.0" layoutY="10.0" mnemonicParsing="false" onAction="#clickFindEmployee" prefHeight="30.0" prefWidth="33.0" styleClass="button-buscar" />
                <TableView fx:id="tvDatosEmpleado" layoutX="-1.0" layoutY="95.0" prefHeight="449.0" prefWidth="794.0" stylesheets="@tableview.css">
                   <columns>
-                     <TableColumn prefWidth="87.33332824707031" text="ID" />
-                     <TableColumn prefWidth="326.0" text="Nombre" />
-                     <TableColumn prefWidth="201.0" text="Puesto" />
-                     <TableColumn minWidth="0.0" prefWidth="178.0" text="Acciones" />
+                     <TableColumn fx:id="empIdCol" prefWidth="87.33332824707031" text="ID" />
+                     <TableColumn fx:id="empNombCol" prefWidth="326.0" text="Nombre" />
+                     <TableColumn fx:id="empPuestoCol" prefWidth="201.0" text="Puesto" />
+                     <TableColumn fx:id="empAccionesCol" minWidth="0.0" prefWidth="178.0" text="Acciones" />
                   </columns>
                </TableView>
                <Label layoutX="29.0" layoutY="53.0" styleClass="label-table" text="Lista de empleados">
