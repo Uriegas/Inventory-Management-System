@@ -8,7 +8,7 @@ import javafx.beans.property.*;
 public class CajaFX {
     private IntegerProperty id;
     private IntegerProperty idUsuario;
-    private IntegerProperty saldo;
+    private DoubleProperty saldo;
 
     /**
      * DB constructor
@@ -16,19 +16,19 @@ public class CajaFX {
      * @param idUsuario
      * @param saldo
      */
-     public CajaFX( int id, int idUsuario, int saldo ) {
+     public CajaFX( int id, int idUsuario, double saldo ) {
         this.id = new SimpleIntegerProperty( id );
         this.idUsuario = new SimpleIntegerProperty( idUsuario );
-        this.saldo = new SimpleIntegerProperty( saldo );
+        this.saldo = new SimpleDoubleProperty( saldo );
     }
     /**
      * UI constructor
      * @param idUsuario
      * @param saldo
      */
-    public CajaFX( int idUsuario, int saldo ) {
+    public CajaFX( int idUsuario, double saldo ) {
         this.idUsuario = new SimpleIntegerProperty( idUsuario );
-        this.saldo = new SimpleIntegerProperty( saldo );
+        this.saldo = new SimpleDoubleProperty( saldo );
     }
     /**
      * @return id property
@@ -69,19 +69,19 @@ public class CajaFX {
     /**
      * @return saldo property
      */
-    public IntegerProperty getSaldoProperty() {
+    public DoubleProperty getSaldoProperty() {
         return saldo;
     }
     /**
      * @return the saldo
      */
-    public int getSaldo() {
+    public double getSaldo() {
         return saldo.get();
     }
     /**
      * @param saldo the saldo to set
      */
-    public void setSaldo( int saldo ) {
+    public void setSaldo( double saldo ) {
         this.saldo.set( saldo );
     }
 }

@@ -64,4 +64,19 @@ public class EmpleadoFX {
     public void setTipo(String tipo) {
         this.tipo.set(tipo);
     }
+    public String toString() {
+        return "Empleado{" +
+                "id=" + id +
+                ", nombre='" + nombre + '\'' +
+                ", contraseña='" + contraseña + '\'' +
+                ", tipo='" + tipo + '\'' +
+                '}';
+    }
+    /**
+     * String to make an INSERT query
+     * @return values to insert
+     */
+    public String toINSERT() {
+        return nombre.get() + "', '" + contraseña.get() + "', '" + tipo.get() + "')";
+    }
 }

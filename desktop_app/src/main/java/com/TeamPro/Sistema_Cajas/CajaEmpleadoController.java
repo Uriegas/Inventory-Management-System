@@ -34,6 +34,9 @@ public class CajaEmpleadoController extends Window {
     @FXML
     private Label lbTotalPagar;
 
+    public void initialize() {
+    }
+
     @FXML
     void clickLogout(ActionEvent event) {
         switchScene(event, "/LoginResources/Login.fxml");

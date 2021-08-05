@@ -70,7 +70,11 @@ public class AddAdminController extends Window implements Initializable{
 
         if(!tfNombre.getText().isEmpty() && !tfUsername.getText().isEmpty() && !tfPassword.getText().isEmpty() ) {
             String datos = "'"+tfNombre.getText()+"', '"+tfPassword.getText()+"', 'administrador', 011";
+            try{
             this.db.insert("usuarios", datos );
+            }catch(Exception e){//Show alert of error on insert
+                System.out.println("Error al insertar datos");
+            }
             switchScene(event, "/Sistema_InventarioResources/Inventario.fxml");
         }
         else
@@ -79,7 +83,11 @@ public class AddAdminController extends Window implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        db.conexion();
+        try{
+            this.db.conexion();
+        }catch(Exception e){//Show alert
+            System.out.println("Error al conectar a la base de datos");
+        }
         this.img = new Image(this.getClass().getResource("/LoginResources/userAdmin.jpg").toString(),false);
         clip.setFill(new ImagePattern(this.img));
         clip.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.8)));

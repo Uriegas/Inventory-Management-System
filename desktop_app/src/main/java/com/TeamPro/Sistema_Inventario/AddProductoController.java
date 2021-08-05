@@ -56,6 +56,10 @@ public class AddProductoController extends Window {
         String Precio = tfPrecio.getText();
         String cant = tfStock.getText();
         String valores = Precio + ", " + "'" + desc + "'" + ", " + cant;
+        try{
         query.insert("productos", valores);
+        }catch(Exception e){
+            System.out.println(e.getMessage());
+        }
     }
 }
