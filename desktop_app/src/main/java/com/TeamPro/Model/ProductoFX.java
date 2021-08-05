@@ -107,4 +107,13 @@ public class ProductoFX {
     public void setStock(Integer stock) {
         this.stock.set(stock);
     }
+
+
+    /**
+     * String to make an INSERT query
+     * @return values to insert
+     */
+    public String toINSERT() {
+        return id.get() + ", " + precio.get() + ", '" + nombre.get() + "', " + stock.get();
+    }
 }

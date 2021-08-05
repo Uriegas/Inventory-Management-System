@@ -4,9 +4,11 @@ import com.TeamPro.DAO.MySQL;
 import com.TeamPro.Window;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 public class AddEmpleadoController extends Window {
 
@@ -38,7 +40,10 @@ public class AddEmpleadoController extends Window {
 
     @FXML
     void clickCancelar(ActionEvent event) {
-        switchScene(event, "/Sistema_InventarioResources/Inventario.fxml");
+        Node source = (Node)event.getSource();
+        Stage stage = (Stage)source.getScene().getWindow();
+        stage.close();
+        //switchScene(event, "/Sistema_InventarioResources/Inventario.fxml");
     }
 
     @FXML

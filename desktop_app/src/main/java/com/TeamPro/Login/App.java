@@ -38,7 +38,7 @@ public class App extends Application {
             loader = new FXMLLoader(this.getClass().getResource("/LoginResources/AddAdmin.fxml"));
         }
         // --> Show login window
-        ((Window)loader.getController()).initModel(db);
+        //((Window)loader.getController()).initModel(db);
         Scene scene = loader.load();
         primaryStage.setTitle("Sistema inventario");
         primaryStage.getIcons().add(new Image(App.class.getResourceAsStream( "/LoginResources/teampro.png" )));

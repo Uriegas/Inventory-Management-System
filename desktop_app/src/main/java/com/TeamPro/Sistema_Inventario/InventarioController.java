@@ -17,6 +17,8 @@ import javafx.scene.layout.Pane;
 import javafx.util.Callback;
 
 import java.net.URL;
+import java.sql.SQLException;
+import java.util.Optional;
 import java.util.ResourceBundle;
 
 public class InventarioController extends Window implements Initializable {
@@ -189,7 +191,25 @@ public class InventarioController extends Window implements Initializable {
                         // --> Definimos su accion al hacer clic
                         btnElimianar.setOnAction((ActionEvent event) -> {
                             ProductoFX producto = getTableView().getItems().get(getIndex()); //toma el producto seleccionado
-                            System.out.println("Se eliminara " + producto.getNombre()); // ----- Aqui pondras el codigo o llamada a un metodo que agregue el producto a la otra tabla
+                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert.setHeaderText(null);
+                            alert.setTitle("Confirmacion");
+                            alert.setContentText("¿Deseas eliminar el producto "+producto.getNombre()+"?");
+
+                            System.out.println("ID: "+producto.getId());
+
+                            Optional<ButtonType> opcion = alert.showAndWait();
+                            if(opcion.get() == ButtonType.OK){
+                                try {
+                                    query.delete(producto); //Aqui mando el producto a eliminar
+                                    tvDatosProductos.getItems().clear(); 
+                                    tvDatosProductos.setItems(query.getProductos());
+                                } catch (Exception e) {
+                                    System.out.println(e.getMessage());
+                                }
+                            }else{
+
+                            }
                         });
                         // <-- Definimos su accion al hacer clic
                     }

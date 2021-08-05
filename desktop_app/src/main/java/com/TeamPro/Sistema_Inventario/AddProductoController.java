@@ -7,9 +7,11 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.scene.Node;
 import javafx.scene.control.Button;
 import javafx.scene.control.TextField;
 import javafx.scene.image.ImageView;
+import javafx.stage.Stage;
 
 public class AddProductoController extends Window {
 
@@ -45,6 +47,9 @@ public class AddProductoController extends Window {
 
     @FXML
     void clickCancelar(ActionEvent event) {
+        Node source = (Node)event.getSource();
+        Stage stage = (Stage)source.getScene().getWindow();
+        stage.close();
         //switchScene(event, "/Sistema_InventarioResources/Inventario.fxml");
     }
 
@@ -59,16 +64,16 @@ public class AddProductoController extends Window {
         String desc = tfDescripcion.getText();
         String precio = tfPrecio.getText();
         String cant = tfStock.getText();
+
+        ProductoFX prod = new ProductoFX(Integer.valueOf(id), Double.valueOf(precio), desc, Integer.valueOf(cant));
         try {
-        query.conexion();
-        String valores = id + ", " + precio + ", " + "'" + desc + "'" + ", " + cant;
-        query.insert("productos", valores);
+            query.conexion();
+            query.insert(prod);
         } catch (Exception e) {//Show alert
             System.out.println(e.getMessage());
         }
-        ProductoFX prod = new ProductoFX(Integer.valueOf(id), Double.valueOf(precio), desc, Integer.valueOf(cant));
-        ObservableList<ProductoFX> prdouctoTmp = FXCollections.observableArrayList();
-        prdouctoTmp.add(prod);
+        /*ObservableList<ProductoFX> prdouctoTmp = FXCollections.observableArrayList();
+        prdouctoTmp.add(prod);*/
 
     }
 }

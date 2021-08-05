@@ -54,9 +54,12 @@ public class MySQL {
     // <-- Table column names (for performance)
 
     // --> Default Credentials
-    private String host = "jdbc:mysql://localhost/inventariosDB";
-    private String user = "inventarios_client";
-    private String password = "inventarios123";
+    /*private String host = "jdbc:mysql://localhost/inventariosDB";*/
+    /*private String user = "inventarios_client";
+    private String password = "inventarios123";*/
+    private String host = "jdbc:mysql://localhost/unidad4";
+    private String user = "elpapi";
+    private String password = "Contrasen&a1234";
     private Connection conn = null;
     // <-- Default Credentials
 
@@ -142,11 +145,15 @@ public class MySQL {
     public void insert(String tabla, String valores) throws SQLException {
         Statement insert = this.conn.createStatement();
         insert.execute("INSERT INTO " + tabla + " VALUES("+valores+")");
-        System.out.println("Usuario agregado");
+        System.out.println("Elemento agregado");
     }
 
     public void update(){}
-    public void delete(){}
+    public void delete(String tabla, Integer id) throws SQLException {
+        Statement delete = this.conn.createStatement();
+        delete.execute("DELETE FROM " + tabla + " WHERE id_p = "+id); //EN LA BASE DE DATOS PONER UN NOMBRE COMUN PARA TODAS LAS TABLAS(id)
+        System.out.println("Elemento eliminado");
+    }
     /**
      * Query the database and get a list of employees
      * @return {@link List<EmpleadoFX>}
@@ -252,7 +259,9 @@ public class MySQL {
      * Inserts a new product in the database
      * @param producto producto a insertar
      */
-    public void insert(ProductoFX producto){}
+    public void insert(ProductoFX producto) throws SQLException {
+        insert(PRODUCTOS, producto.toINSERT() );
+    }
     /**
      * Inserts a new corte_caja in the database
      * @param corteCaja corte de caja a insertar
@@ -308,7 +317,9 @@ public class MySQL {
      * Deletes a product in the database, find it and delete it
      * @param producto producto a borrar
      */
-    public void delete(ProductoFX producto){}
+    public void delete(ProductoFX producto) throws SQLException {
+        delete(PRODUCTOS, producto.getId());
+    }
     /**
      * Deletes a corte_caja in the database, find it and delete it
      * @param corteCaja corte de caja a borrar

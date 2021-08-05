@@ -77,6 +77,6 @@ public class EmpleadoFX {
      * @return values to insert
      */
     public String toINSERT() {
-        return nombre.get() + "', '" + contraseña.get() + "', '" + tipo.get() + "')";
+        return nombre.get() + "', '" + contraseña.get() + "', '" + tipo.get() + "'";
     }
 }
