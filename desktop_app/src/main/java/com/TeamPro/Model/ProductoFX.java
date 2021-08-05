@@ -26,7 +26,7 @@ public class ProductoFX {
     }
     /**
      * UI constructor
-     * @param id
+     * @param
      * @param precio
      * @param nombre
      */
@@ -114,6 +114,10 @@ public class ProductoFX {
      * @return values to insert
      */
     public String toINSERT() {
-        return id.get() + ", " + precio.get() + ", '" + nombre.get() + "', " + stock.get();
+        return precio.get() + ", '" + nombre.get() + "', " + stock.get();
+    }
+
+    public String toUPDATE() {
+        return "precio = " + precio.get() + ", descrpcion = '" + nombre.get() + "', existencia = " + stock.get();
     }
 }

@@ -8,14 +8,20 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
+import javafx.fxml.FXMLLoader;
 import javafx.fxml.Initializable;
+import javafx.scene.Node;
+import javafx.scene.Scene;
 import javafx.scene.control.*;
 import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.scene.image.ImageView;
 import javafx.scene.layout.HBox;
 import javafx.scene.layout.Pane;
+import javafx.stage.Modality;
+import javafx.stage.Stage;
 import javafx.util.Callback;
 
+import java.io.IOException;
 import java.net.URL;
 import java.sql.SQLException;
 import java.util.Optional;
@@ -29,31 +35,13 @@ public class InventarioController extends Window implements Initializable {
     private ImageView ivLogo;
 
     @FXML
-    private Button btnInventario;
-
-    @FXML
-    private Button btnEmpleados;
-
-    @FXML
-    private Label lbNombre;
-
-    @FXML
     private ImageView ivFoto;
-
-    @FXML
-    private Label lbNombreNegocio;
 
     @FXML
     private Pane pInventario;
 
     @FXML
-    private Button btnAgregarProducto;
-
-    @FXML
     private TextField tfBuscarProducto;
-
-    @FXML
-    private Button btnBuscarProducto;
 
     @FXML
     private TableView<ProductoFX> tvDatosProductos = new TableView<>();
@@ -67,20 +55,12 @@ public class InventarioController extends Window implements Initializable {
     private TableColumn<ProductoFX, String> prodFotoCol;
     @FXML
     private TableColumn<ProductoFX, Integer> prodStockCol;
-    @FXML
-    private TableColumn<ProductoFX, String> prodAccionesCol;
 
     @FXML
     private Pane pEmpleados;
 
     @FXML
-    private Button btnAgregarEmpleado;
-
-    @FXML
     private TextField tfBuscarEmpleado;
-
-    @FXML
-    private Button btnBuscarEmpleado;
 
     @FXML
     private TableView<EmpleadoFX> tvDatosEmpleado  = new TableView<>();
@@ -181,6 +161,7 @@ public class InventarioController extends Window implements Initializable {
                         // --> Definimos su accion al hacer clic
                         btnModificar.setOnAction((ActionEvent event) -> {
                             ProductoFX producto = getTableView().getItems().get(getIndex()); //toma el producto seleccionado
+                            popUpProducto(event, producto);
                             System.out.println("Se modificara " + producto.getNombre()); // ----- Aqui pondras el codigo o llamada a un metodo que agregue el producto a la otra tabla
                         });
                         // <-- Definimos su accion al hacer clic
@@ -208,7 +189,7 @@ public class InventarioController extends Window implements Initializable {
                                     System.out.println(e.getMessage());
                                 }
                             }else{
-
+                                alert.close();
                             }
                         });
                         // <-- Definimos su accion al hacer clic
@@ -249,6 +230,7 @@ public class InventarioController extends Window implements Initializable {
                         // --> Definimos su accion al hacer clic
                         btnModificar.setOnAction((ActionEvent event) -> {
                             EmpleadoFX usuario = getTableView().getItems().get(getIndex()); //toma el producto seleccionado
+                            popUpEmpleado(event, usuario);
                             System.out.println("Se modificara " + usuario.getNombre()); // ----- Aqui pondras el codigo o llamada a un metodo que agregue el producto a la otra tabla
                         });
                         // <-- Definimos su accion al hacer clic
@@ -259,7 +241,23 @@ public class InventarioController extends Window implements Initializable {
                         // --> Definimos su accion al hacer clic
                         btnElimianar.setOnAction((ActionEvent event) -> {
                             EmpleadoFX usuario = getTableView().getItems().get(getIndex()); //toma el producto seleccionado
-                            System.out.println("Se eliminara " + usuario.getNombre()); // ----- Aqui pondras el codigo o llamada a un metodo que agregue el producto a la otra tabla
+                            Alert alert = new Alert(Alert.AlertType.CONFIRMATION);
+                            alert.setHeaderText(null);
+                            alert.setTitle("Confirmacion");
+                            alert.setContentText("¿Deseas eliminar el usuario "+usuario.getNombre()+"?");
+
+                            Optional<ButtonType> opcion = alert.showAndWait();
+                            if(opcion.get() == ButtonType.OK){
+                                try {
+                                    query.delete(usuario); //Aqui mando el producto a eliminar
+                                    tvDatosEmpleado.getItems().clear();
+                                    tvDatosEmpleado.setItems(query.getEmpleados());
+                                } catch (Exception e) {
+                                    System.out.println(e.getMessage());
+                                }
+                            }else{
+                                alert.close();
+                            }
                         });
                         // <-- Definimos su accion al hacer clic
                     }
@@ -283,5 +281,41 @@ public class InventarioController extends Window implements Initializable {
         colBtn.setCellFactory(cellFactory);
         tvDatosEmpleado.getColumns().add(colBtn);   //Agregamos la columna a la tabla
         // --> Botones en tabla
+    }
+
+    public void popUpProducto(ActionEvent event, ProductoFX productoFX){
+
+        Stage dialog = new Stage(); // new stage
+        dialog.initModality(Modality.WINDOW_MODAL);
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(this.getClass().getResource("/Sistema_InventarioResources/ModProducto.fxml"));
+        loader.setController(new ModProductoController());
+        ((ModProductoController)loader.getController()).modificar(productoFX);
+        try{
+            Scene scene = loader.load();
+            dialog.setScene(scene);
+        }catch(IOException ex){ex.printStackTrace();}
+        // Defines a modal window that blocks events from being
+        // delivered to any other application window.
+        dialog.initOwner(((Node)event.getTarget()).getScene().getWindow());
+        dialog.show();
+    }
+
+    public void popUpEmpleado(ActionEvent event, EmpleadoFX empleadoFX){
+
+        Stage dialog = new Stage(); // new stage
+        dialog.initModality(Modality.WINDOW_MODAL);
+        FXMLLoader loader = new FXMLLoader();
+        loader.setLocation(this.getClass().getResource("/Sistema_InventarioResources/ModEmpleado.fxml"));
+        loader.setController(new ModEmpleadoController());
+        ((ModEmpleadoController)loader.getController()).modificar(empleadoFX);
+        try{
+            Scene scene = loader.load();
+            dialog.setScene(scene);
+        }catch(IOException ex){ex.printStackTrace();}
+        // Defines a modal window that blocks events from being
+        // delivered to any other application window.
+        dialog.initOwner(((Node)event.getTarget()).getScene().getWindow());
+        dialog.show();
     }
 }

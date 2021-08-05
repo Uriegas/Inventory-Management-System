@@ -26,10 +26,10 @@ public class MySQL {
     // <-- Table names
 
     // --> Table column names (for performance)
-    private static final int USUARIO_NOMBRE = 1;
-    private static final int USUARIO_CONTRASENA = 2;
-    private static final int USUARIO_TIPO = 3;
-    private static final int USUARIO_ID = 4;
+    private static final int USUARIO_ID = 1;
+    private static final int USUARIO_NOMBRE = 2;
+    private static final int USUARIO_CONTRASENA = 3;
+    private static final int USUARIO_TIPO = 4;
 
     private static final int PRODUCTO_ID = 1;
     private static final int PRODUCTO_PRECIO = 2;
@@ -54,12 +54,9 @@ public class MySQL {
     // <-- Table column names (for performance)
 
     // --> Default Credentials
-    /*private String host = "jdbc:mysql://localhost/inventariosDB";*/
-    /*private String user = "inventarios_client";
-    private String password = "inventarios123";*/
-    private String host = "jdbc:mysql://localhost/unidad4";
-    private String user = "elpapi";
-    private String password = "Contrasen&a1234";
+    private String host = "jdbc:mysql://localhost/inventariosDB";
+    private String user = "inventarios_client";
+    private String password = "inventarios123";
     private Connection conn = null;
     // <-- Default Credentials
 
@@ -144,14 +141,18 @@ public class MySQL {
      */
     public void insert(String tabla, String valores) throws SQLException {
         Statement insert = this.conn.createStatement();
-        insert.execute("INSERT INTO " + tabla + " VALUES("+valores+")");
+        insert.execute("INSERT INTO " + tabla + " VALUES(0,"+valores+")");
         System.out.println("Elemento agregado");
     }
 
-    public void update(){}
+    public void update(String tabla, String valores, Integer id) throws SQLException {
+        Statement update = this.conn.createStatement();
+        update.execute("UPDATE " + tabla + " SET " + valores + " WHERE id = "+id);
+        System.out.println("Elemento agregado");
+    }
     public void delete(String tabla, Integer id) throws SQLException {
         Statement delete = this.conn.createStatement();
-        delete.execute("DELETE FROM " + tabla + " WHERE id_p = "+id); //EN LA BASE DE DATOS PONER UN NOMBRE COMUN PARA TODAS LAS TABLAS(id)
+        delete.execute("DELETE FROM " + tabla + " WHERE id = "+id);
         System.out.println("Elemento eliminado");
     }
     /**
@@ -284,12 +285,16 @@ public class MySQL {
      * Updates a user in the database
      * @param empleado empleado a actualizar
      */
-    public void update(EmpleadoFX empleado){}
+    public void update(EmpleadoFX empleado) throws SQLException {
+        update(USUARIOS, empleado.toUPDATE(), empleado.getId());
+    }
     /**
      * Updates a product in the database
      * @param producto producto a actualizar
      */
-    public void update(ProductoFX producto){}
+    public void update(ProductoFX producto) throws SQLException {
+        update(PRODUCTOS, producto.toUPDATE(), producto.getId());
+    }
     /**
      * Updats a corte_caja in the database
      * @param corteCaja corte de caja a actualizar
@@ -312,7 +317,9 @@ public class MySQL {
      * Deletes a user in the database, find it and delete it
      * @param empleado empleado a borrar
      */
-    public void delete(EmpleadoFX empleado){}
+    public void delete(EmpleadoFX empleado) throws SQLException {
+        delete(USUARIOS, empleado.getId());
+    }
     /**
      * Deletes a product in the database, find it and delete it
      * @param producto producto a borrar

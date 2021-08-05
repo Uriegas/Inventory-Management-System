@@ -69,7 +69,7 @@ public class AddAdminController extends Window implements Initializable{
     void clickGuardar(ActionEvent event) {
 
         if(!tfNombre.getText().isEmpty() && !tfUsername.getText().isEmpty() && !tfPassword.getText().isEmpty() ) {
-            String datos = "'"+tfNombre.getText()+"', '"+tfPassword.getText()+"', 'administrador', 011";
+            String datos = /*"011, "+*/"'"+tfNombre.getText()+"', '"+tfPassword.getText()+"', 'administrador'";
             try{
             this.db.insert("usuarios", datos );
             }catch(Exception e){//Show alert of error on insert

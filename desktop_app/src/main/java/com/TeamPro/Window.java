@@ -25,7 +25,6 @@ public abstract class Window {
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(this.getClass().getResource(FXML));
             Scene scene = loader.load();
-            /*scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());//Add css*/
             switchscene.setScene(scene);
         }catch(IOException ex){ex.printStackTrace();}
     }
@@ -34,24 +33,18 @@ public abstract class Window {
      * @param e event to handle this pop up
      * @param FXML the fxml file to load this pop up
      */
-    public void createPopUp(Event e, String FXML){
+    public void createPopUp(Event e, String FXML) {
         Stage dialog = new Stage(); // new stage
         dialog.initModality(Modality.WINDOW_MODAL);
         FXMLLoader loader = new FXMLLoader();
         loader.setLocation(this.getClass().getResource(FXML));
         try{
             Scene scene = loader.load();
-            /*scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());//Add css*/
             dialog.setScene(scene);
         }catch(IOException ex){ex.printStackTrace();}
         // Defines a modal window that blocks events from being
         // delivered to any other application window.
         dialog.initOwner(((Node)e.getTarget()).getScene().getWindow());
-        // dialog.setOnCloseRequest(event ->{
-        //     Node source = (Node)event.getSource();
-        //     Stage stage = (Stage)source.getScene().getWindow();
-        //     stage.close();
-        // });
         dialog.show();
     }
     /**
