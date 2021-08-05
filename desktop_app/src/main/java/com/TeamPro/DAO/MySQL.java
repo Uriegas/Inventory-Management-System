@@ -310,6 +310,22 @@ public class MySQL {
     public void delete(CajaFX caja){}
     // <-- Deletes
 
+    /**
+     * Query the database and Check the database and get a list of searched products
+     */
+    public ObservableList<ProductoFX> getProducto(String condicion){
+        ObservableList<ProductoFX> productos = FXCollections.observableArrayList();
+        try {
+            Statement select = this.conn.createStatement();
+            ResultSet rs = select.executeQuery("SELECT * FROM " + PRODUCTOS + " WHERE LOWER(descrpcion) = LOWER('" + condicion+"')");
+            while(rs.next())
+                productos.add(new ProductoFX(rs.getInt(PRODUCTO_ID), rs.getDouble(PRODUCTO_PRECIO), rs.getString(PRODUCTO_DESC), rs.getInt(PRODUCTO_EXISTENCIA)));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return productos;
+    }
+
     //Main
     public static void main(String[] args) {
         System.out.println(MySQL.INFO);

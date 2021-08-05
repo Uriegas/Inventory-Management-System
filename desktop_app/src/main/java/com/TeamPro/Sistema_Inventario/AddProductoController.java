@@ -1,7 +1,10 @@
 package com.TeamPro.Sistema_Inventario;
 
 import com.TeamPro.DAO.MySQL;
+import com.TeamPro.Model.ProductoFX;
 import com.TeamPro.Window;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.control.Button;
@@ -42,7 +45,7 @@ public class AddProductoController extends Window {
 
     @FXML
     void clickCancelar(ActionEvent event) {
-        switchScene(event, "/Sistema_InventarioResources/Inventario.fxml");
+        //switchScene(event, "/Sistema_InventarioResources/Inventario.fxml");
     }
 
     @FXML
@@ -52,14 +55,20 @@ public class AddProductoController extends Window {
 
     @FXML
     void clickGuardar(ActionEvent event) {
+        String id = tfID.getText();
         String desc = tfDescripcion.getText();
-        String Precio = tfPrecio.getText();
+        String precio = tfPrecio.getText();
         String cant = tfStock.getText();
-        String valores = Precio + ", " + "'" + desc + "'" + ", " + cant;
-        try{
+        try {
+        query.conexion();
+        String valores = id + ", " + precio + ", " + "'" + desc + "'" + ", " + cant;
         query.insert("productos", valores);
-        }catch(Exception e){
+        } catch (Exception e) {//Show alert
             System.out.println(e.getMessage());
         }
+        ProductoFX prod = new ProductoFX(Integer.valueOf(id), Double.valueOf(precio), desc, Integer.valueOf(cant));
+        ObservableList<ProductoFX> prdouctoTmp = FXCollections.observableArrayList();
+        prdouctoTmp.add(prod);
+
     }
 }
