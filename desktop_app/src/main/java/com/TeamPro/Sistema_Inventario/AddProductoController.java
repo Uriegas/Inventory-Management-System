@@ -59,10 +59,13 @@ public class AddProductoController extends Window {
         String desc = tfDescripcion.getText();
         String precio = tfPrecio.getText();
         String cant = tfStock.getText();
+        try {
         query.conexion();
         String valores = id + ", " + precio + ", " + "'" + desc + "'" + ", " + cant;
         query.insert("productos", valores);
-
+        } catch (Exception e) {//Show alert
+            System.out.println(e.getMessage());
+        }
         ProductoFX prod = new ProductoFX(Integer.valueOf(id), Double.valueOf(precio), desc, Integer.valueOf(cant));
         ObservableList<ProductoFX> prdouctoTmp = FXCollections.observableArrayList();
         prdouctoTmp.add(prod);

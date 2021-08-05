@@ -48,10 +48,14 @@ public class AddEmpleadoController extends Window {
 
     @FXML
     void clickGuardar(ActionEvent event) {
+        try {
         String id = tfID.getText();
         String name = tfNombre.getText();
         String Tipo = tfNombre1.getText();
         String valores = "'" + name + "'" + ", " + "'" + " " + "'" + ", " + "'" + Tipo + "'";
         query.insert("usuarios", "");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

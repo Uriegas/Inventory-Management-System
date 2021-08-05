@@ -137,8 +137,11 @@ public class InventarioController extends Window implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-
-        query.conexion();
+        try {
+            query.conexion();
+        } catch (Exception e) {//Show alert
+            e.printStackTrace();
+        }
 
         // --> Inicializamos las columnas de la tabla de productos
         this.prodIdCol.setCellValueFactory(cellData -> cellData.getValue().idProperty().asObject());

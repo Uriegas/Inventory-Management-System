@@ -11,6 +11,7 @@ import javafx.scene.control.*;
 import javafx.util.Callback;
 
 import java.net.URL;
+import java.sql.SQLException;
 import java.util.ResourceBundle;
 
 public class CajaEmpleadoController extends Window implements Initializable {
@@ -40,6 +41,9 @@ public class CajaEmpleadoController extends Window implements Initializable {
 
     @FXML
     private Label lbTotalPagar;
+
+    public void initialize() {
+    }
 
     @FXML
     private TableView<ProductoFX> tvproductos = new TableView<>();
@@ -73,7 +77,11 @@ public class CajaEmpleadoController extends Window implements Initializable {
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        query.conexion();
+        try {
+            query.conexion();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
 
         // --> Inicializamos las columnas de la tabla de productos
         this.prodDescCol.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());

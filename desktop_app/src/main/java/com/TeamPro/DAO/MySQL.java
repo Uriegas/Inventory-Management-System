@@ -3,25 +3,26 @@ package com.TeamPro.DAO;
 import com.TeamPro.Model.*;
 import javafx.collections.*;
 import java.sql.*;
-import java.util.*;
-
-
+/**
+ * Handles all the database operations
+ */
 public class MySQL {
+
     // создаем подключение к базе данных
     // --> Printers
-    private static final String ERROR = "\033[91m[EROR]\033[00m ";
-    private static final String WARNING = "\033[93m[WARNING]\033[00m ";
-    private static final String INFO = "\033[94m[INFO]\033[00m ";
-    private static final String DEBUG = "\033[95m[DEBUG]\033[00m ";
-    private static final String SUCCESS = "\033[92m[SUCCESS]\033[00m ";
+    public static final String ERROR = "\033[91m[EROR]\033[00m ";
+    public static final String WARNING = "\033[93m[WARNING]\033[00m ";
+    public static final String INFO = "\033[94m[INFO]\033[00m ";
+    public static final String DEBUG = "\033[95m[DEBUG]\033[00m ";
+    public static final String SUCCESS = "\033[92m[SUCCESS]\033[00m ";
     // <-- Printers
 
     // --> Table names
     private static final String USUARIOS = "usuarios";
     private static final String PRODUCTOS = "productos";
-    private static final String CORTE_CAJA = "corte_caja";
-    private static final String VENTA = "venta";
-    private static final String CAJA = "caja";
+    private static final String CORTE_CAJAS = "corte_caja";
+    private static final String VENTAS = "venta";
+    private static final String CAJAS = "caja";
     // <-- Table names
 
     // --> Table column names (for performance)
@@ -49,26 +50,52 @@ public class MySQL {
 
     private static final int CAJA_ID = 1;
     private static final int CAJA_ID_USUARIO = 2;
-    private static final int CAJA_SADO = 3;
+    private static final int CAJA_SALDO = 3;
     // <-- Table column names (for performance)
 
+    // --> Default Credentials
+    private String host = "jdbc:mysql://localhost/inventariosDB";
+    private String user = "inventarios_client";
+    private String password = "inventarios123";
     private Connection conn = null;
+    // <-- Default Credentials
 
     /**
-     * Crea la conexion a la base de datos
-     * @return
+     * Default constructor<p>
+     * You shoud make the connection manually with
+     * {@link DAO.MySQL#connect(String, String, String)}
      */
-    public Connection conexion(){
-        try {       //Cambiar los datos de acceso por los datos finales
-            //this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/inventariosDB", "inventarios_client", "inventarios123");
-            this.conn = DriverManager.getConnection("jdbc:mysql://localhost:3306/unidad4", "elpapi", "Contrasen&a1234");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-
-        return conn;
+    public MySQL() {
     }
-
+    /**
+     * Connection constructor
+     * @param String host
+     * @param String user
+     * @param String password
+     */
+    public MySQL(String host, String user, String password) throws SQLException {
+        conexion(host, user, password);
+    }
+    /**
+     * Specific conection
+     * @param String host
+     * @param String user
+     * @param String password
+     * @return {@link Connection}
+     */
+    public Connection conexion(String host, String user, String password) throws SQLException {
+        this.host = host;
+        this.user = user;
+        this.password = password;
+        return conexion();
+    }
+    /**
+     * Crea la conexion a la base de datos
+     * @return {@link Connection}
+     */
+    public Connection conexion() throws SQLException {
+        return this.conn = DriverManager.getConnection(host, user, password);
+    }
     /**
      * Ejecuta una sentencia SELECT en la base de datos
      * @param tabla nombre de tabla
@@ -86,7 +113,6 @@ public class MySQL {
             return false;
         }
     }
-
     /**
      * Ejecuta una sentencia SELECT en la base de datos
      * @param tabla nombre de tabla
@@ -113,15 +139,10 @@ public class MySQL {
      * @param tabla nombre de la tabla
      * @param valores valores a insertar
      */
-    public void insert(String tabla, String valores){
-        try {
-            Statement insert = this.conn.createStatement();
-            insert.execute("INSERT INTO " + tabla + " VALUES("+valores+")");
-            System.out.println("Usuario agregado");
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-            System.out.println("No se pudo agregar el usuario");
-        }
+    public void insert(String tabla, String valores) throws SQLException {
+        Statement insert = this.conn.createStatement();
+        insert.execute("INSERT INTO " + tabla + " VALUES("+valores+")");
+        System.out.println("Usuario agregado");
     }
 
     public void update(){}
@@ -173,6 +194,137 @@ public class MySQL {
         }
         return productos;
     }
+    /**
+     * Query the database and get a list of sales
+     */
+    public ObservableList<VentaFX> getVentas(){
+        ObservableList<VentaFX> ventas = FXCollections.observableArrayList();
+        try {
+            Statement select = this.conn.createStatement();
+            ResultSet rs = select.executeQuery("SELECT * FROM " + VENTAS);
+            while(rs.next())
+                ventas.add( new VentaFX(rs.getInt(VENTA_ID), rs.getInt(VENTA_ID_USUARIO), rs.getInt(VENTA_ID_CORTE), rs.getDouble(VENTA_MONTO), rs.getDate(VENTA_FECHA)) );
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return ventas;
+    }
+    /**
+     * Query the database and get a list of cajas
+     */
+    public ObservableList<CajaFX> getCajas(){
+        ObservableList<CajaFX> cajas = FXCollections.observableArrayList();
+        try {
+            Statement select = this.conn.createStatement();
+            ResultSet rs = select.executeQuery("SELECT * FROM " + CAJAS);
+            while(rs.next())
+                cajas.add( new CajaFX(rs.getInt(CAJA_ID), rs.getInt(CAJA_ID_USUARIO), rs.getDouble(CAJA_SALDO)) );
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return cajas;
+    }
+
+    /**
+     * Query the database and get a list of corte de cajas
+     */
+    public ObservableList<CorteCajaFX> getCortes(){
+        ObservableList<CorteCajaFX> cortes = FXCollections.observableArrayList();
+        try {
+            Statement select = this.conn.createStatement();
+            ResultSet rs = select.executeQuery("SELECT * FROM " + CORTE_CAJAS);
+            while(rs.next())
+                cortes.add( new CorteCajaFX(rs.getInt(CORTE_CAJA_ID), rs.getDate(CORTE_CAJA_INICIO), rs.getDate(CORTE_CAJA_FINAL), rs.getDouble(CORTE_CAJA_TOTAL), rs.getInt(CORTE_CAJA_ID_USUARIO)) );
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return cortes;
+    }
+    // --> Inserts
+    /**
+     * Inserts a new user in the database
+     * @param nombre nombre del usuario
+     */
+    public void insert(EmpleadoFX empleado) throws SQLException {
+        insert(USUARIOS, empleado.toINSERT() );
+    }
+    /**
+     * Inserts a new product in the database
+     * @param producto producto a insertar
+     */
+    public void insert(ProductoFX producto){}
+    /**
+     * Inserts a new corte_caja in the database
+     * @param corteCaja corte de caja a insertar
+     */
+    public void insert(CorteCajaFX corte){}
+    /**
+     * Inserts a new venta in the database
+     * @param venta venta a insertar
+     */
+    public void insert(VentaFX venta){}
+    /**
+     * Inserts a new caja in the database
+     * @param caja caja a insertar
+     */
+    public void insert(CajaFX caja){}
+    // <-- Inserts
+
+    // --> Updates
+    /**
+     * Updates a user in the database
+     * @param empleado empleado a actualizar
+     */
+    public void update(EmpleadoFX empleado){}
+    /**
+     * Updates a product in the database
+     * @param producto producto a actualizar
+     */
+    public void update(ProductoFX producto){}
+    /**
+     * Updats a corte_caja in the database
+     * @param corteCaja corte de caja a actualizar
+     */
+    public void update(CorteCajaFX corte){}
+    /**
+     * Updates a venta in the database
+     * @param venta venta a actualizar
+     */
+    public void update(VentaFX venta){}
+    /**
+     * Updates a caja in the database
+     * @param caja caja a actualizar
+     */
+    public void update(CajaFX caja){}
+    // <-- Updates
+
+    // --> Deletes
+    /**
+     * Deletes a user in the database, find it and delete it
+     * @param empleado empleado a borrar
+     */
+    public void delete(EmpleadoFX empleado){}
+    /**
+     * Deletes a product in the database, find it and delete it
+     * @param producto producto a borrar
+     */
+    public void delete(ProductoFX producto){}
+    /**
+     * Deletes a corte_caja in the database, find it and delete it
+     * @param corteCaja corte de caja a borrar
+     */
+    public void delete(CorteCajaFX corte){}
+    /**
+     * Deletes a venta in the database, find it and delete it
+     * @param venta venta a borrar
+     */
+    public void delete(VentaFX venta){}
+    /**
+     * Deletes a caja in the database, find it and delete it
+     * @param caja caja a borrar
+     */
+    public void delete(CajaFX caja){}
+    // <-- Deletes
 
     /**
      * Query the database and Check the database and get a list of searched products
