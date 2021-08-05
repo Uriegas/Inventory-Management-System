@@ -1,7 +1,7 @@
 package com.TeamPro.Login;
 
-import com.TeamPro.MySQL;
 import com.TeamPro.Window;
+import com.TeamPro.DAO.MySQL;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -11,12 +11,8 @@ import java.util.ResourceBundle;
 
 public class LoginController extends Window implements Initializable {
     protected MySQL db = new MySQL();
-
-    @FXML
-    private TextField TfUsuario;
-
-    @FXML
-    private TextField TfContra;
+    @FXML private TextField TfUsuario;
+    @FXML private TextField TfContra;
 
     /**
      * Verifica las credenciales de autenticación y llama a las vistas dependiendo del tipo de usuario
@@ -41,9 +37,12 @@ public class LoginController extends Window implements Initializable {
             System.out.println("No existe el usuario");
         }
     }
-
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        db.conexion();
+        try{
+            db.conexion();
+        }catch(Exception e){//Show an alert dialog
+            System.out.println("Error al conectar a la base de datos");
+        }
     }
 }

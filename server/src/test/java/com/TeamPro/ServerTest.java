@@ -84,9 +84,4 @@ public class ServerTest {
             Assert.fail("Insert data please");
         }
 	}
-
-    // @Test
-    // public void testRequest() throws Exception{
-    //     Assert.assertEquals(server.request(actual_query), expected_result);
-    // }
 }

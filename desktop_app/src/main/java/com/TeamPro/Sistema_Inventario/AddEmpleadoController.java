@@ -1,6 +1,6 @@
 package com.TeamPro.Sistema_Inventario;
 
-import com.TeamPro.MySQL;
+import com.TeamPro.DAO.MySQL;
 import com.TeamPro.Window;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -48,10 +48,14 @@ public class AddEmpleadoController extends Window {
 
     @FXML
     void clickGuardar(ActionEvent event) {
+        try {
         String id = tfID.getText();
         String name = tfNombre.getText();
         String Tipo = tfNombre1.getText();
         String valores = "'" + name + "'" + ", " + "'" + " " + "'" + ", " + "'" + Tipo + "'";
         query.insert("usuarios", "");
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

@@ -47,11 +47,6 @@ import java.util.*;
  * @author Eduardo Uriegas
  */
 public class Server{
-    // --> Column names (instead of strings for performance)
-    // private static final int VAR = 1;
-    // private static final int NAME = 2;
-    // <-- Column names
-
     private static final String DB = "jdbc:mysql://localhost/inventariosDB";
     private static String USER = "inventarios_client";
     private static String PASSWORD = "inventarios123";
@@ -80,31 +75,25 @@ public class Server{
         System.out.println("Starting server...");
         connection = DriverManager.getConnection(DB, USER, PASSWORD);
         System.out.println(Colors.toGreen("[OK]") + " Connected to database");
-
-        Console console = System.console();
         // --> Query loop
-        // while(true) {
-        //     System.out.print("Enter a query statement: ");
-        //     String query = console.readLine();
-        //     if(query.equals("exit"))
-        //         break;
-        //     // --> Execute query
-        //     try {
-        //         HashMap<String, List<String>> result = query(query);
-        //         // --> Print result
-        //         System.out.println("Result: " + result);
-        //     } catch (SQLException e) {
-        //         System.out.println(Colors.toRed("[ERROR]") + " " + e.getMessage());
-        //     }
-        // }
-        // <-- Query loop
-        // <-- Create connection to the database
-
-        // --> Create connection to a desktop client
-        // <-- Create connection to a desktop client
-
-        // --> Create connection to a web client
-        // <-- Create connection to a web client
+        Console console = System.console();
+        while(true) {
+            System.out.print("Enter a query statement: ");
+            String query = console.readLine();
+            if(query.equals("exit"))
+                break;
+            // --> Execute query
+            try {
+                if(query.startsWith("SELECT")) {
+                HashMap<String, List<String>> result = query(query);
+                // --> Print result
+                System.out.println("Result: " + result);
+                } else
+                    update(query);
+            } catch (SQLException e) {
+                System.out.println(Colors.toRed("[ERROR]") + " " + e.getMessage());
+            }
+        }
     }
 
     /**
@@ -114,23 +103,16 @@ public class Server{
      */
     public HashMap<String, List<String>> query(String statement) throws SQLException {
         System.out.println("Executing query: " + statement);
-        // try {
-            Statement st = connection.createStatement();
-            ResultSet rs = st.executeQuery(statement);
-            System.out.println(Colors.toGreen("[OK]") + " Query executed");
-            HashMap<String, List<String>> result = new HashMap<>();
-
-            for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) // Add column names
-                result.put(rs.getMetaData().getColumnName(i), new ArrayList<>());
-
-            while (rs.next())
-                for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) // Add values
-                    result.get(rs.getMetaData().getColumnName(i)).add(rs.getString(i));
-
-            return result;
-        // } catch(SQLException e){
-        //     System.out.println(Colors.toRed("[ERROR]") + " Query failed");
-        // }
+        Statement st = connection.createStatement();
+        ResultSet rs = st.executeQuery(statement);
+        System.out.println(Colors.toGreen("[OK]") + " Query executed");
+        HashMap<String, List<String>> result = new HashMap<>();
+        for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) // Add column names
+            result.put(rs.getMetaData().getColumnName(i), new ArrayList<String>());
+        while (rs.next())
+            for (int i = 1; i <= rs.getMetaData().getColumnCount(); i++) // Add values
+                result.get(rs.getMetaData().getColumnName(i)).add(rs.getString(i));
+        return result;
     }
     /**
      * Insert, update and delete statement
@@ -138,14 +120,10 @@ public class Server{
      * @throws SQLException
      */
     public void update(String statement) throws SQLException {
-        System.out.println("Executing insert: " + statement);
-        // try {
-            Statement st = connection.createStatement();
-            st.executeUpdate(statement);
-            System.out.println(Colors.toGreen("[OK]") + " Insert|Update|Delete executed");
-        // } catch(SQLException e){
-        //     System.out.println(Colors.toRed("[ERROR]") + " Insert failed");
-        // }
+        // System.out.println("Executing insert: " + statement);
+        Statement st = connection.createStatement();
+        st.executeUpdate(statement);
+        System.out.println(Colors.toGreen("[OK]") + " Insert|Update|Delete executed");
     }
     /**
      * Get a specific row from a HashMap<String, List<String>> aka. table<p>
