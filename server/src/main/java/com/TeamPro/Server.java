@@ -83,20 +83,20 @@ public class Server{
 
         Console console = System.console();
         // --> Query loop
-        // while(true) {
-        //     System.out.print("Enter a query statement: ");
-        //     String query = console.readLine();
-        //     if(query.equals("exit"))
-        //         break;
-        //     // --> Execute query
-        //     try {
-        //         HashMap<String, List<String>> result = query(query);
-        //         // --> Print result
-        //         System.out.println("Result: " + result);
-        //     } catch (SQLException e) {
-        //         System.out.println(Colors.toRed("[ERROR]") + " " + e.getMessage());
-        //     }
-        // }
+        while(true) {
+            System.out.print("Enter a query statement: ");
+            String query = console.readLine();
+            if(query.equals("exit"))
+                break;
+            // --> Execute query
+            try {
+                HashMap<String, List<String>> result = query(query);
+                // --> Print result
+                System.out.println("Result: " + result);
+            } catch (SQLException e) {
+                System.out.println(Colors.toRed("[ERROR]") + " " + e.getMessage());
+            }
+        }
         // <-- Query loop
         // <-- Create connection to the database
 
