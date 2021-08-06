@@ -10,15 +10,15 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Scene xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.TeamPro.Sistema_Cajas.CajaGerenteController">
+<Scene xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.TeamPro.Sistema_Cajas.CajaGerenteController">
     <AnchorPane prefHeight="517.0" prefWidth="882.0" styleClass="background-inv" stylesheets="@estilos.css">
       <children>
          <TableView fx:id="tvTablaVentas" layoutX="493.0" layoutY="196.0" prefHeight="306.0" prefWidth="374.0" stylesheets="@tableview.css">
            <columns>
-               <TableColumn prefWidth="114.0" text="Nombre" />
-             <TableColumn prefWidth="95.0" text="Cantidad" />
-             <TableColumn prefWidth="87.0" text="Total" />
-               <TableColumn prefWidth="62.0" text="Quitar" />
+               <TableColumn fx:id="producto" prefWidth="114.0" text="Producto" />
+             <TableColumn fx:id="cantidad" prefWidth="89.0" text="Cantidad" />
+             <TableColumn fx:id="fecha" prefWidth="106.0" text="Fecha" />
+               <TableColumn fx:id="total" prefWidth="64.0" text="Total" />
            </columns>
          </TableView>
          <Label layoutX="499.0" layoutY="13.0" styleClass="label-table" text="Registro de caja">
@@ -26,24 +26,17 @@
                <Font size="22.0" />
             </font>
          </Label>
-         <Button fx:id="btnCerrar" layoutX="758.0" layoutY="11.0" mnemonicParsing="false" onAction="#clickCerrarCaja" styleClass="button-login" text="Cerrar caja" />
-         <Button fx:id="btnAbrir" layoutX="352.0" layoutY="11.0" mnemonicParsing="false" onAction="#clickAbrirCaja" styleClass="button-login" text="Abrir caja" />
+         <Button fx:id="btnCorte" layoutX="720.0" layoutY="11.0" mnemonicParsing="false" styleClass="button-login" text="Corte de Caja" />
          <TableView fx:id="tvTablaCajas" layoutX="14.0" layoutY="84.0" prefHeight="426.0" prefWidth="443.0" stylesheets="@tableview.css">
             <columns>
                <TableColumn fx:id="id" prefWidth="57.0" text="ID" />
-               <TableColumn fx:id="encargado" prefWidth="138.0" text="Encargado" />
-               <TableColumn fx:id="saldo_actual" prefWidth="138.0" text="Saldo Total" />
-               <!--<TableColumn fx:id="ver_buttons_column" minWidth="1.0" prefWidth="109.0" text="Ver" />-->
+               <TableColumn fx:id="encargado" prefWidth="170.0" text="Encargado" />
+               <TableColumn fx:id="saldo_actual" prefWidth="133.0" text="Saldo Total" />
             </columns>
          </TableView>
          <Label layoutX="25.0" layoutY="43.0" styleClass="label-table" text="Cajas">
             <font>
                <Font size="18.0" />
-            </font>
-         </Label>
-         <Label fx:id="lbIdCaja" layoutX="698.0" layoutY="13.0" styleClass="label-table" text="xxx">
-            <font>
-               <Font size="22.0" />
             </font>
          </Label>
          <Line endX="-100.0" endY="-161.0" layoutX="574.0" layoutY="161.0" startX="-100.0" startY="355.0" />
@@ -54,7 +47,7 @@
          </Label>
          <Label fx:id="lbNombre" layoutX="499.0" layoutY="74.0" styleClass="label-texto" text="Jose Maria Morelos y Pavon" />
          <Rectangle arcHeight="5.0" arcWidth="5.0" fill="#d7d7d7" height="107.0" layoutX="709.0" layoutY="54.0" stroke="TRANSPARENT" strokeType="INSIDE" style="-fx-fill: #FFC4BE;" width="160.0" />
-         <Label layoutX="719.0" layoutY="68.0" styleClass="label-name" text="Apertura">
+         <Label layoutX="719.0" layoutY="68.0" styleClass="label-name" text="Caja">
             <font>
                <Font name="System Bold" size="13.0" />
             </font>
@@ -64,8 +57,13 @@
                <Font name="System Bold" size="13.0" />
             </font>
          </Label>
-         <Label fx:id="lbApertura" layoutX="719.0" layoutY="84.0" text="xx-xx-xxxx" />
+         <Label fx:id="lbIdCaja" layoutX="719.0" layoutY="84.0" text="xx-xx-xxxx" />
          <Label fx:id="lbTotalVentas" layoutX="719.0" layoutY="123.0" text="\$xx,xxx.xx" />
          <Button fx:id="btnLogout" mnemonicParsing="false" onAction="#clickLogout" text="Cerrar sesión" />
+         <Label layoutX="501.0" layoutY="161.0" styleClass="label-table" text="Ventas">
+            <font>
+               <Font size="18.0" />
+            </font>
+         </Label>
       </children></AnchorPane>
 </Scene>

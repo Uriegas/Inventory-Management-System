@@ -2,6 +2,7 @@ package com.TeamPro.Sistema_Cajas;
 
 import java.io.*;
 import java.net.*;
+import java.sql.SQLException;
 import java.util.*;
 import com.TeamPro.Window;
 import com.TeamPro.DAO.MySQL;
@@ -11,82 +12,82 @@ import javafx.fxml.*;
 import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.stage.*;
+import javafx.util.*;
 
 public class CajaGerenteController extends Window implements Initializable {
-    MySQL query = new MySQL();
     @FXML private TableView<VentaFX> tvTablaVentas;
-    @FXML private Button btnCerrar;
-    @FXML private Button btnAbrir;
-    @FXML private TableView<CajaFX> tvTablaCajas = new TableView<>();
-    @FXML private TableColumn<CajaFX, Integer> id;
-    @FXML private TableColumn<CajaFX, Integer> encargado;
-    @FXML private TableColumn<CajaFX, Double> saldo_actual;
-    @FXML private TableColumn<CajaFX, Double> ver_buttons_column;
+    @FXML private TableColumn<VentaFX, String> producto;
+    @FXML private TableColumn<VentaFX, Integer> cantidad;
+    @FXML private TableColumn<VentaFX, Date> fecha;
+    @FXML private TableColumn<VentaFX, Double> total;
+    @FXML private TableView<CajaWithEmp> tvTablaCajas = new TableView<>();
+    @FXML private TableColumn<CajaWithEmp, Integer> id;
+    @FXML private TableColumn<CajaWithEmp, String> encargado;
+    @FXML private TableColumn<CajaWithEmp, Double> saldo_actual;
+    @FXML private Button btnCorte;
     @FXML private Label lbIdCaja;
-    @FXML private Label lbNombre;
-    @FXML private Label lbApertura;
     @FXML private Label lbTotalVentas;
 
-    // @Override
-    // public void initModel(MySQL d) {
-    //     super.initModel(d);
-    //     tvTablaCajas.setItems(db.getCajas());
-    //     System.out.println(MySQL.INFO + "Loaded cajas: " + db.getCajas().toString());
-    // }
     /**
-     * Que necesito para que cada actor tenga una conexion a la base de datos con sus propias credenciales.
+     * initialize model
+     */
+    @Override
+    public void initModel(MySQL d) {
+        super.initModel(d);
+        try {
+        tvTablaCajas.setItems(db.getCajaswithEmpleados());
+        System.out.println(MySQL.SUCCESS + "Loaded cajas: " + db.getCajas().toString());
+        } catch (SQLException e) {
+            System.out.println( MySQL.ERROR + "Error al cargar la tabla de cajas");
+            Window.showAlert("Error", "Petición a DB falló", "Ocurrió un error al cargar la tabla de cajas");
+        }
+    }
+    /**
+     * Constructor del controlador
      */
     public void initialize(URL url, ResourceBundle rb) {
-        try {
-            query.conexion();
-        } catch (Exception e) {//Show alert
-            Window.showAlert("Error", "Error al insertar datos", "Datos introducidos invalidos");
-            e.printStackTrace();
-        }
         this.id.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
-        this.encargado.setCellValueFactory(cellData -> cellData.getValue().getIdUsuarioProperty().asObject());
+        this.encargado.setCellValueFactory(cellData -> cellData.getValue().getEncargadoProperty());
         this.saldo_actual.setCellValueFactory(cellData -> cellData.getValue().getSaldoProperty().asObject());
-        /*this.ver_buttons_column.setCellValueFactory(cellData -> cellData.getValue().getSaldoProperty().asObject());*/
 
-        // id.setCellFactory(column -> {
-        //     return new TableCell<CajaFX, Integer>() {
-        //         @Override
-        //         public void updateItem(Integer item, boolean empty) {
-        //             super.updateItem(item, empty);
-        //             if (item == null || empty) {
-        //                 setText(null);
-        //             } else {
-        //                 setText(item.toString());
-        //             }
-        //         }
-        //     };
-        // });
-        tvTablaCajas.setItems(query.getCajas());
-        System.out.println(MySQL.INFO + "Loaded cajas: " + query.getCajas().toString());
-        
-        // System.out.println( MySQL.INFO + this.db.holaa);
-        // --> Bind tables
-        // tvTablaVentas.setItems(db.getVentas());
-        // tvTablaCajas.setItems(db.getCajas());//Add button quitar caja
-        // <-- Bind tables
-    }
+        // ==> Create a TableColumn with a custom cell value factory: button 
+        Callback<TableColumn<CajaWithEmp, Void>, TableCell<CajaWithEmp, Void>> callBack = new Callback<TableColumn<CajaWithEmp, Void>, TableCell<CajaWithEmp, Void>>() {
+            @Override
+            public TableCell<CajaWithEmp, Void> call(TableColumn<CajaWithEmp, Void> param) {
+                return new TableCell<CajaWithEmp, Void>() {
+                    final Button btn = new Button("Ver");
+                    {
+                        btn.setOnAction(e -> {
+                            CajaWithEmp c = (CajaWithEmp) getTableView().getItems().get(getIndex());
+                            updateRightWindow(c);
+                            System.out.println(MySQL.INFO + "Selected Caja: " + c.toString());
+                        });
+                    }
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {;
+                            setGraphic(btn);
+                        }
+                    }
+                };
+            }
+        };
+        TableColumn<CajaWithEmp, Void> action = new TableColumn<CajaWithEmp, Void>("Ver");
+        action.setCellFactory(callBack);
+        tvTablaCajas.getColumns().add(action);
+        // <== Create a TableColumn with a custom cell value factory: button
 
-    @FXML
-    void clickAbrirCaja(ActionEvent event) {
-        // System.out.println( MySQL.INFO + "In Gerente: " + this.db.holaa);
-    }
-
-    @FXML
-    void clickCerrarCaja(ActionEvent event) {
-
+        // ==> Button corte de caja
+        // <== Button corte de caja
     }
     /**
      * Return to login window
      */
     @FXML
     void clickLogout(ActionEvent event) {
-        // System.out.println( MySQL.INFO + "In Gerente: " + this.db.holaa);
-        // db.holaa++;
         // ==> Switch scene
         Stage switchscene = (Stage) ((Node)event.getSource()).getScene().getWindow();
         try{
@@ -99,4 +100,14 @@ public class CajaGerenteController extends Window implements Initializable {
         }catch(IOException ex){System.out.println(MySQL.ERROR + ex.getMessage());}
         // <== Switch scene
     }
+    /**
+     * Update the right window with the selected CajaWithEmp
+     * @param CajaWithEmp
+     */
+    public void updateRightWindow(CajaWithEmp CajaWithEmp) {
+
+    }
+    /**
+     * Make a new Corte de caja
+     */
 }
