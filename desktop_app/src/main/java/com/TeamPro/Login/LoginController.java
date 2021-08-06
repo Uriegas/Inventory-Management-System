@@ -69,7 +69,8 @@ public class LoginController extends Window implements Initializable {
         // --> Every user of the app has a DB account method
         try{
             // db.setConexion(db.host, TfUsuario.getText(), TfContra.getText());
-            db.setCurrentUser( db.getEmpleado(new EmpleadoFX( TfUsuario.getText(), TfContra.getText() )) );
+            System.out.println(MySQL.INFO + this.db.getConexion());
+            db.setCurrentUser( db.getEmpleado(new EmpleadoFX(TfUsuario.getText(), TfContra.getText())) );
             // System.out.println(MySQL.INFO + "In Login: " + db.holaa);
             // db.holaa++;
 
@@ -84,6 +85,7 @@ public class LoginController extends Window implements Initializable {
             // <== Switch scene
         }catch(IllegalArgumentException e){
             Window.showAlert("Error", "Usuario invalido", "Usuario y/o contraseña invalidos");
+            System.out.println(MySQL.ERROR + e.getMessage());
         }catch(IOException ex){
             System.out.println(MySQL.ERROR + ex.getMessage());
             Window.showAlert("Error", "Error fatal", "No se pudo cargar la página");

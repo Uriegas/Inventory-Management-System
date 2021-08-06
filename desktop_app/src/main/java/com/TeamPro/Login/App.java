@@ -28,6 +28,7 @@ public class App extends Application {
     public void start(Stage primaryStage) throws IOException {
         try{
             this.db.conexion();
+            System.out.println(MySQL.INFO + this.db.getConexion());
             if((this.db.select("usuarios", "*", "tipo = 'administrador'"))) {// Si ya existe cuenta admin, abre Login
                 loader = new FXMLLoader(this.getClass().getResource("/LoginResources/Login.fxml"));
             }

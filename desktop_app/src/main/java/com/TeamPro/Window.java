@@ -36,7 +36,7 @@ public abstract class Window {
      * @param e event to handle this pop up
      * @param FXML the fxml file to load this pop up
      */
-    public void createPopUp(Event e, String FXML){
+    public void createPopUp(Event e, String FXML) {
         Stage dialog = new Stage(); // new stage
         dialog.initModality(Modality.WINDOW_MODAL);
         FXMLLoader loader = new FXMLLoader();
