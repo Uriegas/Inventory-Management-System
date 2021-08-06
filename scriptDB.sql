@@ -40,7 +40,8 @@ id_u int not null,
 id_p int not null,
 cantidad int not null,
 fecha date not null,
-CONSTRAINT fk_producto FOREIGN KEY (id_p) REFERENCES productos (id) ON DELETE CASCADE
+CONSTRAINT fk_producto FOREIGN KEY (id_p) REFERENCES productos (id) ON DELETE CASCADE,
+CONSTRAINT fk_usuario FOREIGN KEY (id_u) REFERENCES usuarios (id) ON DELETE CASCADE
 );
 
 
