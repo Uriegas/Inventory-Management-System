@@ -122,6 +122,7 @@ public class InventarioController extends Window implements Initializable {
         try {
             query.conexion();
         } catch (Exception e) {//Show alert
+            Window.showAlert("Error", "Error al insertar datos", "Datos introducidos invalidos");
             e.printStackTrace();
         }
 
@@ -185,8 +186,9 @@ public class InventarioController extends Window implements Initializable {
                                     query.delete(producto); //Aqui mando el producto a eliminar
                                     tvDatosProductos.getItems().clear(); 
                                     tvDatosProductos.setItems(query.getProductos());
+                                    Window.showAlert("Completado", "", "Eliminado exitoso");
                                 } catch (Exception e) {
-                                    System.out.println(e.getMessage());
+                                    Window.showAlert("Error", "Error al eliminar", "No se pudo eliminar el produco seleccionado");
                                 }
                             }else{
                                 alert.close();
@@ -252,8 +254,9 @@ public class InventarioController extends Window implements Initializable {
                                     query.delete(usuario); //Aqui mando el producto a eliminar
                                     tvDatosEmpleado.getItems().clear();
                                     tvDatosEmpleado.setItems(query.getEmpleados());
+                                    Window.showAlert("Completado", "", "Eliminado exitoso");
                                 } catch (Exception e) {
-                                    System.out.println(e.getMessage());
+                                    Window.showAlert("Error", "Error al eliminar", "No se pudo eliminar el produco seleccionado");
                                 }
                             }else{
                                 alert.close();

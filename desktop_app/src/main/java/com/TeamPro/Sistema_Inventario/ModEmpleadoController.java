@@ -61,8 +61,9 @@ public class ModEmpleadoController implements Initializable {
         try {
             query.conexion();
             query.update(this.empleado);//Creo que lo que modifique afecta esto
+            Window.showAlert("Completado", "Accion completada con exito", "Update realizado");
         } catch (Exception e) {//Show alert
-            System.out.println(e.getMessage());
+            Window.showAlert("Error", "Error al actualizar", "No se pudo actualizar");
         }
         Node source = (Node)event.getSource();
         Stage stage = (Stage)source.getScene().getWindow();
