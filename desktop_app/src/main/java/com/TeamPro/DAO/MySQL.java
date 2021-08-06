@@ -58,7 +58,7 @@ public class MySQL {
     private String password = "inventarios123";
     public static Connection conn = null;
     // <-- Default Credentials
-    private EmpleadoFX currentUser;
+    private static EmpleadoFX currentUser;
 
     // ============================ Conexiones ============================
     /**
@@ -131,14 +131,14 @@ public class MySQL {
      * @param EmpleadoFX currentUser
      */
     public void setCurrentUser(EmpleadoFX currentUser) {
-        this.currentUser = currentUser;
+        MySQL.currentUser = currentUser;
     }
     /**
      * Get the current user
      * @return EmpleadoFX
      */
     public EmpleadoFX getCurrentUser() {
-        return this.currentUser;
+        return MySQL.currentUser;
     }
 
     // ============================ Last ID ============================

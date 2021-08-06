@@ -12,6 +12,7 @@ import org.junit.runners.Parameterized;
  *     <li>query to database</li>
  *     <li>handle request</li>
  * </ul>
+ * @deprecated
  */
 @RunWith(Parameterized.class)
 public class ServerTest {
