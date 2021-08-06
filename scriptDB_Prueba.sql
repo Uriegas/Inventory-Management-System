@@ -17,4 +17,27 @@ INSERT INTO caja(id_u, saldo_caja) VALUES (3, 100.00);
 INSERT INTO caja(id_u, saldo_caja) VALUES (4, 100.00);
 INSERT INTO caja(id_u, saldo_caja) VALUES (5, 100.00);
 
----Cortes de caja y ventas son dinamicas.
+---Algunas Ventas. Todos los empleados tienen el mismo total de ventas
+--- Cajero 1
+INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (3, 1, 2, '2021-06-07');
+INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (3, 3, 5, '2021-06-07');
+INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (3, 1, 2, '2021-06-07');
+INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (3, 2, 4, '2021-06-07');
+INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (3, 2, 9, '2021-06-07');
+INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (3, 1, 6, '2021-06-07');
+
+--- Cajero 2
+INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (4, 1, 2, '2021-06-07');
+INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (4, 3, 5, '2021-06-07');
+INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (4, 1, 2, '2021-06-07');
+INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (4, 2, 4, '2021-06-07');
+INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (4, 2, 9, '2021-06-07');
+INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (4, 1, 6, '2021-06-07');
+
+--- Cajero 3
+INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (4, 1, 2, '2021-06-07');
+INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (4, 3, 5, '2021-06-07');
+INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (4, 1, 2, '2021-06-07');
+INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (4, 2, 4, '2021-06-07');
+INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (4, 2, 9, '2021-06-07');
+INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (4, 1, 6, '2021-06-07');

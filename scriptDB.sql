@@ -34,14 +34,12 @@ CONSTRAINT fk_corte_gerente FOREIGN KEY (id_u) REFERENCES usuarios (id) ON DELET
 CONSTRAINT fk_fromcaja_corte FOREIGN KEY (id_c) REFERENCES caja (id) ON DELETE CASCADE
 );
 
-create or replace table venta (
+create or replace table ventas (
 id int not null primary key AUTO_INCREMENT,
-Monto decimal(10,2) not null,
+id_p int not null,
+cantidad int not null,
 fecha date not null,
-id_u int not null,
-id_cc int not null,
-CONSTRAINT fk_venta_usuario FOREIGN KEY (id_u) REFERENCES usuarios (id) ON DELETE CASCADE,
-CONSTRAINT fk_corte_caja FOREIGN KEY (id_cc) REFERENCES corte_caja (id) ON DELETE CASCADE
+CONSTRAINT fk_producto FOREIGN KEY (id_p) REFERENCES productos (id) ON DELETE CASCADE
 );
 
 
