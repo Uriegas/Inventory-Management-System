@@ -12,12 +12,12 @@ import javafx.scene.*;
 import javafx.scene.control.*;
 import javafx.stage.*;
 
-public class CajaGerenteController extends Window {
+public class CajaGerenteController extends Window implements Initializable {
     MySQL query = new MySQL();
     @FXML private TableView<VentaFX> tvTablaVentas;
     @FXML private Button btnCerrar;
     @FXML private Button btnAbrir;
-    @FXML private TableView<CajaFX> tvTablaCajas;
+    @FXML private TableView<CajaFX> tvTablaCajas = new TableView<>();
     @FXML private TableColumn<CajaFX, Integer> id;
     @FXML private TableColumn<CajaFX, Integer> encargado;
     @FXML private TableColumn<CajaFX, Double> saldo_actual;
@@ -43,10 +43,10 @@ public class CajaGerenteController extends Window {
             Window.showAlert("Error", "Error al insertar datos", "Datos introducidos invalidos");
             e.printStackTrace();
         }
-        id.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
-        encargado.setCellValueFactory(cellData -> cellData.getValue().getIdUsuarioProperty().asObject());
-        saldo_actual.setCellValueFactory(cellData -> cellData.getValue().getSaldoProperty().asObject());
-        ver_buttons_column.setCellValueFactory(cellData -> cellData.getValue().getSaldoProperty().asObject());
+        this.id.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
+        this.encargado.setCellValueFactory(cellData -> cellData.getValue().getIdUsuarioProperty().asObject());
+        this.saldo_actual.setCellValueFactory(cellData -> cellData.getValue().getSaldoProperty().asObject());
+        /*this.ver_buttons_column.setCellValueFactory(cellData -> cellData.getValue().getSaldoProperty().asObject());*/
 
         // id.setCellFactory(column -> {
         //     return new TableCell<CajaFX, Integer>() {

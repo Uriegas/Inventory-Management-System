@@ -10,7 +10,7 @@
 <?import javafx.scene.shape.Rectangle?>
 <?import javafx.scene.text.Font?>
 
-<Scene xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.TeamPro.Sistema_Cajas.CajaGerenteController">
+<Scene xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.TeamPro.Sistema_Cajas.CajaGerenteController">
     <AnchorPane prefHeight="517.0" prefWidth="882.0" styleClass="background-inv" stylesheets="@estilos.css">
       <children>
          <TableView fx:id="tvTablaVentas" layoutX="493.0" layoutY="196.0" prefHeight="306.0" prefWidth="374.0" stylesheets="@tableview.css">
@@ -33,7 +33,7 @@
                <TableColumn fx:id="id" prefWidth="57.0" text="ID" />
                <TableColumn fx:id="encargado" prefWidth="138.0" text="Encargado" />
                <TableColumn fx:id="saldo_actual" prefWidth="138.0" text="Saldo Total" />
-               <TableColumn fx:id="ver_buttons_column" minWidth="1.0" prefWidth="109.0" text="Ver" />
+               <!--<TableColumn fx:id="ver_buttons_column" minWidth="1.0" prefWidth="109.0" text="Ver" />-->
             </columns>
          </TableView>
          <Label layoutX="25.0" layoutY="43.0" styleClass="label-table" text="Cajas">
