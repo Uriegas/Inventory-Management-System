@@ -1,7 +1,7 @@
 package com.TeamPro.Login;
 
-import com.TeamPro.MySQL;
 import com.TeamPro.Window;
+import com.TeamPro.DAO.MySQL;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -69,8 +69,14 @@ public class AddAdminController extends Window implements Initializable{
     void clickGuardar(ActionEvent event) {
 
         if(!tfNombre.getText().isEmpty() && !tfUsername.getText().isEmpty() && !tfPassword.getText().isEmpty() ) {
-            String datos = "'"+tfNombre.getText()+"', '"+tfPassword.getText()+"', 'administrador', 011";
+            String datos = /*"011, "+*/"'"+tfNombre.getText()+"', '"+tfPassword.getText()+"', 'administrador'";
+            try{
             this.db.insert("usuarios", datos );
+                Window.showAlert("Completado", "Accion completada con exito", "Todo en orden");
+            }catch(Exception e){//Show alert of error on insert
+                Window.showAlert("Error", "Error al insertar datos", "Datos introducidos invalidos");
+
+            }
             switchScene(event, "/Sistema_InventarioResources/Inventario.fxml");
         }
         else
@@ -79,7 +85,11 @@ public class AddAdminController extends Window implements Initializable{
 
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
-        db.conexion();
+        try{
+            this.db.conexion();
+        }catch(Exception e){//Show alert
+            Window.showAlert("Error", "Error al conectar a la base de datos", "Datos introducidos invalidos");
+        }
         this.img = new Image(this.getClass().getResource("/LoginResources/userAdmin.jpg").toString(),false);
         clip.setFill(new ImagePattern(this.img));
         clip.setEffect(new DropShadow(8, Color.rgb(0, 0, 0, 0.8)));

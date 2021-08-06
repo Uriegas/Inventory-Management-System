@@ -46,8 +46,8 @@
                      <Font name="System Bold" size="18.0" />
                   </font>
                </Label>
-               <TextField fx:id="tfBusqueda" layoutX="14.0" layoutY="60.0" prefHeight="23.0" prefWidth="339.0" promptText="Buscar producto" />
-               <Button fx:id="btnBuscar" layoutX="353.0" layoutY="58.0" mnemonicParsing="false" prefHeight="29.0" prefWidth="35.0" styleClass="button-buscar" />
+               <TextField fx:id="tfBusqueda" layoutX="14.0" layoutY="60.0" prefHeight="23.0" prefWidth="298.0" promptText="Buscar producto" />
+               <Button fx:id="btnBuscar" layoutX="324.0" layoutY="58.0" mnemonicParsing="false" onAction="#clickBuscar" prefHeight="29.0" prefWidth="35.0" styleClass="button-buscar" />
                <Button layoutX="11.0" layoutY="119.0" mnemonicParsing="false" prefHeight="62.0" prefWidth="217.0" style="-fx-background-color: #FFFFFF; -fx-effect: dropshadow( gaussian , rgba(0,0,0,0.7) , 10,0,0,1 );" text="Coca cola 600ml     " wrapText="true">
                   <font>
                      <Font name="System Bold" size="13.0" />
@@ -64,8 +64,17 @@
                      <ImageView fitHeight="54.0" fitWidth="55.0" pickOnBounds="true" preserveRatio="true" />
                   </graphic>
                </Button>
-               <ListView fx:id="lvProductos" layoutX="11.0" layoutY="99.0" prefHeight="406.0" prefWidth="446.0" />
+               <ListView fx:id="lvProductos" disable="true" layoutX="11.0" layoutY="99.0" prefHeight="406.0" prefWidth="446.0" visible="false" />
                <Button fx:id="btnLogout" layoutX="-1.0" layoutY="-1.0" mnemonicParsing="false" onAction="#clickLogout" text="Cerrar sesión" />
+               <TableView fx:id="tvproductos" layoutY="95.0" prefHeight="424.0" prefWidth="475.0" stylesheets="@../Sistema_InventarioResources/tableview.css">
+                  <columns>
+                     <TableColumn fx:id="prodDescCol" prefWidth="200.0" text="Descripcion" />
+                     <TableColumn fx:id="prodPrecioCol" prefWidth="61.0" text="Precio" />
+                     <TableColumn fx:id="prodStockCol" prefWidth="118.0" text="Disponible" />
+                     <!--<TableColumn prefWidth="96.0" text="Acciones" />-->
+                  </columns>
+               </TableView>
+               <Button fx:id="btnMostrarTodo" layoutX="372.0" layoutY="61.0" mnemonicParsing="false" onAction="#clickMostrarTodo" styleClass="button-add" text="Mostrar todo" textFill="WHITE" />
             </children>
          </Pane>
          <Label fx:id="lbTotalPagar" layoutX="802.0" layoutY="409.0" text=" 000.00" textFill="#303f9f" textOverrun="CLIP" underline="true">

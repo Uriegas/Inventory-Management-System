@@ -1,6 +1,28 @@
 # POO-Unidad-4-Actividad-1
 ## Actividad 7: Cajeros en Red y Web server
 
+### DUDA  
+El profe quiere a fuerzas que usemos un server o con la pura conexión a la base de datos esta bien?
+Según yo solo es la conexión, por lo que dijo hoy, no?
+Ciertoo. Eres una crack Andrea
+
+### TODO
+* Add a background task that pull records from the database and update the cache when they’re different than expected
+
+### Architecture  
+It is possible to develop this project without a server that handles requests and has a connection to the database, instead each client makes direct requests to the database.  
+Here arise a problem of authentication, how could a desktop app client connect if it cannot access the database and therefore make a new account request?; the easiest way to handle this is define that the admin is the only one capable of creating accounts; the other solution is to use a server.
+
+### Requirements
+* MySQL (tested with MariaDB 10.5.10)
+
+### Execute
+For starting the server is necessary to run MySQL with:
+```
+sudo systemctl start mysql
+```
+Once the server is run the desktop app can is the client that connects to the server
+
 ### Conceptos
 #### Caja
 * Atributos: Efectivo
