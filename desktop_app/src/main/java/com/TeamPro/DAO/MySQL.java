@@ -20,7 +20,7 @@ public class MySQL {
     private static final String USUARIOS = "usuarios";
     private static final String PRODUCTOS = "productos";
     private static final String CORTE_CAJAS = "corte_caja";
-    private static final String VENTAS = "venta";
+    private static final String VENTAS = "ventas";
     private static final String CAJAS = "caja";
     // <-- Table names
 
@@ -42,10 +42,10 @@ public class MySQL {
     private static final int CORTE_CAJA_ID_USUARIO = 5;
 
     private static final int VENTA_ID = 1;
-    private static final int VENTA_MONTO = 2;
-    private static final int VENTA_FECHA = 3;
-    private static final int VENTA_ID_USUARIO = 4;
-    private static final int VENTA_ID_CORTE = 5;
+    private static final int VENTA_ID_USUARIO = 2;
+    private static final int VENTA_ID_PRODUCTO = 3;
+    private static final int VENTA_CANTIDAD = 4;
+    private static final int VENTA_FECHA = 5;
 
     private static final int CAJA_ID = 1;
     private static final int CAJA_ID_USUARIO = 2;
@@ -288,7 +288,7 @@ public class MySQL {
             Statement select = this.conn.createStatement();
             ResultSet rs = select.executeQuery("SELECT * FROM " + VENTAS);
             while(rs.next())
-                ventas.add( new VentaFX(rs.getInt(VENTA_ID), rs.getInt(VENTA_ID_USUARIO), rs.getInt(VENTA_ID_CORTE), rs.getDouble(VENTA_MONTO), rs.getDate(VENTA_FECHA)) );
+                ventas.add( new VentaFX(rs.getInt(VENTA_ID), rs.getInt(VENTA_ID_USUARIO), rs.getInt(VENTA_ID_PRODUCTO), rs.getInt(VENTA_CANTIDAD), rs.getDate(VENTA_FECHA)) );
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
@@ -370,7 +370,7 @@ public class MySQL {
      */
     public VentaFX insert(VentaFX venta) throws SQLException {
         insert(VENTAS, venta.toINSERT() );
-        return new VentaFX(getLastIDVentas(), venta.getIdCliente(), venta.getIdCorte(), venta.getMonto(), venta.getFecha());
+        return new VentaFX(getLastIDVentas(), venta.getid_usuario(), venta.getid_producto(), venta.getcantidad(), venta.getFecha());
     }
     /**
      * Inserts a new caja in the database
@@ -507,6 +507,20 @@ public class MySQL {
             throwables.printStackTrace();
         }
         return "";
+    }
+    /**
+     * This method executes the following query:<p>
+     * {@code SELECT caja.id, usuarios.nombre, caja.saldo_caja FROM caja INNER JOIN usuarios ON caja.id_u = usuarios.id WHERE caja.id = <id>;}
+     * @param id id of the caja
+     * @return list of query
+     */
+    public ObservableList<CajaWithEmp> getCajaswithEmpleados() throws SQLException {
+        ObservableList<CajaWithEmp> cajas = FXCollections.observableArrayList();
+        Statement select = this.conn.createStatement();
+        ResultSet rs = select.executeQuery("SELECT caja.id, usuarios.id, usuarios.nombre, caja.saldo_caja FROM caja INNER JOIN usuarios ON caja.id_u = usuarios.id;");
+        while(rs.next())
+            cajas.add( new CajaWithEmp(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getInt(4)) );
+        return cajas;
     }
     //Main
     public static void main(String[] args) {

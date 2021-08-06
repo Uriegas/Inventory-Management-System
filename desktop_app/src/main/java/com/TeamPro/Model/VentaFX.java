@@ -8,37 +8,37 @@ import javafx.beans.property.*;
  */
 public class VentaFX {
     private IntegerProperty id;
-    private IntegerProperty idCliente;
-    private IntegerProperty idCorte;
-    private DoubleProperty monto;
+    private IntegerProperty id_usuario;
+    private IntegerProperty id_producto;
+    private IntegerProperty cantidad;
     private ObjectProperty<Date> fecha;
 
     /**
      * DB constructor
      * @param id
-     * @param idCliente
-     * @param idCorte
-     * @param monto
+     * @param id_usuario
+     * @param id_producto
+     * @param cantidad
      * @param fecha
      */
-    public VentaFX(int id, int idCliente, int idCorte, double monto, Date fecha) {
+    public VentaFX(int id, int id_usuario, int id_producto, int cantidad, Date fecha) {
         this.id = new SimpleIntegerProperty(id);
-        this.idCliente = new SimpleIntegerProperty(idCliente);
-        this.idCorte = new SimpleIntegerProperty(idCorte);
-        this.monto = new SimpleDoubleProperty(monto);
+        this.id_usuario = new SimpleIntegerProperty(id_usuario);
+        this.id_producto = new SimpleIntegerProperty(id_producto);
+        this.cantidad = new SimpleIntegerProperty(cantidad);
         this.fecha = new SimpleObjectProperty<>(fecha);
     }
     /**
      * UI constructor
-     * @param idCliente
-     * @param idCorte
-     * @param monto
+     * @param id_usuario
+     * @param id_producto
+     * @param cantidad
      * @param fecha
      */
-    public VentaFX(int idCliente, int idCorte, double monto) {
-        this.idCliente = new SimpleIntegerProperty(idCliente);
-        this.idCorte = new SimpleIntegerProperty(idCorte);
-        this.monto = new SimpleDoubleProperty(monto);
+    public VentaFX(int id_usuario, int id_producto, int cantidad) {
+        this.id_usuario = new SimpleIntegerProperty(id_usuario);
+        this.id_producto = new SimpleIntegerProperty(id_producto);
+        this.cantidad = new SimpleIntegerProperty(cantidad);
         this.fecha = new SimpleObjectProperty<>(new Date());
     }
     /**
@@ -60,58 +60,58 @@ public class VentaFX {
         this.id.set(id);
     }
         /**
-     * @return idCliente property
+     * @return id_usuario property
      */
-    public IntegerProperty idClienteProperty() {
-        return idCliente;
+    public IntegerProperty id_usuarioProperty() {
+        return id_usuario;
     }
     /**
-     * @return the idCliente
+     * @return the id_usuario
      */
-    public int getIdCliente() {
-        return idCliente.get();
+    public int getid_usuario() {
+        return id_usuario.get();
     }
     /**
-     * @param idCliente the idCliente to set
+     * @param id_usuario the id_usuario to set
      */
-    public void setIdCliente(int idCliente) {
-        this.idCliente.set(idCliente);
+    public void setid_usuario(int id_usuario) {
+        this.id_usuario.set(id_usuario);
     }
     /**
-     * @return idCorte property
+     * @return id_producto property
      */
-    public IntegerProperty idCorteProperty() {
-        return idCorte;
+    public IntegerProperty id_productoProperty() {
+        return id_producto;
     }
     /**
-     * @return the idCorte
+     * @return the id_producto
      */
-    public int getIdCorte() {
-        return idCorte.get();
+    public int getid_producto() {
+        return id_producto.get();
     }
     /**
-     * @param idCorte the idCorte to set
+     * @param id_producto the id_producto to set
      */
-    public void setIdCorte(int idCorte) {
-        this.idCorte.set(idCorte);
+    public void setid_producto(int id_producto) {
+        this.id_producto.set(id_producto);
     }
     /**
-     * @return monto property
+     * @return cantidad property
      */
-    public DoubleProperty montoProperty() {
-        return monto;
+    public IntegerProperty cantidadProperty() {
+        return cantidad;
     }
     /**
-     * @return the monto
+     * @return the cantidad
      */
-    public double getMonto() {
-        return monto.get();
+    public int getcantidad() {
+        return cantidad.get();
     }
     /**
-     * @param monto the monto to set
+     * @param cantidad the cantidad to set
      */
-    public void setMonto(double monto) {
-        this.monto.set(monto);
+    public void setcantidad(int cantidad) {
+        this.cantidad.set(cantidad);
     }
     /**
      * @return fecha property
@@ -133,16 +133,17 @@ public class VentaFX {
     }
     /**
      * String to make an INSERT query
+     * No need to insert id it is automatically generated
      * @return values to insert
      */
     public String toINSERT() {
-        return "'" + getId() + "', '" + getIdCliente() + "', '" + getMonto()+ "', '" + getFecha() + "'";
+        return "'" + getid_usuario() + "', '" + getid_producto() + "', '" + getcantidad()+ "', '" + getFecha() + "'";
     }
     /**
      * String to make an UPDATE query
      * @return values to update
      */
     public String toUPDATE() {
-        return " Monto = '" + getMonto() + "', fecha = " + getFecha().toString() + "',id_u = " + getIdCliente() + ", id_cc = " + getIdCorte();
+        return " cantidad = '" + getcantidad() + "', fecha = " + getFecha().toString() + "',id_u = " + getid_usuario() + ", id_p = " + getid_producto();
     }
 }
