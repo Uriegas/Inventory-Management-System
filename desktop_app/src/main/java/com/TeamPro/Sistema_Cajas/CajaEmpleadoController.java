@@ -8,6 +8,7 @@ import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
 import javafx.scene.control.*;
+import javafx.scene.control.cell.PropertyValueFactory;
 import javafx.util.Callback;
 
 import java.net.URL;
@@ -19,7 +20,13 @@ public class CajaEmpleadoController extends Window implements Initializable {
     MySQL query = new MySQL();
 
     @FXML
-    private TableView<?> tvProductosCarrito;
+    private TableView<ProductoFX> tvProductosCarrito;
+    @FXML
+    private TableColumn<ProductoFX,String> prodNombre;
+    @FXML
+    private TableColumn<ProductoFX,Integer> prodCant;
+    @FXML
+    private TableColumn<ProductoFX,Integer> prodTotal;
 
     @FXML
     private Button btnConfirmar;
@@ -88,27 +95,36 @@ public class CajaEmpleadoController extends Window implements Initializable {
         this.prodPrecioCol.setCellValueFactory(cellData -> cellData.getValue().precioProperty().asObject());
         this.prodStockCol.setCellValueFactory(cellData -> cellData.getValue().stockProperty().asObject());
         // <-- Inicializamos las columnas de la tabla de productos
-        tvproductos.setItems(query.getProductos());
 
+        // -->Inicializamos las columnas de la tabla del carrito
+        this.prodNombre.setCellValueFactory(new PropertyValueFactory<>("Nombre"));
+        //this.prodCant.setCellValueFactory(new PropertyValueFactory<>("Cantidad"));
+        //this.prodTotal.setCellValueFactory(new PropertyValueFactory<>("Total"));
+        //<--Inicializamos las columnas de la tabla del carrito
+
+        //Aquí agrega los elementos de la BD a la tabla de productos
+        tvproductos.setItems(query.getProductos());
         addButtonIntoTable(); //Agregamos la columna de acciones
 
     }
 
     public void addButtonIntoTable(){
         // --> Botones en tabla
+
         TableColumn<ProductoFX, Void> colBtn = new TableColumn("Acciones"); // Creamos la columna
         Callback<TableColumn<ProductoFX, Void>, TableCell<ProductoFX, Void>> cellFactory = new Callback<TableColumn<ProductoFX, Void>, TableCell<ProductoFX, Void>>() {
             @Override
             public TableCell<ProductoFX, Void> call(final TableColumn<ProductoFX, Void> param) {
                 final TableCell<ProductoFX, Void> cell = new TableCell<ProductoFX, Void>() {
-
                     // --> Creamos el boton
                     private final Button btn = new Button("Agregar");
                     {
                         // --> Definimos su accion al hacer clic
                         btn.setOnAction((ActionEvent event) -> {
                             ProductoFX producto = getTableView().getItems().get(getIndex()); //toma el producto seleccionado
-                            System.out.println("Se agrego " + producto.getNombre() + " al carrito"); // ----- Aqui pondras el codigo o llamada a un metodo que agregue el producto a la otra tabla
+                            tvProductosCarrito.getItems().add(producto); // <- Agrega el producto a la tabla de carrito
+
+                            //System.out.println("Se agrego " + producto.getNombre() + " al carrito"); // ----- Aqui pondras el codigo o llamada a un metodo que agregue el producto a la otra tabla
                         });
                         // <-- Definimos su accion al hacer clic
                     }
