@@ -147,6 +147,51 @@ public class MySQL {
         return this.currentUser;
     }
     /**
+     * Get the current user's id
+     */
+    public int getLastID(String table) throws SQLException {
+        Statement select = this.conn.createStatement();
+        // Get the id of this employee
+        ResultSet rs = select.executeQuery("SELECT AUTO_INCREMENT - 1 FROM information_schema.tables WHERE table_name = '" + table + "'AND table_schema = DATABASE( );");
+        rs.next();
+        return rs.getInt(1);
+    }
+    /**
+     * Get last id in USUARIOS table
+     * @return last inserted id in USUARIOS table
+     */
+    public int getLastIDUsuarios() throws SQLException {
+        return getLastID(USUARIOS);
+    }
+    /**
+     * Get last id in PRODUCTOS table
+     * @return last inserted id in PRODUCTOS table
+     */
+    public int getLastIDProductos() throws SQLException {
+        return getLastID(PRODUCTOS);
+    }
+    /**
+     * Get last id in CORTE_CAJAS table
+     * @return last inserted id in CORTE_CAJAS table
+     */
+    public int getLastIDCorteCaja() throws SQLException {
+        return getLastID(CORTE_CAJAS);
+    }
+    /**
+     * Get last id in VENTAS table
+     * @return last inserted id in VENTAS table
+     */
+    public int getLastIDVentas() throws SQLException {
+        return getLastID(VENTAS);
+    }
+    /**
+     * Get last id in CAJAS table
+     * @return last inserted id in CAJAS table
+     */
+    public int getLastIDCajas() throws SQLException {
+        return getLastID(CAJAS);
+    }
+    /**
      * Ejecuta una sentencia SELECT en la base de datos
      * @param tabla nombre de tabla
      * @param columna nombre de la/las columna/s
@@ -192,18 +237,18 @@ public class MySQL {
     public void insert(String tabla, String valores) throws SQLException {
         Statement insert = this.conn.createStatement();
         insert.execute("INSERT INTO " + tabla + " VALUES(0,"+valores+")");
-        System.out.println("Elemento agregado");
+        System.out.println(MySQL.INFO + "Elemento agregado");
     }
 
-    public void update(String tabla, String valores, Integer id) throws SQLException {
+    public void update(String tabla, String valores, int id) throws SQLException {
         Statement update = this.conn.createStatement();
         update.execute("UPDATE " + tabla + " SET " + valores + " WHERE id = "+id);
-        System.out.println("Elemento agregado");
+        System.out.println(MySQL.INFO + "Elemento agregado");
     }
-    public void delete(String tabla, Integer id) throws SQLException {
+    public void delete(String tabla, int id) throws SQLException {
         Statement delete = this.conn.createStatement();
         delete.execute("DELETE FROM " + tabla + " WHERE id = "+id);
-        System.out.println("Elemento eliminado");
+        System.out.println(MySQL.INFO + "Elemento eliminado");
     }
     /**
      * Query the database and get a list of employees
@@ -312,10 +357,13 @@ public class MySQL {
     // --> Inserts
     /**
      * Inserts a new user in the database
-     * @param nombre nombre del usuario
+     * @param EmpleadoFX empleado to insert
+        * @return {@link EmpleadoFX} the newly inserted user with the id
      */
-    public void insert(EmpleadoFX empleado) throws SQLException {
+    public EmpleadoFX insert(EmpleadoFX empleado) throws SQLException {
         insert(USUARIOS, empleado.toINSERT() );
+        int id = getLastID(USUARIOS);
+        return new EmpleadoFX(id, empleado.getNombre(), empleado.getContraseña(), empleado.getTipo());
     }
     /**
      * Inserts a new product in the database
@@ -348,6 +396,13 @@ public class MySQL {
      */
     public void update(EmpleadoFX empleado) throws SQLException {
         update(USUARIOS, empleado.toUPDATE(), empleado.getId());
+    }
+    /**
+     * Updates a user in the database
+     * @param empleado empleado a actualizar
+     */
+    public void update(EmpleadoFX empleado, EmpleadoFX newEmpleado) throws SQLException {
+        update(USUARIOS, newEmpleado.toUPDATE(), empleado.getId());
     }
     /**
      * Updates a product in the database

@@ -60,7 +60,7 @@ public class ModEmpleadoController implements Initializable {
         this.empleado.setTipo(tipo);
         try {
             query.conexion();
-            query.update(this.empleado);
+            query.update(this.empleado);//Creo que lo que modifique afecta esto
         } catch (Exception e) {//Show alert
             System.out.println(e.getMessage());
         }
