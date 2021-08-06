@@ -13,18 +13,57 @@ import javafx.scene.control.*;
 import javafx.stage.*;
 
 public class CajaGerenteController extends Window {
+    MySQL query = new MySQL();
     @FXML private TableView<VentaFX> tvTablaVentas;
     @FXML private Button btnCerrar;
     @FXML private Button btnAbrir;
     @FXML private TableView<CajaFX> tvTablaCajas;
+    @FXML private TableColumn<CajaFX, Integer> id;
+    @FXML private TableColumn<CajaFX, Integer> encargado;
+    @FXML private TableColumn<CajaFX, Double> saldo_actual;
+    @FXML private TableColumn<CajaFX, Double> ver_buttons_column;
     @FXML private Label lbIdCaja;
     @FXML private Label lbNombre;
     @FXML private Label lbApertura;
     @FXML private Label lbTotalVentas;
+
+    // @Override
+    // public void initModel(MySQL d) {
+    //     super.initModel(d);
+    //     tvTablaCajas.setItems(db.getCajas());
+    //     System.out.println(MySQL.INFO + "Loaded cajas: " + db.getCajas().toString());
+    // }
     /**
      * Que necesito para que cada actor tenga una conexion a la base de datos con sus propias credenciales.
      */
     public void initialize(URL url, ResourceBundle rb) {
+        try {
+            query.conexion();
+        } catch (Exception e) {//Show alert
+            Window.showAlert("Error", "Error al insertar datos", "Datos introducidos invalidos");
+            e.printStackTrace();
+        }
+        id.setCellValueFactory(cellData -> cellData.getValue().getIdProperty().asObject());
+        encargado.setCellValueFactory(cellData -> cellData.getValue().getIdUsuarioProperty().asObject());
+        saldo_actual.setCellValueFactory(cellData -> cellData.getValue().getSaldoProperty().asObject());
+        ver_buttons_column.setCellValueFactory(cellData -> cellData.getValue().getSaldoProperty().asObject());
+
+        // id.setCellFactory(column -> {
+        //     return new TableCell<CajaFX, Integer>() {
+        //         @Override
+        //         public void updateItem(Integer item, boolean empty) {
+        //             super.updateItem(item, empty);
+        //             if (item == null || empty) {
+        //                 setText(null);
+        //             } else {
+        //                 setText(item.toString());
+        //             }
+        //         }
+        //     };
+        // });
+        tvTablaCajas.setItems(query.getCajas());
+        System.out.println(MySQL.INFO + "Loaded cajas: " + db.getCajas().toString());
+        
         // System.out.println( MySQL.INFO + this.db.holaa);
         // --> Bind tables
         // tvTablaVentas.setItems(db.getVentas());
@@ -57,7 +96,6 @@ public class CajaGerenteController extends Window {
             Scene scene = loader.load();
             ((Window)loader.getController()).initModel(this.db);//Initializa with previouly stage DB
             switchscene.setScene(scene);
-            Window.showAlert("Completado", "Accion completada con exito", "Todo en orden");
         }catch(IOException ex){System.out.println(MySQL.ERROR + ex.getMessage());}
         // <== Switch scene
     }
