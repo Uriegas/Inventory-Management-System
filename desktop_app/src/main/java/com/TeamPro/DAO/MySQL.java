@@ -7,7 +7,6 @@ import java.sql.*;
  * Handles all the database operations
  */
 public class MySQL {
-
     // создаем подключение к базе данных
     // --> Printers
     public static final String ERROR = "\033[91m[EROR]\033[00m ";
@@ -59,9 +58,9 @@ public class MySQL {
     private String password = "inventarios123";
     public static Connection conn = null;
     // <-- Default Credentials
-
     private EmpleadoFX currentUser;
-    public int holaa = 11;
+
+    // ============================ Conexiones ============================
     /**
      * Default constructor<p>
      * You shoud make the connection manually with
@@ -119,19 +118,14 @@ public class MySQL {
      * @throws SQLException after connection failure try reconnect with previous credentials, if this fails nothing can be done
      */
     public void setConexion(String host, String user, String password) throws SQLException {
-        // try{
         this.conexion(host, user, password);
         System.out.println(SUCCESS + "Conexion exitosa");
         //If connection is successful, change credentials
         this.host = host;
         this.user = user;
         this.password = password;
-        // }catch(SQLException e){//If connection fails, try reconnect with previous credentials
-        //     System.out.println(ERROR + "Conexión fallida: " + e.getMessage());
-        //     System.out.println(INFO + "Cambiando a conexion anterior");
-        //     this.conexion(this.host, this.user, this.password);//If this fails nothing can be done
-        // }
     }
+    // ============================ Current User ============================
     /**
      * Set the current user
      * @param EmpleadoFX currentUser
@@ -146,6 +140,8 @@ public class MySQL {
     public EmpleadoFX getCurrentUser() {
         return this.currentUser;
     }
+
+    // ============================ Last ID ============================
     /**
      * Get the current user's id
      */
@@ -191,6 +187,8 @@ public class MySQL {
     public int getLastIDCajas() throws SQLException {
         return getLastID(CAJAS);
     }
+
+    // ============================ SELECT's ============================
     /**
      * Ejecuta una sentencia SELECT en la base de datos
      * @param tabla nombre de tabla
@@ -207,48 +205,6 @@ public class MySQL {
             System.out.println("No existe registro");
             return false;
         }
-    }
-    /**
-     * Ejecuta una sentencia SELECT en la base de datos
-     * @param tabla nombre de tabla
-     * @param columna nombre de la/las columna/s
-     * @param condicion condicion a evaluar
-     * @return retorna el tipo de usuario
-     */
-    public String getTipoUsuario(String tabla, String columna, String condicion){
-        try {
-            Statement select = this.conn.createStatement();
-            ResultSet rs = select.executeQuery("SELECT "+columna+ " FROM "+tabla+" WHERE "+condicion);
-            System.out.println("SELECT "+columna+ " FROM "+tabla+" WHERE "+condicion);
-            while(rs.next()) {
-                return rs.getObject("tipo").toString(); //Devuelve true si encuentra registro
-            }
-        } catch (SQLException throwables) {
-            throwables.printStackTrace();
-        }
-        return "";
-    }
-
-    /**
-     * Inserta una fila en la base de datos
-     * @param tabla nombre de la tabla
-     * @param valores valores a insertar
-     */
-    public void insert(String tabla, String valores) throws SQLException {
-        Statement insert = this.conn.createStatement();
-        insert.execute("INSERT INTO " + tabla + " VALUES(0,"+valores+")");
-        System.out.println(MySQL.INFO + "Elemento agregado");
-    }
-
-    public void update(String tabla, String valores, int id) throws SQLException {
-        Statement update = this.conn.createStatement();
-        update.execute("UPDATE " + tabla + " SET " + valores + " WHERE id = "+id);
-        System.out.println(MySQL.INFO + "Elemento agregado");
-    }
-    public void delete(String tabla, int id) throws SQLException {
-        Statement delete = this.conn.createStatement();
-        delete.execute("DELETE FROM " + tabla + " WHERE id = "+id);
-        System.out.println(MySQL.INFO + "Elemento eliminado");
     }
     /**
      * Query the database and get a list of employees
@@ -309,6 +265,21 @@ public class MySQL {
         return productos;
     }
     /**
+     * Query the database and Check the database and get a list of searched products
+     */
+    public ObservableList<ProductoFX> getProducto(String condicion){
+        ObservableList<ProductoFX> productos = FXCollections.observableArrayList();
+        try {
+            Statement select = this.conn.createStatement();
+            ResultSet rs = select.executeQuery("SELECT * FROM " + PRODUCTOS + " WHERE LOWER(descrpcion) = LOWER('" + condicion+"')");
+            while(rs.next())
+                productos.add(new ProductoFX(rs.getInt(PRODUCTO_ID), rs.getDouble(PRODUCTO_PRECIO), rs.getString(PRODUCTO_DESC), rs.getInt(PRODUCTO_EXISTENCIA)));
+        } catch (SQLException throwables) {
+            throwables.printStackTrace();
+        }
+        return productos;
+    }
+    /**
      * Query the database and get a list of sales
      */
     public ObservableList<VentaFX> getVentas(){
@@ -354,52 +325,89 @@ public class MySQL {
         }
         return cortes;
     }
-    // --> Inserts
+    // ============================ INSERT's ============================
+    /**
+     * Inserta una fila en la base de datos
+     * @param tabla nombre de la tabla
+     * @param valores valores a insertar
+     */
+    public void insert(String tabla, String valores) throws SQLException {
+        Statement insert = this.conn.createStatement();
+        insert.execute("INSERT INTO " + tabla + " VALUES(0,"+valores+")");
+        System.out.println(MySQL.INFO + "Elemento agregado");
+    }
     /**
      * Inserts a new user in the database
      * @param EmpleadoFX empleado to insert
-        * @return {@link EmpleadoFX} the newly inserted user with the id
+     * @return {@link EmpleadoFX} the newly inserted user with the id
      */
     public EmpleadoFX insert(EmpleadoFX empleado) throws SQLException {
         insert(USUARIOS, empleado.toINSERT() );
-        int id = getLastID(USUARIOS);
-        return new EmpleadoFX(id, empleado.getNombre(), empleado.getContraseña(), empleado.getTipo());
+        return new EmpleadoFX(getLastIDUsuarios(), empleado.getNombre(), empleado.getContraseña(), empleado.getTipo());
     }
     /**
      * Inserts a new product in the database
      * @param producto producto a insertar
+     * @return {@link ProductoFX} the newly inserted product with the id
      */
-    public void insert(ProductoFX producto) throws SQLException {
+    public ProductoFX insert(ProductoFX producto) throws SQLException {
         insert(PRODUCTOS, producto.toINSERT() );
+        return new ProductoFX(getLastIDProductos(), producto.getPrecio(), producto.getNombre(), producto.getStock());
     }
     /**
      * Inserts a new corte_caja in the database
      * @param corteCaja corte de caja a insertar
+     * @return {@link CorteCajaFX} the newly inserted corte_caja with the id
      */
-    public void insert(CorteCajaFX corte){}
+    public CorteCajaFX insert(CorteCajaFX corte) throws SQLException {
+        insert(CORTE_CAJAS, corte.toINSERT() );
+        return new CorteCajaFX(getLastIDCorteCaja(), corte.getInicio(), corte.getFin(), corte.getTotal(), corte.getIdUsuario());
+    }
     /**
      * Inserts a new venta in the database
      * @param venta venta a insertar
+     * @return {@link VentaFX} the newly inserted venta with the id
      */
-    public void insert(VentaFX venta){}
+    public VentaFX insert(VentaFX venta) throws SQLException {
+        insert(VENTAS, venta.toINSERT() );
+        return new VentaFX(getLastIDVentas(), venta.getIdCliente(), venta.getIdCorte(), venta.getMonto(), venta.getFecha());
+    }
     /**
      * Inserts a new caja in the database
      * @param caja caja a insertar
+     * @return {@link CajaFX} the newly inserted caja with the id
      */
-    public void insert(CajaFX caja){}
-    // <-- Inserts
+    public CajaFX insert(CajaFX caja) throws SQLException {
+        insert(CAJAS, caja.toINSERT() );
+        return new CajaFX(getLastIDCajas(), caja.getIdUsuario(), caja.getSaldo());
+    }
 
-    // --> Updates
+    // ============================ UPDATE's ============================
+    public void update(String tabla, String valores, int id) throws SQLException {
+        Statement update = this.conn.createStatement();
+        update.execute("UPDATE " + tabla + " SET " + valores + " WHERE id = "+id);
+        System.out.println(MySQL.INFO + "Elemento agregado");
+    }
     /**
      * Updates a user in the database
      * @param empleado empleado a actualizar
+     * @deprecated
      */
     public void update(EmpleadoFX empleado) throws SQLException {
         update(USUARIOS, empleado.toUPDATE(), empleado.getId());
     }
     /**
+     * Update a product in the database
+     * @param producto producto a actualizar
+     * @deprecated
+     */
+    public void update(ProductoFX producto) throws SQLException {
+        update(PRODUCTOS, producto.toUPDATE(), producto.getId());
+    }
+    /**
      * Updates a user in the database
      * @param empleado empleado a actualizar
+     * @param newEmpleado nuevos valores del empleado
      */
     public void update(EmpleadoFX empleado, EmpleadoFX newEmpleado) throws SQLException {
         update(USUARIOS, newEmpleado.toUPDATE(), empleado.getId());
@@ -407,28 +415,42 @@ public class MySQL {
     /**
      * Updates a product in the database
      * @param producto producto a actualizar
+     * @param newEmpleado nuevos valores del producto
      */
-    public void update(ProductoFX producto) throws SQLException {
-        update(PRODUCTOS, producto.toUPDATE(), producto.getId());
+    public void update(ProductoFX producto,ProductoFX newProducto) throws SQLException {
+        update(PRODUCTOS, newProducto.toUPDATE(), producto.getId());
     }
     /**
      * Updats a corte_caja in the database
      * @param corteCaja corte de caja a actualizar
+     * @param newCorte nuevos valores del corte de caja
      */
-    public void update(CorteCajaFX corte){}
+    public void update(CorteCajaFX corte, CorteCajaFX newCorte) throws SQLException {
+        update(CORTE_CAJAS, newCorte.toUPDATE(), corte.getId());
+    }
     /**
      * Updates a venta in the database
      * @param venta venta a actualizar
+     * @param newVenta nuevos valores de la venta
      */
-    public void update(VentaFX venta){}
+    public void update(VentaFX venta, VentaFX newVenta) throws SQLException {
+        update(VENTAS, venta.toUPDATE(), venta.getId());
+    }
     /**
      * Updates a caja in the database
      * @param caja caja a actualizar
+     * @param newCaja nuevos valores de la caja
      */
-    public void update(CajaFX caja){}
-    // <-- Updates
+    public void update(CajaFX caja, CajaFX newCaja) throws SQLException {
+        update(CAJAS, caja.toUPDATE(), caja.getId());
+    }
 
-    // --> Deletes
+    // ============================ DELETE's ============================
+    public void delete(String tabla, int id) throws SQLException {
+        Statement delete = this.conn.createStatement();
+        delete.execute("DELETE FROM " + tabla + " WHERE id = "+id);
+        System.out.println(MySQL.INFO + "Elemento " + id + " eliminado de " + tabla);
+    }
     /**
      * Deletes a user in the database, find it and delete it
      * @param empleado empleado a borrar
@@ -447,35 +469,45 @@ public class MySQL {
      * Deletes a corte_caja in the database, find it and delete it
      * @param corteCaja corte de caja a borrar
      */
-    public void delete(CorteCajaFX corte){}
+    public void delete(CorteCajaFX corte) throws SQLException {
+        delete(CORTE_CAJAS, corte.getId());
+    }
     /**
      * Deletes a venta in the database, find it and delete it
      * @param venta venta a borrar
      */
-    public void delete(VentaFX venta){}
+    public void delete(VentaFX venta) throws SQLException {
+        delete(VENTAS, venta.getId());
+    }
     /**
      * Deletes a caja in the database, find it and delete it
      * @param caja caja a borrar
      */
-    public void delete(CajaFX caja){}
-    // <-- Deletes
+    public void delete(CajaFX caja) throws SQLException {
+        delete(CAJAS, caja.getId());
+    }
 
+    // ============================ Extra ============================
     /**
-     * Query the database and Check the database and get a list of searched products
+     * Ejecuta una sentencia SELECT en la base de datos
+     * @param tabla nombre de tabla
+     * @param columna nombre de la/las columna/s
+     * @param condicion condicion a evaluar
+     * @return retorna el tipo de usuario
      */
-    public ObservableList<ProductoFX> getProducto(String condicion){
-        ObservableList<ProductoFX> productos = FXCollections.observableArrayList();
+    public String getTipoUsuario(String tabla, String columna, String condicion){
         try {
             Statement select = this.conn.createStatement();
-            ResultSet rs = select.executeQuery("SELECT * FROM " + PRODUCTOS + " WHERE LOWER(descrpcion) = LOWER('" + condicion+"')");
-            while(rs.next())
-                productos.add(new ProductoFX(rs.getInt(PRODUCTO_ID), rs.getDouble(PRODUCTO_PRECIO), rs.getString(PRODUCTO_DESC), rs.getInt(PRODUCTO_EXISTENCIA)));
+            ResultSet rs = select.executeQuery("SELECT "+columna+ " FROM "+tabla+" WHERE "+condicion);
+            System.out.println("SELECT "+columna+ " FROM "+tabla+" WHERE "+condicion);
+            while(rs.next()) {
+                return rs.getObject("tipo").toString(); //Devuelve true si encuentra registro
+            }
         } catch (SQLException throwables) {
             throwables.printStackTrace();
         }
-        return productos;
+        return "";
     }
-
     //Main
     public static void main(String[] args) {
         System.out.println(MySQL.INFO);

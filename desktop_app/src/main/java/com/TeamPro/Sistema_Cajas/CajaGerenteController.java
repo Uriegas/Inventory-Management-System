@@ -34,7 +34,7 @@ public class CajaGerenteController extends Window {
 
     @FXML
     void clickAbrirCaja(ActionEvent event) {
-        System.out.println( MySQL.INFO + "In Gerente: " + this.db.holaa);
+        // System.out.println( MySQL.INFO + "In Gerente: " + this.db.holaa);
     }
 
     @FXML

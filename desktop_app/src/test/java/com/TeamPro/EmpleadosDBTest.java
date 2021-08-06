@@ -16,7 +16,7 @@ import org.junit.runners.Parameterized;
  */
 @FixMethodOrder(MethodSorters.NAME_ASCENDING)
 @RunWith(Parameterized.class)
-public class MySQLTest {
+public class EmpleadosDBTest {
     MySQL mysql;
     private static EmpleadoFX actualEmpleado;
     /**
@@ -38,21 +38,10 @@ public class MySQLTest {
         }
     }
     /**
-     * Delete inserted rows
-     */
-    // @After
-    // public void tearDown(){
-    //     try {
-    //         server.update("DELETE FROM prueba;");//Delete all rows from table prueba
-    //     } catch (SQLException e) {
-    //         System.out.println(MySQL.ERROR + "Couldn't delete rows from DB");
-    //     }
-    // }
-    /**
      * Constructor with expected value injection
      * @param path path to load file
      */
-    public MySQLTest(EmpleadoFX empleado, String s){
+    public EmpleadosDBTest(EmpleadoFX empleado, String s){
         actualEmpleado = empleado;
     }
     /**
@@ -65,10 +54,6 @@ public class MySQLTest {
             {new EmpleadoFX("Juan", "juan123", "gerente"), "hola" },
             {new EmpleadoFX("Pedro", "pedro123", "gerente"), "hola" }
         });
-        // EmpleadoFX[] empleados = new EmpleadoFX[2];
-        // empleados[0] = new EmpleadoFX("Juan", "juan123", "gerente");
-        // empleados[1] = new EmpleadoFX("Pedro", "pedro123", "gerente");
-        // return Arrays.asList(empleados);
 	}
     /**
      * Test INSERT query

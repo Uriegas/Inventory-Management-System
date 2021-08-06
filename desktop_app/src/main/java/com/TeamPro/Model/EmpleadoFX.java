@@ -89,11 +89,14 @@ public class EmpleadoFX {
      * @return values to insert
      */
     public String toINSERT() {
-        return "'"+nombre.get() + "', '" + contraseña.get() + "', '" + tipo.get() + "'";
+        return "'" + nombre.get() + "', '" + contraseña.get() + "', '" + tipo.get() + "'";
     }
-
+    /**
+     * String to make an UPDATE query
+     * @return values to update
+     */
     public String toUPDATE() {
-        return "nombre = '" + nombre.get() + "', contraseña = '" + contraseña.get() + "', tipo = '" + tipo.get()+"'";
+        return "nombre = '" + nombre.get() + "', contraseña = '" + contraseña.get() + "', tipo = '" + tipo.get() + "'";
     }
     /**
      * Compare two EmpleadosFX

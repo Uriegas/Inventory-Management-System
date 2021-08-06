@@ -131,4 +131,18 @@ public class CorteCajaFX {
     public void setIdUsuario( Integer idUsuario ) {
         this.idUsuario.set( idUsuario );
     }
+    /**
+     * String to make an INSERT query
+     * @return values to insert
+     */
+    public String toINSERT() {
+        return "'" + getId() + ", '" + getInicio() + "', '" + getFin() + "', '" + getTotal() + "', '" + getIdUsuario() + "'";
+    }
+    /**
+     * String to make an UPDATE query
+     * @return values to update
+     */
+    public String toUPDATE() {
+        return "inicio = '" + getInicio().toString() + "', fin = '" + getFin().toString() + "', total = " + getTotal() + ", id_u = " + getIdUsuario() + ", id_c = " + getId();
+    }
 }

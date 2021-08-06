@@ -84,4 +84,18 @@ public class CajaFX {
     public void setSaldo( double saldo ) {
         this.saldo.set( saldo );
     }
+    /**
+     * String to make an INSERT query
+     * @return values to insert
+     */
+    public String toINSERT() {
+        return "'" + getId() + "', '" + getIdUsuario() + "', '" + getSaldo() + "'";
+    }
+    /**
+     * String to make an UPDATE query
+     * @return values to update
+     */
+    public String toUPDATE() {
+        return " id_u = " + getIdUsuario() + ", saldo_caja = " + getSaldo();
+    }
 }
