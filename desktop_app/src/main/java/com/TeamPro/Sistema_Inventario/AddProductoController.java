@@ -2,6 +2,7 @@ package com.TeamPro.Sistema_Inventario;
 
 import com.TeamPro.DAO.MySQL;
 import com.TeamPro.Model.ProductoFX;
+import com.TeamPro.Window;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.scene.Node;
@@ -50,8 +51,9 @@ public class AddProductoController{
         try {
             query.conexion();
             query.insert(prod);
+            Window.showAlert("Completado", "Accion completada con exito", "Todo en orden");
         } catch (Exception e) {//Show alert
-            System.out.println(e.getMessage());
+            Window.showAlert("Error", "Error al insertar datos", "Datos introducidos invalidos");
         }
     }
 }

@@ -39,6 +39,7 @@ public class CajaEmpleadoController extends Window implements Initializable {
         try {
             query.conexion();
         } catch (SQLException e) {
+            Window.showAlert("Error", "Error al conectar a la base de datos", "Datos introducidos invalidos");
             e.printStackTrace();
         }
         // --> Inicializamos las columnas de la tabla de productos

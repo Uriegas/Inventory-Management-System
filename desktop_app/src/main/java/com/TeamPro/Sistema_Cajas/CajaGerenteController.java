@@ -57,6 +57,7 @@ public class CajaGerenteController extends Window {
             Scene scene = loader.load();
             ((Window)loader.getController()).initModel(this.db);//Initializa with previouly stage DB
             switchscene.setScene(scene);
+            Window.showAlert("Completado", "Accion completada con exito", "Todo en orden");
         }catch(IOException ex){System.out.println(MySQL.ERROR + ex.getMessage());}
         // <== Switch scene
     }

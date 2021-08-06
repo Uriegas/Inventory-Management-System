@@ -72,8 +72,10 @@ public class AddAdminController extends Window implements Initializable{
             String datos = /*"011, "+*/"'"+tfNombre.getText()+"', '"+tfPassword.getText()+"', 'administrador'";
             try{
             this.db.insert("usuarios", datos );
+                Window.showAlert("Completado", "Accion completada con exito", "Todo en orden");
             }catch(Exception e){//Show alert of error on insert
-                System.out.println("Error al insertar datos");
+                Window.showAlert("Error", "Error al insertar datos", "Datos introducidos invalidos");
+
             }
             switchScene(event, "/Sistema_InventarioResources/Inventario.fxml");
         }
@@ -86,7 +88,7 @@ public class AddAdminController extends Window implements Initializable{
         try{
             this.db.conexion();
         }catch(Exception e){//Show alert
-            System.out.println("Error al conectar a la base de datos");
+            Window.showAlert("Error", "Error al conectar a la base de datos", "Datos introducidos invalidos");
         }
         this.img = new Image(this.getClass().getResource("/LoginResources/userAdmin.jpg").toString(),false);
         clip.setFill(new ImagePattern(this.img));

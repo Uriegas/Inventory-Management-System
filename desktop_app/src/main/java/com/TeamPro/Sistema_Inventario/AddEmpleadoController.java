@@ -53,7 +53,9 @@ public class AddEmpleadoController extends Window {
 
         query.conexion();
         query.insert(emp);
+            Window.showAlert("Completado", "Accion completada con exito", "Todo en orden");
         } catch (Exception e) {
+            Window.showAlert("Error", "Error al insertar datos", "Datos introducidos invalidos");
             e.printStackTrace();
         }
     }

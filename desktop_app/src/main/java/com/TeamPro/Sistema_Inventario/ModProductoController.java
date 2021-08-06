@@ -2,6 +2,7 @@ package com.TeamPro.Sistema_Inventario;
 
 import com.TeamPro.DAO.MySQL;
 import com.TeamPro.Model.ProductoFX;
+import com.TeamPro.Window;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -59,8 +60,9 @@ public class ModProductoController implements Initializable {
         try {
             query.conexion();
             query.update(this.producto);
+            Window.showAlert("Completado", "Accion completada con exito", "Update realizado");
         } catch (Exception e) {//Show alert
-            System.out.println(e.getMessage());
+            Window.showAlert("Error", "Error al actualizar", "No se pudo actualizar");
         }
         Node source = (Node)event.getSource();
         Stage stage = (Stage)source.getScene().getWindow();
