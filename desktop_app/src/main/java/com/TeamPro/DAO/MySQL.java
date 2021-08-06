@@ -57,12 +57,14 @@ public class MySQL {
     /*private String host = "jdbc:mysql://localhost/inventariosDB";*/
     /*private String user = "inventarios_client";
     private String password = "inventarios123";*/
-    private String host = "jdbc:mysql://localhost/unidad4";
-    private String user = "elpapi";
-    private String password = "Contrasen&a1234";
+    public String host = "jdbc:mysql://localhost/inventariosDB";
+    private String user = "inventarios_client";
+    private String password = "inventarios123";
     private Connection conn = null;
     // <-- Default Credentials
 
+    private EmpleadoFX currentUser;
+    public int holaa = 11;
     /**
      * Default constructor<p>
      * You shoud make the connection manually with
@@ -98,6 +100,48 @@ public class MySQL {
      */
     public Connection conexion() throws SQLException {
         return this.conn = DriverManager.getConnection(host, user, password);
+    }
+    /**
+     * Change conexion
+     * @param Connection conn
+     */
+    public void setConexion(Connection conn) {
+        this.conn = conn;
+    }
+    /**
+     * Change conexion
+     * @param String host
+     * @param String user
+     * @param String password
+     * @throws SQLException after connection failure try reconnect with previous credentials, if this fails nothing can be done
+     */
+    public void setConexion(String host, String user, String password) throws SQLException {
+        // try{
+        this.conexion(host, user, password);
+        System.out.println(SUCCESS + "Conexion exitosa");
+        //If connection is successful, change credentials
+        this.host = host;
+        this.user = user;
+        this.password = password;
+        // }catch(SQLException e){//If connection fails, try reconnect with previous credentials
+        //     System.out.println(ERROR + "Conexión fallida: " + e.getMessage());
+        //     System.out.println(INFO + "Cambiando a conexion anterior");
+        //     this.conexion(this.host, this.user, this.password);//If this fails nothing can be done
+        // }
+    }
+    /**
+     * Set the current user
+     * @param EmpleadoFX currentUser
+     */
+    public void setCurrentUser(EmpleadoFX currentUser) {
+        this.currentUser = currentUser;
+    }
+    /**
+     * Get the current user
+     * @return EmpleadoFX
+     */
+    public EmpleadoFX getCurrentUser() {
+        return this.currentUser;
     }
     /**
      * Ejecuta una sentencia SELECT en la base de datos
@@ -185,6 +229,15 @@ public class MySQL {
             throwables.printStackTrace();
         }
         return empleados;
+    }
+    /**
+     * Find an employee by its password, not recomended using this method because passwords are not unique
+     */
+    public EmpleadoFX getEmpleado(EmpleadoFX empleado) {
+        for(EmpleadoFX emp : getEmpleados())
+            if(empleado.equalsVerification(emp))
+                return emp;
+        throw new IllegalArgumentException("No existe el empleado");
     }
     /**
      * Query the database and get a list of products

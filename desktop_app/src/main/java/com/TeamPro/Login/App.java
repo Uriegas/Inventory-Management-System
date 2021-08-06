@@ -28,22 +28,22 @@ public class App extends Application {
     public void start(Stage primaryStage) throws IOException {
         try{
             this.db.conexion();
+            if((this.db.select("usuarios", "*", "tipo = 'administrador'"))) {// Si ya existe cuenta admin, abre Login
+                loader = new FXMLLoader(this.getClass().getResource("/LoginResources/Login.fxml"));
+            }
+            else{
+                loader = new FXMLLoader(this.getClass().getResource("/LoginResources/AddAdmin.fxml"));
+            }
+            // --> Show login window
+            Scene scene = loader.load();
+            ((Window)loader.getController()).initModel(db);
+            primaryStage.setTitle("Sistema inventario");
+            primaryStage.getIcons().add(new Image(App.class.getResourceAsStream( "/LoginResources/teampro.png" )));
+            primaryStage.setScene(scene);
+            primaryStage.show();
+            // <-- Show login window
         }catch(Exception e){//Show alert
             System.out.println("Error al conectar a la base de datos");
         }
-        if((this.db.select("usuarios", "*", "tipo = 'administrador'"))) {// Si ya existe cuenta admin, abre Login
-            loader = new FXMLLoader(this.getClass().getResource("/LoginResources/Login.fxml"));
-        }
-        else{
-            loader = new FXMLLoader(this.getClass().getResource("/LoginResources/AddAdmin.fxml"));
-        }
-        // --> Show login window
-        //((Window)loader.getController()).initModel(db);
-        Scene scene = loader.load();
-        primaryStage.setTitle("Sistema inventario");
-        primaryStage.getIcons().add(new Image(App.class.getResourceAsStream( "/LoginResources/teampro.png" )));
-        primaryStage.setScene(scene);
-        primaryStage.show();
-        // <-- Show login window
     }
 }

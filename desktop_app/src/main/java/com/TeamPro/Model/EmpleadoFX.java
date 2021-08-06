@@ -20,12 +20,24 @@ public class EmpleadoFX {
         this.tipo = new SimpleStringProperty(tipo);
     }
     /**
-     * UI constructor
+     * UI constructor: Create a new employee
+     * @param nombre
+     * @param contraseña
+     * @param tipo
      */
     public EmpleadoFX(String nombre, String contraseña, String tipo) {
         this.nombre = new SimpleStringProperty(nombre);
         this.contraseña = new SimpleStringProperty(contraseña);
         this.tipo = new SimpleStringProperty(tipo);
+    }
+    /**
+     * UI constructor: In login window
+     * @param nombre
+     * @param contraseña
+     */
+    public EmpleadoFX(String nombre, String contraseña) {
+        this.nombre = new SimpleStringProperty(nombre);
+        this.contraseña = new SimpleStringProperty(contraseña);
     }
 
     public IntegerProperty idProperty() {
@@ -78,5 +90,21 @@ public class EmpleadoFX {
      */
     public String toINSERT() {
         return nombre.get() + "', '" + contraseña.get() + "', '" + tipo.get() + "'";
+    }
+    /**
+     * Compare two EmpleadosFX
+     * @param empleado
+     * @return true if they are equals
+     */
+    public boolean equals(EmpleadoFX empleado) {
+        return this.id.get() == empleado.id.get();
+    }
+    /**
+     * Compare two EmpladosFX but without id
+     * @param empleado
+     * @return true if they are equals
+     */
+    public boolean equalsVerification(EmpleadoFX empleado) {
+        return this.contraseña.get().equals(empleado.contraseña.get()) && this.nombre.get().equals(empleado.nombre.get());
     }
 }

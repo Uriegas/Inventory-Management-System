@@ -4,11 +4,12 @@ import javafx.event.Event;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.Node;
 import javafx.scene.Scene;
+import javafx.scene.control.Alert;
 import javafx.stage.Modality;
 import javafx.stage.Stage;
 import java.io.IOException;
 import com.TeamPro.DAO.MySQL;
-
+import com.TeamPro.Window;
 /**
  * Abstract Window class, needed because of switching scenes and implementing global CSS properties
  */
@@ -24,10 +25,11 @@ public abstract class Window {
         try{
             FXMLLoader loader = new FXMLLoader();
             loader.setLocation(this.getClass().getResource(FXML));
+            System.out.println(MySQL.INFO + "Switching scene to: " + FXML);
             Scene scene = loader.load();
-            /*scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());//Add css*/
+            ((Window)loader.getController()).initModel(this.db);//Initializa with previouly stage DB
             switchscene.setScene(scene);
-        }catch(IOException ex){ex.printStackTrace();}
+        }catch(IOException ex){System.out.println(MySQL.ERROR + ex.getMessage());}
     }
     /**
      * Creates a new pop up from the current window
@@ -41,17 +43,11 @@ public abstract class Window {
         loader.setLocation(this.getClass().getResource(FXML));
         try{
             Scene scene = loader.load();
-            /*scene.getStylesheets().add(getClass().getResource("/styles.css").toExternalForm());//Add css*/
             dialog.setScene(scene);
         }catch(IOException ex){ex.printStackTrace();}
         // Defines a modal window that blocks events from being
         // delivered to any other application window.
         dialog.initOwner(((Node)e.getTarget()).getScene().getWindow());
-        // dialog.setOnCloseRequest(event ->{
-        //     Node source = (Node)event.getSource();
-        //     Stage stage = (Stage)source.getScene().getWindow();
-        //     stage.close();
-        // });
         dialog.show();
     }
     /**
@@ -64,5 +60,18 @@ public abstract class Window {
         else{
             this.db = d;
         }
+    }
+    /**
+     * Show an alert window
+     * @param title
+     * @param message
+     * @param message
+     */
+    public static void showAlert(String title, String header, String message){
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+        alert.setTitle(title);
+        alert.setHeaderText(header);
+        alert.setContentText(message);
+        alert.showAndWait();
     }
 }
