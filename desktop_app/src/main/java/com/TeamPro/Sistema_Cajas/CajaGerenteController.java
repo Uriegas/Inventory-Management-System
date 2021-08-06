@@ -62,7 +62,7 @@ public class CajaGerenteController extends Window {
         //     };
         // });
         tvTablaCajas.setItems(query.getCajas());
-        System.out.println(MySQL.INFO + "Loaded cajas: " + db.getCajas().toString());
+        System.out.println(MySQL.INFO + "Loaded cajas: " + query.getCajas().toString());
         
         // System.out.println( MySQL.INFO + this.db.holaa);
         // --> Bind tables
