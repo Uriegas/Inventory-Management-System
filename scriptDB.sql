@@ -36,6 +36,7 @@ CONSTRAINT fk_fromcaja_corte FOREIGN KEY (id_c) REFERENCES caja (id) ON DELETE C
 
 create or replace table ventas (
 id int not null primary key AUTO_INCREMENT,
+id_u int not null,
 id_p int not null,
 cantidad int not null,
 fecha date not null,
