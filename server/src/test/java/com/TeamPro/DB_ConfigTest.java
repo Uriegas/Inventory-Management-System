@@ -65,7 +65,7 @@ public class DB_ConfigTest {
     @Test
     public void testVentas() {
         try {
-            conn.createStatement().executeQuery("SELECT * FROM venta");
+            conn.createStatement().executeQuery("SELECT * FROM ventas");
             System.out.println(Colors.toGreen("[OK]") + " Table venta exists.");
         } catch (SQLException e) {
             System.out.println(Colors.toRed("[FAIL]") + " Table 'venta' does not exist.");
