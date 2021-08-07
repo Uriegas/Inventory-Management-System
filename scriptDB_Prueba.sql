@@ -35,9 +35,37 @@ INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (4, 2, 9, '2021-06-07');
 INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (4, 1, 6, '2021-06-07');
 
 --- Cajero 3
-INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (4, 1, 2, '2021-06-07');
-INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (4, 3, 5, '2021-06-07');
-INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (4, 1, 2, '2021-06-07');
-INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (4, 2, 4, '2021-06-07');
-INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (4, 2, 9, '2021-06-07');
-INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (4, 1, 6, '2021-06-07');
+INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (5, 1, 2, '2021-06-07');
+INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (5, 3, 5, '2021-06-07');
+INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (5, 1, 2, '2021-06-07');
+INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (5, 2, 4, '2021-06-07');
+INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (5, 2, 9, '2021-06-07');
+INSERT INTO ventas(id_u, id_p, cantidad, fecha) VALUES (5, 1, 6, '2021-06-07');
+
+---Extra: estos SELECT fueron importantes para desarrollar la app
+---SELECT todas las ventas de un usuario
+SELECT * FROM ventas
+WHERE ventas.id_u = <usuario_id>;
+
+
+---SELECT todas las ventas con precios de un usuario
+SELECT *
+FROM ventas JOIN productos
+ON ventas.id_p = productos.id
+WHERE ventas.id_u = <usuario_id>
+ORDER BY ventas.id;
+
+
+---SELECT todas las ventas de un usuario (solo columnas importantes)
+SELECT productos.descrpcion, ventas.cantidad, ventas.fecha, ventas.cantidad * productos.precio
+FROM ventas JOIN productos
+ON ventas.id_p = productos.id
+WHERE ventas.id_u = <usuario_id>
+ORDER BY ventas.id;
+
+
+--SELECT total de ventas de un usuario
+SELECT SUM(productos.precio * ventas.cantidad)
+FROM ventas JOIN productos
+ON ventas.id_p = productos.id
+WHERE ventas.id_u = <usuario_id>
