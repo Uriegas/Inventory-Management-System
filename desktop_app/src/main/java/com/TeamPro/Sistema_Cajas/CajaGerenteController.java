@@ -15,11 +15,11 @@ import javafx.stage.*;
 import javafx.util.*;
 
 public class CajaGerenteController extends Window implements Initializable {
-    @FXML private TableView<VentaFX> tvTablaVentas;
-    @FXML private TableColumn<VentaFX, String> producto;
-    @FXML private TableColumn<VentaFX, Integer> cantidad;
-    @FXML private TableColumn<VentaFX, Date> fecha;
-    @FXML private TableColumn<VentaFX, Double> total;
+    @FXML private TableView<VentaWithProducto> tvTablaVentas;
+    @FXML private TableColumn<VentaWithProducto, String> producto;
+    @FXML private TableColumn<VentaWithProducto, Integer> cantidad;
+    @FXML private TableColumn<VentaWithProducto, Date> fecha;
+    @FXML private TableColumn<VentaWithProducto, Double> total;
     @FXML private TableView<CajaWithEmp> tvTablaCajas = new TableView<>();
     @FXML private TableColumn<CajaWithEmp, Integer> id;
     @FXML private TableColumn<CajaWithEmp, String> encargado;
@@ -27,6 +27,7 @@ public class CajaGerenteController extends Window implements Initializable {
     @FXML private Button btnCorte;
     @FXML private Label lbIdCaja;
     @FXML private Label lbTotalVentas;
+    @FXML private Label lbNombre;
 
     /**
      * initialize model
@@ -60,7 +61,6 @@ public class CajaGerenteController extends Window implements Initializable {
                         btn.setOnAction(e -> {
                             CajaWithEmp c = (CajaWithEmp) getTableView().getItems().get(getIndex());
                             updateRightWindow(c);
-                            System.out.println(MySQL.INFO + "Selected Caja: " + c.toString());
                         });
                     }
                     @Override
@@ -79,6 +79,13 @@ public class CajaGerenteController extends Window implements Initializable {
         action.setCellFactory(callBack);
         tvTablaCajas.getColumns().add(action);
         // <== Create a TableColumn with a custom cell value factory: button
+
+        // ==> Ventas table columns
+        producto.setCellValueFactory(cellData -> cellData.getValue().descripcionProperty());
+        cantidad.setCellValueFactory(cellData -> cellData.getValue().cantidadProperty().asObject());
+        fecha.setCellValueFactory(cellData -> cellData.getValue().fechaProperty());
+        total.setCellValueFactory(cellData -> cellData.getValue().totalProperty().asObject());
+        // <== Ventas table columns
 
         // ==> Button corte de caja
         // <== Button corte de caja
@@ -102,10 +109,22 @@ public class CajaGerenteController extends Window implements Initializable {
     }
     /**
      * Update the right window with the selected CajaWithEmp
-     * @param CajaWithEmp
+     * @param caja
      */
-    public void updateRightWindow(CajaWithEmp CajaWithEmp) {
-
+    public void updateRightWindow(CajaWithEmp caja) {
+        System.out.println(MySQL.DEBUG + "Selected " + caja.toString());
+        lbNombre.setText(caja.getEncargado());
+        lbIdCaja.setText(String.valueOf(caja.getId()));
+        // ==> Get ventas of this caja
+        try{
+            lbTotalVentas.setText("$ " + db.getTotalSales(caja.getIdUsuario()));
+            tvTablaVentas.setItems(db.getVentaswithEmpleados(caja.getIdUsuario()));
+            System.out.println(MySQL.DEBUG + "SELECT " + db.getVentaswithEmpleados(caja.getIdUsuario()).toString());
+        }catch(SQLException ex){
+            System.out.println(MySQL.ERROR + ex.getMessage());
+            Window.showAlert("Error in Query", "Petición a DB falló", "Ocurrió un error al cargar la tabla de ventas");
+        }
+        // <== Get ventas of this caja
     }
     /**
      * Make a new Corte de caja
