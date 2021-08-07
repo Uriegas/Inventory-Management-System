@@ -21,7 +21,7 @@ public class WebServer extends Thread {
     private static String USER = "inventarios_client";
     private static String PASSWORD = "inventarios123";
     private Connection conn;
-    private String html = "";
+    private String html = "", html2 = "";
     //<-- Credentials
 
     //--> Server variables
@@ -40,6 +40,19 @@ public class WebServer extends Thread {
             while ( (line = br.readLine()) != null )
                 html += line;
             br.close();
+        } catch ( IOException e ) {
+            System.out.println(Colors.toRed("[ERROR] ") + e.getMessage());
+        }
+        // <-- Load html
+        // --> Load html footer
+        try{
+            File file2 = new File( this.getClass().getResource( "/index2.html" ).getFile() );
+            BufferedReader br2 = new BufferedReader( new FileReader( file2 ) );
+            System.out.println( Colors.toBlue("[INFO]") + " Loading file: " + file2.getAbsolutePath() );
+            String line2 = "";
+            while ( (line2 = br2.readLine()) != null )
+                html2 += line2;
+            br2.close();
         } catch ( IOException e ) {
             System.out.println(Colors.toRed("[ERROR] ") + e.getMessage());
         }
@@ -143,7 +156,9 @@ public class WebServer extends Thread {
                     System.out.println(Colors.toYellow("[HTML] ") + html + query_in_table);
                     out.println(html);
                 }
+                out.println(html);
                 out.println(query_in_table);
+                out.println(html2);
                 out.flush();
                 // <-- Send client response (HTML)
             }catch(IOException e){
