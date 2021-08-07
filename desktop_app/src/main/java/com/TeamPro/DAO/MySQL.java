@@ -522,6 +522,34 @@ public class MySQL {
             cajas.add( new CajaWithEmp(rs.getInt(1), rs.getInt(2), rs.getString(3), rs.getInt(4)) );
         return cajas;
     }
+    /**
+     * Get the total sales in money of an employee (cajero)
+     * This method executes the following query:<p>
+     * {@code SELECT SUM(productos.precio * ventas.cantidad) FROM ventas JOIN productos ON ventas.id_p = productos.id WHERE ventas.id_u = <usuario_id>}
+     * @return the sum of product * cantidad for each sale of the employee
+     */
+    public double getTotalSales(int usuario_id) throws SQLException {
+        Statement select = this.conn.createStatement();
+        ResultSet rs = select.executeQuery("SELECT SUM(productos.precio * ventas.cantidad) FROM ventas JOIN productos ON ventas.id_p = productos.id WHERE ventas.id_u = "+usuario_id + ";");
+        rs.next(); //It is a one row query we don't need to iterate
+        return rs.getDouble(1);
+    }
+    /**
+     * Get the list of sales of an employee (cajero) to display in the GUI
+     * This method executes the following query:<p>
+     * {@code SELECT * FROM ventas JOIN productos ON ventas.id_p = productos.id WHERE ventas.id_u = 4 ORDER BY ventas.id;}
+     * @param usuario_id id of the employee
+     * @return the list of sales of the employee
+     */
+    public ObservableList<VentaWithProducto> getVentaswithEmpleados(int usuario_id) throws SQLException {
+        ObservableList<VentaWithProducto> ventas = FXCollections.observableArrayList();
+        Statement select = this.conn.createStatement();
+        ResultSet rs = select.executeQuery("SELECT ventas.id, ventas.id_u, ventas.id_p, ventas.cantidad, ventas.fecha, productos.precio, productos.descrpcion, ventas.cantidad * productos.precio FROM ventas JOIN productos ON ventas.id_p = productos.id WHERE ventas.id_u =" +usuario_id + " ORDER BY ventas.id;");
+        while(rs.next())
+            ventas.add( new VentaWithProducto(rs.getInt(1), rs.getInt(2), rs.getInt(3), rs.getInt(4), rs.getDate(5), rs.getDouble(6), rs.getString(7), rs.getDouble(8)) );
+        return ventas;
+    }
+
     //Main
     public static void main(String[] args) {
         System.out.println(MySQL.INFO);
