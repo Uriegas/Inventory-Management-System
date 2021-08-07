@@ -7,7 +7,6 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
-import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -56,7 +55,7 @@ public class CajaEmpleadoController extends Window implements Initializable {
 
         // -->Inicializamos las columnas de la tabla del carrito (Esto da null, i dont know why)
         this.prodNombre.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
-        addSpinnerIntoTable();
+        addTextFieldIntoTable();
         tvProductosCarrito.getColumns().get(1);
         //<--Inicializamos las columnas de la tabla del carrito
 
@@ -83,7 +82,9 @@ public class CajaEmpleadoController extends Window implements Initializable {
     }
     @FXML
     void clickConfirmar(ActionEvent event){
-
+        tvProductosCarrito.getItems().size();
+        System.out.println(tvProductosCarrito.getItems().get(0).getCantidadVenta());
+        //query.insert(new VentaFX());
     }
     public void addButtonIntoTable(){
         // --> Botones en tabla
@@ -126,20 +127,29 @@ public class CajaEmpleadoController extends Window implements Initializable {
         // --> Botones en tabla
     }
 
-    public void addSpinnerIntoTable(){
-        this.colSpinner.setId("Cantidad");
-        // --> Botones en tabla
+    public void addTextFieldIntoTable(){
+        // --> TextField en tabla
         Callback<TableColumn<ProductoFX, Void>, TableCell<ProductoFX, Void>> cellFactory = new Callback<TableColumn<ProductoFX, Void>, TableCell<ProductoFX, Void>>() {
             @Override
             public TableCell<ProductoFX, Void> call(final TableColumn<ProductoFX, Void> param) {
                 final TableCell<ProductoFX, Void> cell = new TableCell<ProductoFX, Void>() {
 
-                    // --> Creamos el spinner
-                    final int valor_inicial = 1;
-                    SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, valor_inicial);
-                    private final Spinner<Integer> spinner = new Spinner<Integer>((valueFactory));
+                    // --> Creamos el TextField
+                    private final TextField textField = new TextField();
+                    {
+                        // --> Definimos su accion al hacer clic
+                        textField.setOnAction((ActionEvent event) -> {
+                            ProductoFX selectedItem = tvProductosCarrito.getSelectionModel().getSelectedItem();
+                            if (selectedItem != null) {
+                                System.out.println("Entra");
+                                System.out.println(textField.getText());
+                                selectedItem.setCantidadVenta(Integer.parseInt(textField.getText()));
 
-                    // <-- Creamos el spinner
+                            }
+                        });
+                        // <-- Definimos su accion al hacer clic
+                    }
+                    // <-- Creamos el TextField
                     // --> Lo agregamos a la columna
                     @Override
                     public void updateItem(Void item, boolean empty) {
@@ -147,7 +157,7 @@ public class CajaEmpleadoController extends Window implements Initializable {
                         if (empty) {
                             setGraphic(null);
                         } else {
-                            setGraphic(spinner);
+                            setGraphic(textField);
                         }
                     }
                     // <-- Lo agregamos a la columna
@@ -157,7 +167,7 @@ public class CajaEmpleadoController extends Window implements Initializable {
         };
         colSpinner.setCellFactory(cellFactory);
         tvProductosCarrito.getColumns().add(colSpinner);   //Agregamos la columna a la tabla
-        // --> Botones en tabla
+        // --> TextField en tabla
     }
 
     public void totalPagar(){
@@ -170,13 +180,13 @@ public class CajaEmpleadoController extends Window implements Initializable {
     }
 
     public void totalProductos(){
-
+/*
         for(int i = 0; i < this.colSpinner.getTableView().getColumns().size(); i++){
             System.out.println(this.colSpinner.getTableView().getColumns().get(i).getId());
             System.out.println(this.colSpinner.getText());
             System.out.println(this.colSpinner.getCellData(1));
         }
-        System.out.println(this.colSpinner.getId());
+        System.out.println(this.colSpinner.getId());*/
         this.totalProductos.setValue(tvProductosCarrito.getItems().size());
     }
 }

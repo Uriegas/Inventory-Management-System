@@ -10,6 +10,7 @@ public class ProductoFX {
     private DoubleProperty precio;
     private StringProperty nombre;
     private IntegerProperty stock;
+    private IntegerProperty cantidadVenta = new SimpleIntegerProperty();
 
     /**
      * DB constructor
@@ -111,6 +112,28 @@ public class ProductoFX {
      * String to make an INSERT query
      * @return values to insert
      */
+
+
+    /**
+     * @return cantidadVenta property
+     */
+    public IntegerProperty cantidadVentaProperty() {
+        return cantidadVenta;
+    }
+    /**
+     * @return the cantidadVenta
+     */
+    public Integer getCantidadVenta() {
+        return this.cantidadVenta.get();
+    }
+    /**
+     * @param id the cantidadVenta to set
+     */
+    public void setCantidadVenta(Integer cantidad) {
+        this.cantidadVenta.setValue(cantidad);
+    }
+
+
     public String toINSERT() {
         return "'" + precio.get() + "', '" + nombre.get() + "', '" + stock.get() + "'";
     }
