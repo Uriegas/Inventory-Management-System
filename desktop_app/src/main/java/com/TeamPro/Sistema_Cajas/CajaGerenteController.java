@@ -3,6 +3,8 @@ package com.TeamPro.Sistema_Cajas;
 import java.io.*;
 import java.net.*;
 import java.sql.SQLException;
+import java.time.LocalDate;
+import java.time.ZoneId;
 import java.util.*;
 import com.TeamPro.Window;
 import com.TeamPro.DAO.MySQL;
@@ -87,8 +89,6 @@ public class CajaGerenteController extends Window implements Initializable {
         total.setCellValueFactory(cellData -> cellData.getValue().totalProperty().asObject());
         // <== Ventas table columns
 
-        // ==> Button corte de caja
-        // <== Button corte de caja
     }
     /**
      * Return to login window
@@ -115,6 +115,9 @@ public class CajaGerenteController extends Window implements Initializable {
         System.out.println(MySQL.DEBUG + "Selected " + caja.toString());
         lbNombre.setText(caja.getEncargado());
         lbIdCaja.setText(String.valueOf(caja.getId()));
+        // ==> Button corte de caja
+        btnCorte.setOnAction(e -> createCorte(caja));
+        // <== Button corte de caja
         // ==> Get ventas of this caja
         try{
             lbTotalVentas.setText("$ " + db.getTotalSales(caja.getIdUsuario()));
@@ -128,5 +131,64 @@ public class CajaGerenteController extends Window implements Initializable {
     }
     /**
      * Make a new Corte de caja
+     * @param caja
      */
+    public void createCorte(CajaFX c){
+        // ==> Create a new corte
+        try{
+            //Dialog to get the money count
+            TextInputDialog dialog = new TextInputDialog(String.valueOf(db.getTotalSales(c.getIdUsuario())));
+            dialog.setTitle("Corte de caja");
+            dialog.setHeaderText("Ingrese el conteo de dinero de la caja " + c.getId());
+            dialog.setContentText("$ ");
+            Optional<String> result = dialog.showAndWait();
+
+            LocalDate now = LocalDate.now();
+            Date fin = Date.from(now.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+            System.out.println(MySQL.DEBUG + "Today date: " + fin.toString());
+            System.out.println(MySQL.DEBUG + "Today: " + now.toString());
+
+            // ==> Get the spreed: 1 week, 3 days, 1 day choice dialog
+            ChoiceDialog<String> choiceDialog = new ChoiceDialog<String>(
+                    "1 día",
+                    "3 días",
+                    "1 semana"
+            );
+            choiceDialog.setTitle("Corte de caja");
+            choiceDialog.setHeaderText("Seleccione el tiempo de corte de la caja " + c.getId());
+            choiceDialog.setContentText("Plazo de corte de caja ");
+            choiceDialog.showAndWait().ifPresent(action -> {
+                // ==> Create a new corte
+                try{
+                    int days = 0;
+                    if(action.equals("1 día"))
+                        days = 1;
+                    else if(action.equals("3 días"))
+                        days = 3;
+                    else if(action.equals("1 semana"))
+                        days = 7;
+                    LocalDate inicio = now.minusDays(days);
+                    Date inicioDate = Date.from(inicio.atStartOfDay().atZone(ZoneId.systemDefault()).toInstant());
+                    CorteCajaFX corte = new CorteCajaFX(inicioDate, fin, Integer.valueOf(result.get()) - c.getSaldo() , c.getIdUsuario());
+                    db.insert(corte);
+                }catch(SQLException ex){
+                    System.out.println(MySQL.ERROR + ex.getMessage());
+                    Window.showAlert("Error in Query", "Petición a DB falló", "Ocurrió un error al crear el corte");
+                }
+            });
+            // <== Get the spreed: 1 week, 3 days, 1 day choice dialog
+            System.out.println(MySQL.SUCCESS + "Corte creado");
+
+            //Show succes message dialog
+            Alert alert = new Alert(Alert.AlertType.INFORMATION);
+            alert.setTitle("Corte creado");
+            alert.setHeaderText("Corte creado");
+            alert.setContentText("Corte creado con éxito");
+            alert.showAndWait();
+        }catch(SQLException ex){
+            System.out.println(MySQL.ERROR + ex.getMessage());
+            Window.showAlert("Error in Query", "Petición a DB falló", "Ocurrió un error al crear el corte");
+        }
+        // <== Create a new corte
+    }
 }

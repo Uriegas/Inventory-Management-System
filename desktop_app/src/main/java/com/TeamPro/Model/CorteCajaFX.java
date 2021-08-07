@@ -21,7 +21,7 @@ public class CorteCajaFX {
      * @param total
      * @param idUsuario
      */
-    public CorteCajaFX( Integer id, Date inicio, Date fin, Double total, Integer idUsuario ) {
+    public CorteCajaFX( Integer id, Date inicio, Date fin, double total, int idUsuario ) {
         this.id = new SimpleIntegerProperty( id );
         this.inicio = new SimpleObjectProperty<>( inicio );
         this.fin = new SimpleObjectProperty<>( fin );
@@ -35,7 +35,7 @@ public class CorteCajaFX {
      * @param total
      * @param idUsuario
      */
-    public CorteCajaFX( Date inicio, Date fin, Double total, Integer idUsuario ) {
+    public CorteCajaFX( Date inicio, Date fin, double total, int idUsuario ) {
         this.inicio = new SimpleObjectProperty<>( inicio );
         this.fin = new SimpleObjectProperty<>( fin );
         this.total = new SimpleDoubleProperty( total );
