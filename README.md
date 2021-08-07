@@ -1,10 +1,6 @@
 # POO-Unidad-4-Actividad-1
 ## Actividad 7: Cajeros en Red y Web server
 
-### DUDA  
-El profe quiere a fuerzas que usemos un server o con la pura conexión a la base de datos esta bien?
-Según yo solo es la conexión, por lo que dijo hoy, no?
-Ciertoo. Eres una crack Andrea
 
 ### TODO
 * Add a background task that pull records from the database and update the cache when they’re different than expected
