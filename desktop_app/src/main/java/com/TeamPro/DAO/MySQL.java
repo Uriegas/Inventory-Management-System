@@ -343,7 +343,7 @@ public class MySQL {
      */
     public EmpleadoFX insert(EmpleadoFX empleado) throws SQLException {
         insert(USUARIOS, empleado.toINSERT() );
-        return new EmpleadoFX(getLastIDUsuarios(), empleado.getNombre(), empleado.getContraseña(), empleado.getTipo());
+        return new EmpleadoFX(getLastIDUsuarios(), empleado.getNombre(), empleado.getContrasena(), empleado.getTipo());
     }
     /**
      * Inserts a new product in the database

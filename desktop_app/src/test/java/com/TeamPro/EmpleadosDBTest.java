@@ -93,7 +93,7 @@ public class EmpleadosDBTest {
     public void test_3_UPDATE() {
         try{
             actualEmpleado = mysql.getEmpleado(actualEmpleado);
-            EmpleadoFX newEmpleado = new EmpleadoFX(actualEmpleado.getId(), actualEmpleado.getNombre(), actualEmpleado.getContraseña(), "administrador");
+            EmpleadoFX newEmpleado = new EmpleadoFX(actualEmpleado.getId(), actualEmpleado.getNombre(), actualEmpleado.getContrasena(), "administrador");
             mysql.update(actualEmpleado, newEmpleado);
             System.out.println(MySQL.SUCCESS + "Updated row in DB");
         }catch(Exception e){

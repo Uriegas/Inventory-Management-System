@@ -36,7 +36,7 @@
             </image>
          </ImageView>
          <TextField fx:id="TfUsuario" layoutX="176.0" layoutY="197.0" prefHeight="35.0" prefWidth="237.0" promptText="Dirección de correo" style="-fx-background-color: false;" styleClass="jfx-text-field" />
-         <TextField fx:id="TfContra" layoutX="176.0" layoutY="278.0" prefHeight="26.0" prefWidth="242.0" promptText="Contraseña" style="-fx-background-color: false;" styleClass="jfx-text-field" />
+         <TextField fx:id="TfContra" layoutX="176.0" layoutY="278.0" prefHeight="26.0" prefWidth="242.0" promptText="Contrasena" style="-fx-background-color: false;" styleClass="jfx-text-field" />
          <ImageView fitHeight="34.0" fitWidth="33.0" layoutX="129.0" layoutY="198.0" pickOnBounds="true" preserveRatio="true">
             <image>
                <Image url="@user.png" />

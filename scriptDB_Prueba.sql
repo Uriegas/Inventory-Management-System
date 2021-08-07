@@ -1,11 +1,11 @@
 --Este script es de prueba, inicializa valores por defectuo para probar la app
 
 ---Add users
-INSERT INTO usuarios(nombre, contraseña, tipo) VALUES ('administrador', 'administrador','administrador');
-INSERT INTO usuarios(nombre, contraseña, tipo) VALUES ('gerente', 'gerente123','gerente');
-INSERT INTO usuarios(nombre, contraseña, tipo) VALUES ('cajero1', 'cajero123','vendedor');
-INSERT INTO usuarios(nombre, contraseña, tipo) VALUES ('cajero2', 'cajero123','vendedor');
-INSERT INTO usuarios(nombre, contraseña, tipo) VALUES ('cajero2', 'cajero123','vendedor');
+INSERT INTO usuarios(nombre, contrasena, tipo) VALUES ('administrador', 'administrador','administrador');
+INSERT INTO usuarios(nombre, contrasena, tipo) VALUES ('gerente', 'gerente123','gerente');
+INSERT INTO usuarios(nombre, contrasena, tipo) VALUES ('cajero1', 'cajero123','vendedor');
+INSERT INTO usuarios(nombre, contrasena, tipo) VALUES ('cajero2', 'cajero123','vendedor');
+INSERT INTO usuarios(nombre, contrasena, tipo) VALUES ('cajero2', 'cajero123','vendedor');
 
 ---Add products
 INSERT INTO productos( precio, descrpcion, existencia) VALUES (89.99, 'Pizza de Luigis', 100);

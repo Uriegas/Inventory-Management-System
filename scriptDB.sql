@@ -5,7 +5,7 @@ use inventariosDB;
 create or replace table usuarios(
 id int not null primary key AUTO_INCREMENT,
 nombre varchar(80) not null,
-contraseña varchar(30) not null,
+contrasena varchar(30) not null,
 tipo varchar(30) not null
 );
 

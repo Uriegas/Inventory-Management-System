@@ -22,8 +22,8 @@
          <TextField fx:id="tfUsername" layoutX="52.0" layoutY="238.0" prefHeight="23.0" prefWidth="308.0" promptText="Ingresa un nombre de usuario" style="-fx-background-color: false;" />
          <TextField fx:id="tfNombre" layoutX="52.0" layoutY="301.0" prefHeight="23.0" prefWidth="308.0" promptText="Ingresa tu nombre completo" style="-fx-background-color: false;" />
          <Label layoutX="52.0" layoutY="277.0" text="Nombre completo" />
-         <PasswordField fx:id="tfPassword" layoutX="52.0" layoutY="363.0" prefHeight="23.0" prefWidth="307.0" promptText="Ingresa una contraseña" style="-fx-background-color: false;" />
-         <Label layoutX="52.0" layoutY="341.0" text="Contraseña" />
+         <PasswordField fx:id="tfPassword" layoutX="52.0" layoutY="363.0" prefHeight="23.0" prefWidth="307.0" promptText="Ingresa una contrasena" style="-fx-background-color: false;" />
+         <Label layoutX="52.0" layoutY="341.0" text="Contrasena" />
          <Label layoutX="52.0" layoutY="214.0" text="Nombre de usuario" />
          <Line endX="207.0" layoutX="153.0" layoutY="261.0" startX="-100.0" stroke="#00000060" />
          <Line endX="207.0" layoutX="153.0" layoutY="324.0" startX="-100.0" stroke="#00000060" />

@@ -7,37 +7,37 @@ import javafx.beans.property.*;
 public class EmpleadoFX {
     private IntegerProperty id;
     private StringProperty nombre;
-    private StringProperty contraseña;
+    private StringProperty contrasena;
     private StringProperty tipo;
 
     /**
      * DB constructor
      */
-    public EmpleadoFX(Integer id, String nombre, String contraseña, String tipo) {
+    public EmpleadoFX(Integer id, String nombre, String contrasena, String tipo) {
         this.id = new SimpleIntegerProperty(id);
         this.nombre = new SimpleStringProperty(nombre);
-        this.contraseña = new SimpleStringProperty(contraseña);
+        this.contrasena = new SimpleStringProperty(contrasena);
         this.tipo = new SimpleStringProperty(tipo);
     }
     /**
      * UI constructor: Create a new employee
      * @param nombre
-     * @param contraseña
+     * @param contrasena
      * @param tipo
      */
-    public EmpleadoFX(String nombre, String contraseña, String tipo) {
+    public EmpleadoFX(String nombre, String contrasena, String tipo) {
         this.nombre = new SimpleStringProperty(nombre);
-        this.contraseña = new SimpleStringProperty(contraseña);
+        this.contrasena = new SimpleStringProperty(contrasena);
         this.tipo = new SimpleStringProperty(tipo);
     }
     /**
      * UI constructor: In login window
      * @param nombre
-     * @param contraseña
+     * @param contrasena
      */
-    public EmpleadoFX(String nombre, String contraseña) {
+    public EmpleadoFX(String nombre, String contrasena) {
         this.nombre = new SimpleStringProperty(nombre);
-        this.contraseña = new SimpleStringProperty(contraseña);
+        this.contrasena = new SimpleStringProperty(contrasena);
     }
 
     public IntegerProperty idProperty() {
@@ -58,14 +58,14 @@ public class EmpleadoFX {
     public void setNombre(String nombre) {
         this.nombre.set(nombre);
     }
-    public StringProperty contraseñaProperty() {
-        return contraseña;
+    public StringProperty contrasenaProperty() {
+        return contrasena;
     }
-    public String getContraseña() {
-        return contraseña.get();
+    public String getContrasena() {
+        return contrasena.get();
     }
-    public void setContraseña(String contraseña) {
-        this.contraseña.set(contraseña);
+    public void setContrasena(String contrasena) {
+        this.contrasena.set(contrasena);
     }
     public StringProperty tipoProperty() {
         return tipo;
@@ -80,7 +80,7 @@ public class EmpleadoFX {
         return "Empleado{" +
                 "id=" + id +
                 ", nombre='" + nombre + '\'' +
-                ", contraseña='" + contraseña + '\'' +
+                ", contrasena='" + contrasena + '\'' +
                 ", tipo='" + tipo + '\'' +
                 '}';
     }
@@ -89,14 +89,14 @@ public class EmpleadoFX {
      * @return values to insert
      */
     public String toINSERT() {
-        return "'" + nombre.get() + "', '" + contraseña.get() + "', '" + tipo.get() + "'";
+        return "'" + nombre.get() + "', '" + contrasena.get() + "', '" + tipo.get() + "'";
     }
     /**
      * String to make an UPDATE query
      * @return values to update
      */
     public String toUPDATE() {
-        return "nombre = '" + nombre.get() + "', contraseña = '" + contraseña.get() + "', tipo = '" + tipo.get() + "'";
+        return "nombre = '" + nombre.get() + "', contrasena = '" + contrasena.get() + "', tipo = '" + tipo.get() + "'";
     }
     /**
      * Compare two EmpleadosFX
@@ -112,6 +112,6 @@ public class EmpleadoFX {
      * @return true if they are equals
      */
     public boolean equalsVerification(EmpleadoFX empleado) {
-        return this.contraseña.get().equals(empleado.contraseña.get()) && this.nombre.get().equals(empleado.nombre.get());
+        return this.contrasena.get().equals(empleado.contrasena.get()) && this.nombre.get().equals(empleado.nombre.get());
     }
 }

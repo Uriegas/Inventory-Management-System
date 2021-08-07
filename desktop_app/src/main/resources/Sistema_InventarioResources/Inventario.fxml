@@ -26,14 +26,14 @@
          </Label>
          <Label layoutX="73.0" layoutY="500.0" text="Administrador" textFill="#e9eeef" />
          <ImageView fx:id="ivFoto" fitHeight="46.0" fitWidth="50.0" layoutX="14.0" layoutY="466.0" pickOnBounds="true" preserveRatio="true" />
-         <Label fx:id="lbNombreNegocio" layoutX="19.0" layoutY="128.0" styleClass="label-tienda" text="Tienda &quot;Doña Pelos&quot;">
+         <Label fx:id="lbNombreNegocio" layoutX="19.0" layoutY="128.0" styleClass="label-tienda" text="Tienda &quot;Dona Pelos&quot;">
             <font>
                <Font size="18.0" />
             </font>
          </Label>
          <Pane fx:id="pInventario" layoutX="204.0" prefHeight="543.0" prefWidth="793.0" style="-fx-background-color: #FFFFFF;" styleClass="background-inv">
             <children>
-               <Button fx:id="btnAgregarProducto" layoutX="653.0" layoutY="53.0" mnemonicParsing="false" onAction="#clickAddProduct" styleClass="button-add" text="Añadir producto" textFill="WHITE" />
+               <Button fx:id="btnAgregarProducto" layoutX="653.0" layoutY="53.0" mnemonicParsing="false" onAction="#clickAddProduct" styleClass="button-add" text="Anadir producto" textFill="WHITE" />
                <TextField fx:id="tfBuscarProducto" layoutX="87.0" layoutY="12.0" prefHeight="23.0" prefWidth="423.0" promptText="Ingresa busqueda" />
                <Button fx:id="btnBuscarProducto" layoutX="57.0" layoutY="9.0" mnemonicParsing="false" onAction="#clickFindProduct" prefHeight="31.0" prefWidth="30.0" styleClass="button-buscar" />
                <TableView fx:id="tvDatosProductos" layoutY="94.0" prefHeight="449.0" prefWidth="794.0" stylesheets="@tableview.css">

@@ -66,7 +66,7 @@ public class LoginController extends Window implements Initializable {
             switchscene.setScene(scene);
             // <== Switch scene
         }catch(IllegalArgumentException e){
-            Window.showAlert("Error", "Usuario invalido", "Usuario y/o contraseña invalidos");
+            Window.showAlert("Error", "Usuario invalido", "Usuario y/o contrasena invalidos");
             System.out.println(MySQL.ERROR + e.getMessage());
         }catch(IOException ex){
             System.out.println(MySQL.ERROR + ex.getMessage());

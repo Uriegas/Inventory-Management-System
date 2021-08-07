@@ -11,7 +11,7 @@ Esta es una guia para configurar la base de datos necesaria para que el [server]
 
 3.- Elegir el tipo de instalacion, la opcion "Developer Default" nos instalara tanto el servidor mysql como el cliente Mysqlworkbench(entorno grafico desde el que podemos crear esquemas y objetos)
 
-4.- En la ventana en la que nos pide indicar la contraseña para el usuario root (usuario con privilegios de administracion) podemos agregar otra cuenta desde el boton "Add User"
+4.- En la ventana en la que nos pide indicar la contrasena para el usuario root (usuario con privilegios de administracion) podemos agregar otra cuenta desde el boton "Add User"
 
 ## Configuración Usuarios
 
@@ -21,13 +21,13 @@ Esta es una guia para configurar la base de datos necesaria para que el [server]
 
 3.- Asignamos el host y rol del usuario 
 
-4.- establecemos una contraseña
+4.- establecemos una contrasena
 
 5.- El usuario puede ser creado tambien desde la consola de mysql
 
 6.- desde la consola de nuestro SO usamos el comando "mysql" lo que nos  devolvera un resultado que confimra que accedimos al servidor mysql
 
-7.- usamos el comando "CREATE USER 'nuevo_usuario'@'localhost' IDENTIFIED BY 'contraseña';" para crear un nuevo usuario 
+7.- usamos el comando "CREATE USER 'nuevo_usuario'@'localhost' IDENTIFIED BY 'contrasena';" para crear un nuevo usuario 
 
 8.- Y con el comando "GRANT ALL PRIVILEGES ON * . * TO 'nuevo_usuario'@'localhost';
 " le otorgamos todos los privilegios

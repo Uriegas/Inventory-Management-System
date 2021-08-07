@@ -56,7 +56,7 @@ public class ModEmpleadoController implements Initializable {
         System.out.println("nuevos datos: "+nombre+" "+ contra+ " "+ tipo);
 
         this.empleado.setNombre(nombre);
-        this.empleado.setContraseña(contra);
+        this.empleado.setContrasena(contra);
         this.empleado.setTipo(tipo);
         try {
             query.conexion();
@@ -77,7 +77,7 @@ public class ModEmpleadoController implements Initializable {
     @Override
     public void initialize(URL url, ResourceBundle resourceBundle) {
         tfNombre.setText(this.empleado.getNombre());
-        tfContra.setText(this.empleado.getContraseña());
+        tfContra.setText(this.empleado.getContrasena());
         cbPuesto.setValue(this.empleado.getTipo());
     }
 }
