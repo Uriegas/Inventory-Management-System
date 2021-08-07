@@ -3,6 +3,11 @@ package com.TeamPro.Sistema_Cajas;
 import com.TeamPro.DAO.MySQL;
 import com.TeamPro.Model.ProductoFX;
 import com.TeamPro.Window;
+import javafx.beans.property.DoubleProperty;
+import javafx.beans.property.IntegerProperty;
+import javafx.beans.property.SimpleDoubleProperty;
+import javafx.beans.property.SimpleIntegerProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -16,16 +21,16 @@ import java.util.ResourceBundle;
 public class CajaEmpleadoController extends Window implements Initializable {
 
     MySQL query = new MySQL();
+    DoubleProperty totalPagar = new SimpleDoubleProperty(0.00);
+    IntegerProperty totalProductos = new SimpleIntegerProperty(0);
 
-    @FXML private TableView<ProductoFX> tvProductosCarrito;
+    @FXML private TableView<ProductoFX> tvProductosCarrito  = new TableView<>();
     @FXML private TableColumn<ProductoFX,String> prodNombre;
     @FXML private TableColumn<ProductoFX,Integer> prodCant;
     @FXML private TableColumn<ProductoFX,Integer> prodTotal;
-    @FXML private Button btnConfirmar;
+    TableColumn<ProductoFX, Void> colSpinner = new TableColumn<ProductoFX, Void>("Cantidad"); // Creamos la columna
     @FXML private Label lbCantidadProductos;
-    @FXML private Button btnVaciar;
     @FXML private TextField tfBusqueda;
-    @FXML private Button btnBuscar;
     @FXML private Label lbTotalPagar;
     @FXML private TableView<ProductoFX> tvproductos = new TableView<>();
     @FXML private TableColumn<ProductoFX, String> prodDescCol;
@@ -46,15 +51,20 @@ public class CajaEmpleadoController extends Window implements Initializable {
         this.prodDescCol.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
         this.prodPrecioCol.setCellValueFactory(cellData -> cellData.getValue().precioProperty().asObject());
         this.prodStockCol.setCellValueFactory(cellData -> cellData.getValue().stockProperty().asObject());
+        addButtonIntoTable(); //Agregamos la columna de acciones
         // <-- Inicializamos las columnas de la tabla de productos
 
         // -->Inicializamos las columnas de la tabla del carrito (Esto da null, i dont know why)
         this.prodNombre.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
+        addSpinnerIntoTable();
+        tvProductosCarrito.getColumns().get(1);
         //<--Inicializamos las columnas de la tabla del carrito
 
         //Aquí agrega los elementos de la BD a la tabla de productos
         tvproductos.setItems(query.getProductos());
-        addButtonIntoTable(); //Agregamos la columna de acciones
+
+        lbTotalPagar.textProperty().bind(totalPagar.asString());
+        lbCantidadProductos.textProperty().bind(totalProductos.asString());
 
     }
     @FXML
@@ -63,8 +73,6 @@ public class CajaEmpleadoController extends Window implements Initializable {
     }
     @FXML
     void clickBuscar(ActionEvent event){
-        /*ObservableList<ProductoFX> productoBuscado = FXCollections.observableArrayList();
-        productoBuscado = query.getProducto(tfBusqueda.getText());*/
         tvproductos.getItems().clear();
         tvproductos.setItems(query.getProducto(tfBusqueda.getText()));
     }
@@ -72,6 +80,10 @@ public class CajaEmpleadoController extends Window implements Initializable {
     void clickMostrarTodo(ActionEvent event){
         tvproductos.getItems().clear();
         tvproductos.setItems(query.getProductos());
+    }
+    @FXML
+    void clickConfirmar(ActionEvent event){
+
     }
     public void addButtonIntoTable(){
         // --> Botones en tabla
@@ -88,8 +100,8 @@ public class CajaEmpleadoController extends Window implements Initializable {
                         btn.setOnAction((ActionEvent event) -> {
                             ProductoFX producto = getTableView().getItems().get(getIndex()); //toma el producto seleccionado
                             tvProductosCarrito.getItems().add(producto); // <- Agrega el producto a la tabla de carrito
-
-                            //System.out.println("Se agrego " + producto.getNombre() + " al carrito"); // ----- Aqui pondras el codigo o llamada a un metodo que agregue el producto a la otra tabla
+                            totalPagar();
+                            totalProductos();
                         });
                         // <-- Definimos su accion al hacer clic
                     }
@@ -112,5 +124,59 @@ public class CajaEmpleadoController extends Window implements Initializable {
         colBtn.setCellFactory(cellFactory);
         tvproductos.getColumns().add(colBtn);   //Agregamos la columna a la tabla
         // --> Botones en tabla
+    }
+
+    public void addSpinnerIntoTable(){
+        this.colSpinner.setId("Cantidad");
+        // --> Botones en tabla
+        Callback<TableColumn<ProductoFX, Void>, TableCell<ProductoFX, Void>> cellFactory = new Callback<TableColumn<ProductoFX, Void>, TableCell<ProductoFX, Void>>() {
+            @Override
+            public TableCell<ProductoFX, Void> call(final TableColumn<ProductoFX, Void> param) {
+                final TableCell<ProductoFX, Void> cell = new TableCell<ProductoFX, Void>() {
+
+                    // --> Creamos el spinner
+                    final int valor_inicial = 1;
+                    SpinnerValueFactory<Integer> valueFactory = new SpinnerValueFactory.IntegerSpinnerValueFactory(1, 100, valor_inicial);
+                    private final Spinner<Integer> spinner = new Spinner<Integer>((valueFactory));
+
+                    // <-- Creamos el spinner
+                    // --> Lo agregamos a la columna
+                    @Override
+                    public void updateItem(Void item, boolean empty) {
+                        super.updateItem(item, empty);
+                        if (empty) {
+                            setGraphic(null);
+                        } else {
+                            setGraphic(spinner);
+                        }
+                    }
+                    // <-- Lo agregamos a la columna
+                };
+                return cell;
+            }
+        };
+        colSpinner.setCellFactory(cellFactory);
+        tvProductosCarrito.getColumns().add(colSpinner);   //Agregamos la columna a la tabla
+        // --> Botones en tabla
+    }
+
+    public void totalPagar(){
+        this.totalPagar.set(0.00);
+        double tmp = 0.0;
+        for(int i = 0; i < tvProductosCarrito.getItems().size(); i++){
+            tmp += tvProductosCarrito.getItems().get(i).getPrecio();
+        }
+        this.totalPagar.setValue(tmp);
+    }
+
+    public void totalProductos(){
+
+        for(int i = 0; i < this.colSpinner.getTableView().getColumns().size(); i++){
+            System.out.println(this.colSpinner.getTableView().getColumns().get(i).getId());
+            System.out.println(this.colSpinner.getText());
+            System.out.println(this.colSpinner.getCellData(1));
+        }
+        System.out.println(this.colSpinner.getId());
+        this.totalProductos.setValue(tvProductosCarrito.getItems().size());
     }
 }
