@@ -1,39 +1,148 @@
 <!DOCTYPE html>
 <html lang="es">
+<style>
+  *{
+    margin:0;
+    padding: 0;
+    box-sizing: border-box;
+  }
+</style>
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
     <title>Tienda LPY</title>
     <link rel="shorcut icon" href="iconp.png" type="image/x-icon">
-    <link rel="stylesheet" href="estilosp.css">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@300;400;700&display=swap" rel="stylesheet">
 </head>
-<body>
+<body style="font-family: 'open sans';">
 <header>
-    <nav>
+    <style>
+    header{
+        width: 100%;
+        height: 600px;
+        background: #aa4b6b;  /* fallback for old browsers */
+        background: -webkit-linear-gradient(to right, 	hsl(188, 44%, 42%, 0.671), 	hsl(240, 10%, 47%, 0.671), 	hsl(340, 39%, 48%, 0.671)), url("https://miro.medium.com/max/6036/1*Gt9zkN8_DefhFyOGrb8XPQ.jpeg");
+        background: linear-gradient(to right, 	hsl(188, 44%, 42%, 0.671), 	hsl(240, 10%, 47%, 0.671), 	hsl(340, 39%, 48%, 0.671)), url("https://miro.medium.com/max/6036/1*Gt9zkN8_DefhFyOGrb8XPQ.jpeg");
+        background-size: cover;
+        background-attachment: fixed;
+        position: relative;
+    }
+    header .textos-header{
+        display: flex;
+        height: 430px;
+        width: 100%;
+        align-items: center;
+        justify-content: center;
+        flex-direction: column;
+        text-align: center;
+    }
+    .textos-header h1{
+        font-size: 50px;
+        color: #fff;
+    }
+
+    .textos-header h2{
+        font-size: 30px;
+        font-weight: 300;
+        color: #fff;
+    }
+  </style>
+    <nav style="text-align: right;padding: 30px 50px 0 0;">
+        <style>
+      nav > a{
+        color: #fff;
+        font-weight: 300;
+        text-decoration: none;
+        margin-right: 10px;
+      }
+      nav > a:hover{
+        text-decoration: underline;
+      }
+    </style>
         <a href="#">Inicio</a>
         <a href="#">Acerca de</a>
         <a href="#">Servicios</a>
         <a href="#">Contacto</a>
     </nav>
     <section class="textos-header">
-        <h1>Welcome to Tienda: LYP</h1>
+        <h1>Welcome to Tienda: LPY</h1>
         <h2>Con una página web potente</h2>
     </section>
-    <div class="wave" style="height: 150px; overflow: hidden;" >
+    <div class="wave" style="height: 150px; overflow: hidden;position: absolute;bottom: 0;width: 100%;" >
         <svg viewBox="0 0 500 150" preserveAspectRatio="none" style="height: 100%; width: 100%;">
             <path d="M0.00,49.99 C150.00,150.00 349.20,-49.99 500.00,49.99 L500.00,150.00 L0.00,150.00 Z" style="stroke: none; fill: #fff;"></path>
         </svg>
     </div>
 </header>
 <main>
-    <section class="contenedor sobre-nosotros">
-        <h2 class="titulo">Nuestros productos</h2>
-        <div class="contenedor-sobre-nosotros">
+    <section class="contenedor sobre-nosotros" style="padding: 60px 0;width: 90%;max-width: 1000px;margin: auto;overflow: hidden;">
+        <h2 class="titulo" style="color: #642a73;font-size: 30px;text-align: center;margin-bottom: 60px;">Nuestros productos</h2>
+        <div class="contenedor-sobre-nosotros" style="display: flex;justify-content: space-evenly;">
             <table>
+                <style>
+          .container {
+              position: absolute;
+              top: 120%;
+              left: 50%;
+              transform: translate(-50%, -50%);
+          }
+
+          body {
+              margin: 0;
+              background: #fff;
+              font-family: sans-serif;
+              font-weight: 100;
+          }
+
+          table {
+              width: 800px;
+              border-collapse: collapse;
+              overflow: hidden;
+              box-shadow: 0 0 20px rgba(0,0,0,0.1);
+          }
+
+          th, td {
+              padding: 15px;
+              background-color: hsl(188, 44%, 42%, 0.671);
+              color: #fff;
+          }
+
+          th {
+              text-align: left;
+          }
+
+          thead {
+              th {
+                  background-color: #55608f;
+              }
+          }
+
+          tbody {
+              tr {
+                  &:hover {
+                      background-color: rgba(255,255,255,0.3);
+                  }
+              }
+              td {
+                  position: relative;
+                  &:hover {
+                      &:before {
+                          content: "";
+                          position: absolute;
+                          left: 0;
+                          right: 0;
+                          top: -9999px;
+                          bottom: -9999px;
+                          background-color: rgba(255,255,255,0.2);
+                          z-index: -1;
+                      }
+                  }
+              }
+          }
+        </style>
                 <thead>
                 <tr>
                     <th>ID</th>
@@ -72,7 +181,39 @@
         </div>
     </section>
 </main>
-<footer>
+<footer style="background: #414141;padding: 60px 0 30px 0;margin: auto;overflow: hidden;">
+    <style>
+    .contenedor-footer{
+        display: flex;
+        width: 90%;
+        justify-content: space-evenly;
+        margin: auto;
+        padding-bottom: 50px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .content-foo{
+        text-align: center;
+    }
+
+    .content-foo h4{
+        color: #fff;
+        border-bottom: 3px solid #af20d3;
+        padding-bottom: 5px;
+        margin-bottom: 10px;
+    }
+
+    .content-foo p{
+        color: #ccc;
+    }
+
+    .titulo-final{
+        text-align: center;
+        font-size: 24px;
+        margin: 20px 0 0 0;
+        color: #9e9797;
+    }
+  </style>
     <div class="contenedor-footer">
         <div class="content-foo">
             <h4>Phone</h4>
