@@ -550,6 +550,10 @@ public class MySQL {
         return ventas;
     }
 
+    public void realizarVenta(){
+
+    }
+
     //Main
     public static void main(String[] args) {
         System.out.println(MySQL.INFO);
