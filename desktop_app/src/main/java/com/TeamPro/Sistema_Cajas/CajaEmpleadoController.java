@@ -7,6 +7,7 @@ import javafx.beans.property.DoubleProperty;
 import javafx.beans.property.IntegerProperty;
 import javafx.beans.property.SimpleDoubleProperty;
 import javafx.beans.property.SimpleIntegerProperty;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -26,7 +27,7 @@ public class CajaEmpleadoController extends Window implements Initializable {
     @FXML private TableView<ProductoFX> tvProductosCarrito  = new TableView<>();
     @FXML private TableColumn<ProductoFX,String> prodNombre;
     @FXML private TableColumn<ProductoFX,Integer> prodCant;
-    @FXML private TableColumn<ProductoFX,Integer> prodTotal;
+    @FXML private TableColumn<ProductoFX,Double> prodTotal;
     TableColumn<ProductoFX, Void> colSpinner = new TableColumn<ProductoFX, Void>("Cantidad"); // Creamos la columna
     @FXML private Label lbCantidadProductos;
     @FXML private TextField tfBusqueda;
@@ -55,6 +56,7 @@ public class CajaEmpleadoController extends Window implements Initializable {
 
         // -->Inicializamos las columnas de la tabla del carrito (Esto da null, i dont know why)
         this.prodNombre.setCellValueFactory(cellData -> cellData.getValue().nombreProperty());
+        this.prodTotal.setCellValueFactory(cellData -> cellData.getValue().precioProperty().multiply(cellData.getValue().cantidadVentaProperty()).asObject());
         addTextFieldIntoTable();
         tvProductosCarrito.getColumns().get(1);
         //<--Inicializamos las columnas de la tabla del carrito
@@ -81,10 +83,13 @@ public class CajaEmpleadoController extends Window implements Initializable {
         tvproductos.setItems(query.getProductos());
     }
     @FXML
-    void clickConfirmar(ActionEvent event){
-        tvProductosCarrito.getItems().size();
-        System.out.println(tvProductosCarrito.getItems().get(0).getCantidadVenta());
-        //query.insert(new VentaFX());
+    void clickConfirmar(ActionEvent event) throws SQLException {
+        ObservableList<ProductoFX> productosVenta = tvProductosCarrito.getItems();
+        query.actualizarStock(productosVenta);
+        tvProductosCarrito.getItems().clear();
+        clickMostrarTodo(event);
+        this.totalPagar.setValue(0.00);
+        this.totalProductos.setValue(0);
     }
     public void addButtonIntoTable(){
         // --> Botones en tabla
@@ -141,9 +146,10 @@ public class CajaEmpleadoController extends Window implements Initializable {
                         textField.setOnAction((ActionEvent event) -> {
                             ProductoFX selectedItem = tvProductosCarrito.getSelectionModel().getSelectedItem();
                             if (selectedItem != null) {
-                                System.out.println("Entra");
                                 System.out.println(textField.getText());
                                 selectedItem.setCantidadVenta(Integer.parseInt(textField.getText()));
+                                totalPagar();
+                                totalProductos();
 
                             }
                         });
@@ -174,19 +180,16 @@ public class CajaEmpleadoController extends Window implements Initializable {
         this.totalPagar.set(0.00);
         double tmp = 0.0;
         for(int i = 0; i < tvProductosCarrito.getItems().size(); i++){
-            tmp += tvProductosCarrito.getItems().get(i).getPrecio();
+            tmp += tvProductosCarrito.getItems().get(i).getPrecio() * tvProductosCarrito.getItems().get(i).getCantidadVenta();
         }
         this.totalPagar.setValue(tmp);
     }
 
     public void totalProductos(){
-/*
-        for(int i = 0; i < this.colSpinner.getTableView().getColumns().size(); i++){
-            System.out.println(this.colSpinner.getTableView().getColumns().get(i).getId());
-            System.out.println(this.colSpinner.getText());
-            System.out.println(this.colSpinner.getCellData(1));
+        int tmp = 0;
+        for(int i = 0; i < tvProductosCarrito.getItems().size(); i++){
+            tmp += tvProductosCarrito.getItems().get(i).getCantidadVenta();
         }
-        System.out.println(this.colSpinner.getId());*/
-        this.totalProductos.setValue(tvProductosCarrito.getItems().size());
+        this.totalProductos.setValue(tmp);
     }
 }

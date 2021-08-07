@@ -550,8 +550,24 @@ public class MySQL {
         return ventas;
     }
 
-    public void realizarVenta(){
+    /**
+     * Actualiza el stock de los productos vendidos
+     * @param vendidos
+     * @throws SQLException
+     */
+    public void actualizarStock(ObservableList<ProductoFX> vendidos) throws SQLException {
+        Statement update = this.conn.createStatement();
 
+        int id;
+        int cantidad;
+        int stock;
+        for(int i = 0; i < vendidos.size(); i++){
+            id = vendidos.get(i).getId();
+            cantidad = vendidos.get(i).getCantidadVenta();
+            stock = vendidos.get(i).getStock();
+            System.out.println("UPDATE " + PRODUCTOS + " SET existencia = " + stock + " - " + cantidad + " WHERE id = "+id);
+            update.execute("UPDATE " + PRODUCTOS + " SET existencia = " + stock + " - " + cantidad + " WHERE id = "+id);
+        }
     }
 
     //Main
