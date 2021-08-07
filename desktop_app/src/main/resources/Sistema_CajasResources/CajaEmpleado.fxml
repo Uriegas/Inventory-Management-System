@@ -12,18 +12,18 @@
 <?import javafx.scene.layout.Pane?>
 <?import javafx.scene.text.Font?>
 
-<Scene xmlns="http://javafx.com/javafx" xmlns:fx="http://javafx.com/fxml" fx:controller="com.TeamPro.Sistema_Cajas.CajaEmpleadoController">
+<Scene xmlns="http://javafx.com/javafx/16" xmlns:fx="http://javafx.com/fxml/1" fx:controller="com.TeamPro.Sistema_Cajas.CajaEmpleadoController">
     <AnchorPane prefHeight="519.0" prefWidth="877.0" styleClass="background-inv" stylesheets="@estilos.css">
       <children>
          <TableView fx:id="tvProductosCarrito" layoutX="492.0" layoutY="95.0" prefHeight="306.0" prefWidth="369.0" stylesheets="@tableview.css">
-           <columns>
-               <TableColumn prefWidth="114.0" text="Nombre" />
-             <TableColumn prefWidth="95.0" text="Cantidad" />
-             <TableColumn prefWidth="87.0" text="Total" />
-               <TableColumn prefWidth="62.0" text="Quitar" />
-           </columns>
+            <columns>
+               <TableColumn fx:id="prodNombre" prefWidth="114.0" text="Nombre" />
+               <!--<TableColumn fx:id="prodCant" prefWidth="95.0" text="Cantidad" />-->
+               <TableColumn fx:id="prodTotal" prefWidth="87.0" text="Total" />
+               <!--<TableColumn fx:id="" prefWidth="62.0" text="Quitar" />-->
+            </columns>
          </TableView>
-         <Button fx:id="btnConfirmar" layoutX="486.0" layoutY="437.0" mnemonicParsing="false" prefHeight="68.0" prefWidth="378.0" styleClass="button-save" text="Confirmar venta" />
+         <Button fx:id="btnConfirmar" layoutX="486.0" layoutY="437.0" mnemonicParsing="false" onAction="#clickConfirmar" prefHeight="68.0" prefWidth="378.0" styleClass="button-save" text="Confirmar venta" />
          <Label layoutX="700.0" layoutY="408.0" styleClass="label-texto" text="Total a pagar:" />
          <Label layoutX="798.0" layoutY="410.0" text="\$" textFill="#303f9f" textOverrun="CLIP" underline="true">
             <font>
@@ -71,15 +71,14 @@
                      <TableColumn fx:id="prodDescCol" prefWidth="200.0" text="Descripcion" />
                      <TableColumn fx:id="prodPrecioCol" prefWidth="61.0" text="Precio" />
                      <TableColumn fx:id="prodStockCol" prefWidth="118.0" text="Disponible" />
-                     <!--<TableColumn prefWidth="96.0" text="Acciones" />-->
                   </columns>
                </TableView>
                <Button fx:id="btnMostrarTodo" layoutX="372.0" layoutY="61.0" mnemonicParsing="false" onAction="#clickMostrarTodo" styleClass="button-add" text="Mostrar todo" textFill="WHITE" />
             </children>
          </Pane>
-         <Label fx:id="lbTotalPagar" layoutX="802.0" layoutY="409.0" text=" 000.00" textFill="#303f9f" textOverrun="CLIP" underline="true">
+         <Label fx:id="lbTotalPagar" layoutX="806.0" layoutY="410.0" text=" 000.00" textFill="#303f9f" textOverrun="CLIP" underline="true">
             <font>
-               <Font name="System Bold" size="13.0" />
+               <Font name="System Bold" size="14.0" />
             </font>
          </Label>
       </children></AnchorPane>
