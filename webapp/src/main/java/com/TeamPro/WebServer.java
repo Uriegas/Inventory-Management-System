@@ -115,7 +115,7 @@ public class WebServer extends Thread {
                     List<Producto> productos = new ArrayList<Producto>();
                     // --> Create a list of products
                     while( rs.next() ) {
-                        productos.add( new Producto( rs.getInt( "id_p" ), rs.getString( "descrpcion" ), rs.getFloat( "precio" ), rs.getInt( "existencia" ) ) );
+                        productos.add( new Producto( rs.getInt( "id" ), rs.getString( "descrpcion" ), rs.getFloat( "precio" ), rs.getInt( "existencia" ) ) );
                     }
                     System.out.println(Colors.toYellow("[QUERY] ") + productos.toString());
                     query_in_table = "<table><tr><th>ID</th><th>Descripcion</th><th>Precio</th><th>Existencia</th></tr>";
@@ -140,7 +140,7 @@ public class WebServer extends Thread {
                 out.println("");
                 // Send the HTML page
                 synchronized(html){
-                    System.out.println(Colors.toYellow("[HTML] ") + html);
+                    System.out.println(Colors.toYellow("[HTML] ") + html + query_in_table);
                     out.println(html);
                 }
                 out.println(query_in_table);
