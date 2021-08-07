@@ -85,6 +85,13 @@ public class CajaFX {
         this.saldo.set( saldo );
     }
     /**
+     * To string method
+     * @return the string
+     */
+    public String toString() {
+        return "Caja: id=" + getId() + ", id_usuario=" + getIdUsuario() + ", saldo=" + getSaldo();
+    }
+    /**
      * String to make an INSERT query
      * @return values to insert
      */

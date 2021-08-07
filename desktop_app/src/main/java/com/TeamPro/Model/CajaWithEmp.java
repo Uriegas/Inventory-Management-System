@@ -33,4 +33,12 @@ public class CajaWithEmp extends CajaFX {
     public void setEncargado(String encargado) {
         this.encargado.set(encargado);
     }
+    /**
+     * To string method
+     * @return the string
+     */
+    @Override
+    public String toString() {
+        return super.toString() + ", nombre_encargado=" + this.getEncargado();
+    }
 }

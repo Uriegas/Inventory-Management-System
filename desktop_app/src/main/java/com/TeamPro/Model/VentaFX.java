@@ -132,6 +132,13 @@ public class VentaFX {
         this.fecha.set(fecha);
     }
     /**
+     * @return String representation of the object
+     */
+    @Override
+    public String toString() {
+        return "VentaFX: id=" + getId() + ", id_usuario=" + getid_usuario() + ", id_producto=" + getid_producto() + ", cantidad=" + getcantidad() + ", fecha=" + getFecha().toString();
+    } 
+    /**
      * String to make an INSERT query
      * No need to insert id it is automatically generated
      * @return values to insert
